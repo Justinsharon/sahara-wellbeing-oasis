@@ -10,6 +10,8 @@ export interface User {
   email_verified?: boolean;
   otp_verified?: boolean;
   character_companion?: string; // Character ID reference
+  onboarding_completed?: boolean; // Added missing property
+  assessment_session_id?: string; // Added missing property
 }
 
 export interface Therapist {

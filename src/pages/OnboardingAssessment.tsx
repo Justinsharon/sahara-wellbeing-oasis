@@ -162,7 +162,7 @@ export default function OnboardingAssessment() {
           });
       }
 
-      // Update user profile
+      // Update user profile - now with correct typing
       await updateProfile({
         onboarding_completed: true,
         assessment_session_id: sessionId
