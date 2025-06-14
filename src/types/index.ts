@@ -1,14 +1,14 @@
-
 export interface User {
   id: string;
   email: string;
   full_name: string;
-  mobile_number: string;
-  country_code: string;
-  date_of_birth: string;
+  mobile_number?: string;
+  country_code?: string;
+  date_of_birth?: string;
   created_at: string;
-  email_verified: boolean;
-  otp_verified: boolean;
+  updated_at: string;
+  email_verified?: boolean;
+  otp_verified?: boolean;
 }
 
 export interface Therapist {
