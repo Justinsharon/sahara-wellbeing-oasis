@@ -9,6 +9,7 @@ export interface User {
   updated_at: string;
   email_verified?: boolean;
   otp_verified?: boolean;
+  character_companion?: string; // Character ID reference
 }
 
 export interface Therapist {

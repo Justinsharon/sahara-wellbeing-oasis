@@ -1,9 +1,12 @@
+
 import { useMockAuth } from "@/hooks/useMockAuth";
+import { useCharacter } from "@/hooks/useCharacter";
+import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { MobileNav } from "./MobileNav";
 import { FloatingChatButton } from "./FloatingChatButton";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Menu, Heart, Home, User, Settings, HelpCircle, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { AlertTriangle, Menu, Heart, Home, User, Settings, HelpCircle, LogOut, Plus } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   Sheet,
@@ -26,7 +29,12 @@ const sideMenuItems = [
 
 export function Layout({ children }: LayoutProps) {
   const { user, loading } = useMockAuth();
+  const { character, hasCharacter } = useCharacter();
+  const navigate = useNavigate();
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
+
+  // Redirect to character creator if user exists but has no character
+  const shouldShowCharacterPrompt = user && !hasCharacter && !loading;
 
   if (loading) {
     return (
@@ -50,13 +58,13 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen flex flex-col wellness-gradient">
-      {/* Enhanced Mobile-First Header with color mapping */}
+      {/* Enhanced Mobile-First Header with character integration */}
       <header className="sticky top-0 z-50 safe-area-top">
         <div className="glass-nav border-b border-white/20">
           <div className="flex h-16 items-center justify-between px-4">
             {/* Left side - Menu and Logo */}
             <div className="flex items-center gap-3">
-              {/* Enhanced Hamburger Menu */}
+              {/* Enhanced Hamburger Menu with Character */}
               <Sheet open={sideMenuOpen} onOpenChange={setSideMenuOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon" className="neo-button rounded-2xl">
@@ -67,18 +75,43 @@ export function Layout({ children }: LayoutProps) {
                   <SheetHeader className="pb-6">
                     <SheetTitle className="text-left">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-2xl bg-crimson-wine flex items-center justify-center shadow-xl">
-                          <Heart className="w-6 h-6 text-off-white" />
-                        </div>
+                        {character ? (
+                          <CharacterAvatar 
+                            character={character} 
+                            size="lg"
+                            expression={{ type: 'happy', intensity: 'medium' }}
+                          />
+                        ) : (
+                          <div className="w-12 h-12 rounded-2xl bg-crimson-wine flex items-center justify-center shadow-xl">
+                            <Heart className="w-6 h-6 text-off-white" />
+                          </div>
+                        )}
                         <div>
-                          <h1 className="font-bold text-xl heading-gradient">Sahara</h1>
-                          <p className="text-sm text-warm-gray -mt-1">Wellness Companion</p>
+                          <h1 className="font-bold text-xl heading-gradient">
+                            {character ? `${character.name}` : 'Sahara'}
+                          </h1>
+                          <p className="text-sm text-warm-gray -mt-1">
+                            {character ? 'Your Wellness Companion' : 'Wellness Companion'}
+                          </p>
                         </div>
                       </div>
                     </SheetTitle>
                   </SheetHeader>
                   
                   <nav className="space-y-2">
+                    {!character && user && (
+                      <Link
+                        to="/create-character"
+                        onClick={() => setSideMenuOpen(false)}
+                        className="flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 bg-emerald-splash-100 border border-emerald-splash-200"
+                      >
+                        <div className="w-10 h-10 rounded-2xl bg-emerald-splash-500 flex items-center justify-center">
+                          <Plus className="w-5 h-5 text-white" />
+                        </div>
+                        <span className="font-semibold text-emerald-splash-700">Create Your Companion</span>
+                      </Link>
+                    )}
+
                     {sideMenuItems.map((item) => (
                       <Link
                         key={item.title}
@@ -105,11 +138,19 @@ export function Layout({ children }: LayoutProps) {
                 </SheetContent>
               </Sheet>
 
-              {/* Enhanced Clickable Logo */}
+              {/* Enhanced Clickable Logo with Character */}
               <Link to="/" className="flex items-center gap-3 transition-all duration-300 hover:scale-105 active:scale-95">
-                <div className="w-12 h-12 rounded-2xl bg-crimson-wine flex items-center justify-center shadow-lg">
-                  <Heart className="w-6 h-6 text-off-white" />
-                </div>
+                {character ? (
+                  <CharacterAvatar 
+                    character={character} 
+                    size="lg"
+                    expression={{ type: 'happy', intensity: 'medium' }}
+                  />
+                ) : (
+                  <div className="w-12 h-12 rounded-2xl bg-crimson-wine flex items-center justify-center shadow-lg">
+                    <Heart className="w-6 h-6 text-off-white" />
+                  </div>
+                )}
                 <div>
                   <h1 className="font-bold text-xl heading-gradient">Sahara</h1>
                   <p className="text-xs text-warm-gray -mt-1">Wellness Companion</p>
@@ -144,6 +185,31 @@ export function Layout({ children }: LayoutProps) {
 
       {/* Floating Nia Chat Button */}
       {user && <FloatingChatButton />}
+
+      {/* Character Creation Prompt */}
+      {shouldShowCharacterPrompt && (
+        <div className="fixed inset-0 z-40 glass-nav flex items-center justify-center p-6">
+          <div className="glass-card rounded-3xl p-8 text-center shadow-2xl max-w-sm w-full animate-scale-in">
+            <div className="w-24 h-24 rounded-3xl bg-emerald-splash-500 flex items-center justify-center mx-auto mb-8 shadow-xl">
+              <Plus className="w-12 h-12 text-white" />
+            </div>
+            <h2 className="text-3xl font-bold mb-4 heading-gradient">
+              Create Your Companion
+            </h2>
+            <p className="text-warm-gray mb-8 text-lg">
+              Let's create a personalized companion to support you throughout your wellness journey.
+            </p>
+            <div className="space-y-4">
+              <Button onClick={() => navigate('/create-character')} className="btn-primary-modern w-full">
+                Create My Companion
+              </Button>
+              <Button variant="outline" onClick={() => {/* Skip for now */}} className="btn-secondary-modern w-full">
+                Maybe Later
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Enhanced Auth Overlay */}
       {!user && (
