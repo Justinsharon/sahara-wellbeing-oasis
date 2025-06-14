@@ -454,6 +454,57 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
+  /* Color utilities for new palette */
+  .text-ivory-50 { color: hsl(var(--ivory-50)); }
+  .text-ivory-100 { color: hsl(var(--ivory-100)); }
+  .text-ivory-500 { color: hsl(var(--ivory-500)); }
+  .text-ivory-600 { color: hsl(var(--ivory-600)); }
+  
+  .text-blush-50 { color: hsl(var(--blush-50)); }
+  .text-blush-100 { color: hsl(var(--blush-100)); }
+  .text-blush-500 { color: hsl(var(--blush-500)); }
+  .text-blush-600 { color: hsl(var(--blush-600)); }
+  
+  .text-sage-50 { color: hsl(var(--sage-50)); }
+  .text-sage-100 { color: hsl(var(--sage-100)); }
+  .text-sage-500 { color: hsl(var(--sage-500)); }
+  .text-sage-600 { color: hsl(var(--sage-600)); }
+  
+  .text-french-blue-50 { color: hsl(var(--french-blue-50)); }
+  .text-french-blue-100 { color: hsl(var(--french-blue-100)); }
+  .text-french-blue-500 { color: hsl(var(--french-blue-500)); }
+  .text-french-blue-600 { color: hsl(var(--french-blue-600)); }
+  
+  .text-evergreen-50 { color: hsl(var(--evergreen-50)); }
+  .text-evergreen-100 { color: hsl(var(--evergreen-100)); }
+  .text-evergreen-500 { color: hsl(var(--evergreen-500)); }
+  .text-evergreen-600 { color: hsl(var(--evergreen-600)); }
+
+  .bg-ivory-50 { background-color: hsl(var(--ivory-50)); }
+  .bg-ivory-100 { background-color: hsl(var(--ivory-100)); }
+  .bg-ivory-500 { background-color: hsl(var(--ivory-500)); }
+  .bg-ivory-600 { background-color: hsl(var(--ivory-600)); }
+  
+  .bg-blush-50 { background-color: hsl(var(--blush-50)); }
+  .bg-blush-100 { background-color: hsl(var(--blush-100)); }
+  .bg-blush-500 { background-color: hsl(var(--blush-500)); }
+  .bg-blush-600 { background-color: hsl(var(--blush-600)); }
+  
+  .bg-sage-50 { background-color: hsl(var(--sage-50)); }
+  .bg-sage-100 { background-color: hsl(var(--sage-100)); }
+  .bg-sage-500 { background-color: hsl(var(--sage-500)); }
+  .bg-sage-600 { background-color: hsl(var(--sage-600)); }
+  
+  .bg-french-blue-50 { background-color: hsl(var(--french-blue-50)); }
+  .bg-french-blue-100 { background-color: hsl(var(--french-blue-100)); }
+  .bg-french-blue-500 { background-color: hsl(var(--french-blue-500)); }
+  .bg-french-blue-600 { background-color: hsl(var(--french-blue-600)); }
+  
+  .bg-evergreen-50 { background-color: hsl(var(--evergreen-50)); }
+  .bg-evergreen-100 { background-color: hsl(var(--evergreen-100)); }
+  .bg-evergreen-500 { background-color: hsl(var(--evergreen-500)); }
+  .bg-evergreen-600 { background-color: hsl(var(--evergreen-600)); }
+
   /* Modern animations */
   .animate-float {
     animation: float 3s ease-in-out infinite;

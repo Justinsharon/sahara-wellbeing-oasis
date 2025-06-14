@@ -134,18 +134,14 @@ export function Layout({ children }: LayoutProps) {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 relative">
+      <main className="flex-1 relative pb-24">
         <div className="animate-slide-up">
           {children}
         </div>
       </main>
 
       {/* Enhanced Mobile Navigation */}
-      {user && (
-        <div className="safe-area-bottom">
-          <MobileNav />
-        </div>
-      )}
+      {user && <MobileNav />}
 
       {/* Floating Nia Chat Button */}
       {user && <FloatingChatButton />}
