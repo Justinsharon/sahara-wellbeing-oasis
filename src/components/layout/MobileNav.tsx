@@ -1,6 +1,7 @@
 
+
 import { NavLink, useLocation } from "react-router-dom";
-import { Heart, Users, TrendingUp, BarChart3, Home, Sparkles } from "lucide-react";
+import { Heart, Users, TrendingUp, BarChart3, Home, Sparkles, Compass } from "lucide-react";
 
 const mobileNavItems = [
   { title: "Home", url: "/", icon: Home },
@@ -8,6 +9,7 @@ const mobileNavItems = [
   { title: "Community", url: "/community", icon: Users },
   { title: "Growth", url: "/personal-growth", icon: TrendingUp },
   { title: "Insights", url: "/insights", icon: Sparkles },
+  { title: "Explore", url: "/explore-heal", icon: Compass },
 ];
 
 export function MobileNav() {
@@ -18,7 +20,7 @@ export function MobileNav() {
 
   return (
     <nav className="glass-nav border-t border-white/20 safe-area-bottom">
-      <div className="grid grid-cols-5 gap-1 p-3">
+      <div className="grid grid-cols-6 gap-1 p-3">
         {mobileNavItems.map((item) => (
           <NavLink
             key={item.title}
@@ -45,3 +47,4 @@ export function MobileNav() {
     </nav>
   );
 }
+
