@@ -1,498 +1,351 @@
 
 import { useState } from "react";
-import { 
-  Search, 
-  BookOpen, 
-  Headphones, 
-  Activity, 
-  Heart, 
-  Brain,
-  Sparkles,
-  Play,
-  Clock,
-  Star,
-  Bookmark,
-  Filter,
-  TrendingUp,
-  Award,
-  Users,
-  Calendar
-} from "lucide-react";
+import { Search, Filter, Play, BookOpen, Headphones, Heart, Star, Clock, Users, Compass, Sparkles } from "lucide-react";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
 
-const meditationLibrary = [
+const meditations = [
   {
     id: 1,
-    title: "Morning Anxiety Relief",
+    title: "Morning Mindfulness",
+    description: "Start your day with clarity and intention",
     duration: "10 min",
-    category: "Anxiety",
+    category: "Mindfulness",
     difficulty: "Beginner",
     rating: 4.8,
-    plays: 1234,
-    description: "Start your day with calm and confidence through guided breathing exercises.",
-    instructor: "Dr. Sarah Chen",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop"
+    plays: 15420
   },
   {
     id: 2,
-    title: "Deep Sleep Journey",
-    duration: "25 min",
-    category: "Sleep",
-    difficulty: "All Levels",
-    rating: 4.9,
-    plays: 2156,
-    description: "Drift into peaceful sleep with this gentle, progressive relaxation session.",
-    instructor: "Michael Rivers",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop"
-  },
-  {
-    id: 3,
-    title: "Focus & Concentration",
+    title: "Anxiety Relief",
+    description: "Calm your mind and reduce anxiety",
     duration: "15 min",
-    category: "Focus",
+    category: "Anxiety",
     difficulty: "Intermediate",
-    rating: 4.7,
-    plays: 987,
-    description: "Enhance your mental clarity and concentration with mindful attention practices.",
-    instructor: "Emma Martinez",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=200&fit=crop"
-  }
-];
-
-const healingActivities = [
-  {
-    id: 1,
-    title: "Gratitude Journal",
-    type: "Writing",
-    duration: "5-10 min",
-    difficulty: "Easy",
-    description: "Daily practice of writing three things you're grateful for.",
-    benefits: ["Improved mood", "Better sleep", "Reduced stress"],
-    completions: 456
-  },
-  {
-    id: 2,
-    title: "4-7-8 Breathing Exercise",
-    type: "Breathing",
-    duration: "3-5 min",
-    difficulty: "Easy",
-    description: "A simple breathing technique to reduce anxiety and promote relaxation.",
-    benefits: ["Instant calm", "Better focus", "Sleep improvement"],
-    completions: 789
+    rating: 4.9,
+    plays: 23150
   },
   {
     id: 3,
-    title: "Body Scan Meditation",
-    type: "Mindfulness",
+    title: "Sleep Stories",
+    description: "Peaceful stories to help you drift off",
     duration: "20 min",
-    difficulty: "Intermediate",
-    description: "Progressive relaxation technique focusing on different parts of your body.",
-    benefits: ["Body awareness", "Tension release", "Deep relaxation"],
-    completions: 234
+    category: "Sleep",
+    difficulty: "Beginner",
+    rating: 4.7,
+    plays: 18760
   }
 ];
 
-const wellnessArticles = [
+const activities = [
   {
     id: 1,
-    title: "Understanding Anxiety: A Complete Guide",
-    author: "Dr. Lisa Thompson",
+    title: "Gratitude Journaling",
+    description: "Reflect on positive moments in your day",
+    time: "5-10 min",
+    category: "Reflection",
+    benefits: ["Improved mood", "Better sleep", "Increased positivity"]
+  },
+  {
+    id: 2,
+    title: "Breathing Exercises",
+    description: "Simple techniques to manage stress and anxiety",
+    time: "3-5 min",
+    category: "Stress Relief",
+    benefits: ["Reduced anxiety", "Better focus", "Calm mind"]
+  },
+  {
+    id: 3,
+    title: "Progressive Muscle Relaxation",
+    description: "Release physical tension throughout your body",
+    time: "15-20 min",
+    category: "Relaxation",
+    benefits: ["Muscle tension relief", "Improved sleep", "Stress reduction"]
+  }
+];
+
+const articles = [
+  {
+    id: 1,
+    title: "Understanding Anxiety: A Comprehensive Guide",
+    author: "Dr. Sarah Chen",
     readTime: "8 min read",
     category: "Mental Health",
-    publishedDate: "2 days ago",
-    excerpt: "Learn about the different types of anxiety, their symptoms, and evidence-based treatment approaches.",
-    views: 1845,
-    rating: 4.9
+    excerpt: "Learn about anxiety symptoms, causes, and effective coping strategies...",
+    publishDate: "2 days ago"
   },
   {
     id: 2,
-    title: "Building Healthy Sleep Habits",
-    author: "Sleep Specialist Team",
+    title: "Building Resilience in Daily Life",
+    author: "Dr. Michael Rodriguez",
     readTime: "6 min read",
-    category: "Sleep Wellness",
-    publishedDate: "5 days ago",
-    excerpt: "Discover practical tips and strategies for improving your sleep quality and establishing a healthy bedtime routine.",
-    views: 1234,
-    rating: 4.7
+    category: "Personal Growth",
+    excerpt: "Discover practical ways to build emotional resilience and bounce back...",
+    publishDate: "1 week ago"
   },
   {
     id: 3,
-    title: "The Science of Mindfulness",
-    author: "Dr. James Wilson",
-    readTime: "12 min read",
+    title: "The Science of Meditation",
+    author: "Dr. Emma Thompson",
+    readTime: "10 min read",
     category: "Mindfulness",
-    publishedDate: "1 week ago",
-    excerpt: "Explore the research behind mindfulness practices and their impact on mental health and well-being.",
-    views: 967,
-    rating: 4.8
+    excerpt: "Explore the neuroscience behind meditation and its benefits...",
+    publishDate: "3 days ago"
   }
 ];
 
-const wellnessChallenges = [
+const challenges = [
   {
     id: 1,
     title: "7-Day Mindfulness Challenge",
+    description: "Build a daily mindfulness practice",
     duration: "7 days",
-    participants: 2340,
-    description: "Build a daily mindfulness practice with guided exercises and community support.",
-    progress: 65,
-    status: "In Progress",
-    dailyTime: "10-15 min"
+    participants: 2847,
+    difficulty: "Beginner",
+    reward: "Mindfulness Badge"
   },
   {
     id: 2,
     title: "30-Day Gratitude Journey",
+    description: "Cultivate gratitude and positive thinking",
     duration: "30 days",
-    participants: 1876,
-    description: "Transform your mindset through daily gratitude practices and reflection.",
-    progress: 0,
-    status: "Available",
-    dailyTime: "5-10 min"
+    participants: 1523,
+    difficulty: "Intermediate",
+    reward: "Gratitude Master Badge"
   },
   {
     id: 3,
     title: "Sleep Better Challenge",
+    description: "Improve your sleep quality and habits",
     duration: "14 days",
-    participants: 1543,
-    description: "Improve your sleep quality with evidence-based techniques and habits.",
-    progress: 100,
-    status: "Completed",
-    dailyTime: "Various"
+    participants: 3421,
+    difficulty: "Beginner",
+    reward: "Sleep Champion Badge"
   }
 ];
 
 export default function ExploreHeal() {
-  const [activeTab, setActiveTab] = useState("meditations");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   return (
-    <div className="min-h-screen p-4 md:p-6 lg:p-8">
-      {/* Header */}
-      <div className="mb-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-          <div>
-            <h1 className="text-4xl font-bold heading-gradient mb-2">
-              Explore & Heal
-            </h1>
-            <p className="text-muted-foreground text-lg">
-              Discover resources, activities, and tools for your wellness journey
-            </p>
+    <div className="min-h-screen wellness-gradient">
+      <div className="container mx-auto px-4 py-8 space-y-8">
+        {/* Header */}
+        <LiquidGlass variant="card" floating bubbles className="text-center p-8">
+          <div className="w-16 h-16 bg-crimson-wine rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+            <Compass className="w-8 h-8 text-off-white" />
           </div>
-          <div className="flex gap-3 mt-4 md:mt-0">
-            <Button className="btn-primary-modern">
-              <Bookmark className="w-4 h-4 mr-2" />
-              My Saved
-            </Button>
+          <h1 className="text-4xl font-bold heading-gradient mb-4">Explore & Heal</h1>
+          <p className="text-lg text-warm-gray max-w-2xl mx-auto">
+            Discover guided meditations, healing activities, educational articles, and wellness challenges to support your journey.
+          </p>
+        </LiquidGlass>
+
+        {/* Search and Filters */}
+        <LiquidGlass variant="crystal" className="p-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-3 w-4 h-4 text-warm-gray" />
+              <Input
+                placeholder="Search meditations, activities, articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 glass-input"
+              />
+            </div>
             <Button variant="outline" className="btn-secondary-modern">
-              <TrendingUp className="w-4 h-4 mr-2" />
-              Trending
+              <Filter className="w-4 h-4 mr-2" />
+              Filters
             </Button>
           </div>
-        </div>
+        </LiquidGlass>
 
-        {/* Search & Filter */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              placeholder="Search meditations, articles, activities..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 glass-input"
-            />
-          </div>
-          <Button variant="outline" className="btn-secondary-modern">
-            <Filter className="w-4 h-4 mr-2" />
-            Filter
-          </Button>
-        </div>
-      </div>
+        <Tabs defaultValue="meditations" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4 bg-muted-blush">
+            <TabsTrigger value="meditations" className="tab-trigger-primary">Meditations</TabsTrigger>
+            <TabsTrigger value="activities" className="tab-trigger-warm">Activities</TabsTrigger>
+            <TabsTrigger value="articles" className="tab-trigger-taupe">Articles</TabsTrigger>
+            <TabsTrigger value="challenges" className="tab-trigger-primary">Challenges</TabsTrigger>
+          </TabsList>
 
-      {/* Main Content */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 glass-nav mb-8">
-          <TabsTrigger value="meditations" className="tab-modern">
-            <Headphones className="w-4 h-4 mr-2" />
-            Meditations
-          </TabsTrigger>
-          <TabsTrigger value="activities" className="tab-modern">
-            <Activity className="w-4 h-4 mr-2" />
-            Activities
-          </TabsTrigger>
-          <TabsTrigger value="articles" className="tab-modern">
-            <BookOpen className="w-4 h-4 mr-2" />
-            Articles
-          </TabsTrigger>
-          <TabsTrigger value="challenges" className="tab-modern">
-            <Award className="w-4 h-4 mr-2" />
-            Challenges
-          </TabsTrigger>
-        </TabsList>
-
-        {/* Meditations Tab */}
-        <TabsContent value="meditations" className="animate-fade-in">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {meditationLibrary.map((meditation) => (
-              <Card key={meditation.id} className="glass-card hover-scale soft-shadow">
-                <div className="relative">
-                  <div className="h-40 rounded-t-xl flex items-center justify-center relative overflow-hidden" 
-                       style={{
-                         background: `linear-gradient(135deg, 
-                           hsl(var(--classic-red-500)) 0%, 
-                           hsl(var(--deep-burgundy-500)) 50%,
-                           hsl(var(--muted-purple-500)) 100%)`
-                       }}>
-                    <div className="absolute inset-0 bg-black/20"></div>
-                    <Button size="lg" className="bg-white/20 hover:bg-white/30 text-white border-white/30 rounded-full w-16 h-16 z-10">
-                      <Play className="w-6 h-6 ml-1" />
-                    </Button>
-                    <Badge className="absolute top-3 right-3 bg-white/20 text-white border-white/30">
+          <TabsContent value="meditations" className="space-y-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {meditations.map((meditation) => (
+                <LiquidGlass 
+                  key={meditation.id} 
+                  variant="card" 
+                  interactive 
+                  floating 
+                  className="p-6 hover-scale"
+                >
+                  <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                    <Headphones className="w-6 h-6 text-crimson-wine" />
+                  </div>
+                  <h3 className="text-lg font-bold text-deep-charcoal mb-2">{meditation.title}</h3>
+                  <p className="text-warm-gray mb-4">{meditation.description}</p>
+                  
+                  <div className="flex items-center gap-2 mb-4">
+                    <Badge variant="outline" className="bg-muted-blush text-deep-charcoal">
                       {meditation.category}
                     </Badge>
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-bold text-lg text-deep-navy-500">{meditation.title}</h3>
-                    <Badge variant="outline" className="text-xs border-deep-burgundy-500 text-deep-burgundy-500">
+                    <Badge variant="secondary" className="bg-emerald-splash-100 text-emerald-splash-700">
                       {meditation.difficulty}
                     </Badge>
                   </div>
-                  
-                  <p className="text-sm text-muted-foreground mb-3">
-                    by {meditation.instructor}
-                  </p>
-                  
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                    {meditation.description}
-                  </p>
-                  
-                  <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
+
+                  <div className="flex items-center justify-between text-sm text-warm-gray mb-4">
                     <div className="flex items-center gap-1">
                       <Clock className="w-4 h-4" />
-                      {meditation.duration}
+                      <span>{meditation.duration}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 fill-bright-orange-500 text-bright-orange-500" />
-                      {meditation.rating}
+                      <Star className="w-4 h-4 text-yellow-500" />
+                      <span>{meditation.rating}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Play className="w-4 h-4" />
-                      {meditation.plays}
+                      <span>{meditation.plays.toLocaleString()}</span>
                     </div>
                   </div>
 
-                  <Button className="btn-primary-modern w-full">
+                  <Button className="w-full btn-primary-modern">
                     <Play className="w-4 h-4 mr-2" />
-                    Start Session
+                    Start Meditation
                   </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
+                </LiquidGlass>
+              ))}
+            </div>
+          </TabsContent>
 
-        {/* Activities Tab */}
-        <TabsContent value="activities" className="animate-fade-in">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {healingActivities.map((activity) => (
-              <Card key={activity.id} className="glass-card hover-scale">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                         style={{
-                           background: `linear-gradient(135deg, 
-                             hsl(var(--bright-orange-500)) 0%, 
-                             hsl(var(--bright-orange-600)) 100%)`
-                         }}>
-                      <Activity className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <Badge variant="outline" className="text-xs mb-1 border-deep-burgundy-500 text-deep-burgundy-500">
-                        {activity.type}
-                      </Badge>
-                      <p className="text-sm text-muted-foreground">{activity.difficulty}</p>
-                    </div>
-                  </div>
-                  
-                  <h3 className="font-bold text-lg mb-2 text-deep-navy-500">{activity.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                    {activity.description}
-                  </p>
-                  
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-sm mb-2 text-deep-navy-500">Benefits:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {activity.benefits.map((benefit, index) => (
-                        <Badge key={index} className="text-xs bg-soft-pink-100 text-deep-burgundy-600 border-soft-pink-500">
-                          {benefit}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      {activity.duration}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Users className="w-4 h-4" />
-                      {activity.completions} completed
-                    </div>
-                  </div>
-
-                  <Button className="btn-accent-modern w-full">
-                    <Sparkles className="w-4 h-4 mr-2" />
-                    Start Activity
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-
-        {/* Articles Tab */}
-        <TabsContent value="articles" className="animate-fade-in">
-          <div className="space-y-6">
-            {wellnessArticles.map((article) => (
-              <Card key={article.id} className="glass-card hover-scale">
-                <CardContent className="p-6">
-                  <div className="flex flex-col md:flex-row gap-6">
-                    <div className="w-full md:w-32 h-32 rounded-xl flex items-center justify-center"
-                         style={{
-                           background: `linear-gradient(135deg, 
-                             hsl(var(--muted-purple-500)) 0%, 
-                             hsl(var(--deep-burgundy-500)) 100%)`
-                         }}>
-                      <BookOpen className="w-8 h-8 text-white" />
-                    </div>
-                    
+          <TabsContent value="activities" className="space-y-6">
+            <div className="grid gap-6">
+              {activities.map((activity) => (
+                <LiquidGlass 
+                  key={activity.id} 
+                  variant="crystal" 
+                  interactive 
+                  liquidBorder 
+                  className="p-6"
+                >
+                  <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-10 h-10 bg-soft-taupe rounded-xl flex items-center justify-center">
+                          <Heart className="w-5 h-5 text-crimson-wine" />
+                        </div>
                         <div>
-                          <Badge variant="outline" className="text-xs mb-2 border-muted-purple-500 text-muted-purple-600">
-                            {article.category}
-                          </Badge>
-                          <h3 className="font-bold text-xl mb-1 hover:text-primary cursor-pointer text-deep-navy-500">
-                            {article.title}
-                          </h3>
-                          <p className="text-sm text-muted-foreground">
-                            by {article.author} • {article.publishedDate}
-                          </p>
-                        </div>
-                        <Button variant="ghost" size="sm" className="hover:bg-light-peach-100">
-                          <Bookmark className="w-4 h-4" />
-                        </Button>
-                      </div>
-                      
-                      <p className="text-muted-foreground mb-4 leading-relaxed">
-                        {article.excerpt}
-                      </p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-1">
+                          <h3 className="text-xl font-bold text-deep-charcoal">{activity.title}</h3>
+                          <div className="flex items-center gap-2 text-sm text-warm-gray">
                             <Clock className="w-4 h-4" />
-                            {article.readTime}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 fill-bright-orange-500 text-bright-orange-500" />
-                            {article.rating}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Users className="w-4 h-4" />
-                            {article.views} views
+                            <span>{activity.time}</span>
+                            <Badge variant="outline" className="bg-muted-blush text-deep-charcoal">
+                              {activity.category}
+                            </Badge>
                           </div>
                         </div>
-                        <Button className="btn-primary-modern">
-                          Read Article
-                        </Button>
+                      </div>
+                      <p className="text-warm-gray mb-4">{activity.description}</p>
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium text-deep-charcoal">Benefits:</p>
+                        <div className="flex flex-wrap gap-2">
+                          {activity.benefits.map((benefit, index) => (
+                            <Badge key={index} variant="secondary" className="bg-emerald-splash-100 text-emerald-splash-700">
+                              {benefit}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
                     </div>
+                    <Button className="btn-primary-modern ml-4">Start Activity</Button>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
+                </LiquidGlass>
+              ))}
+            </div>
+          </TabsContent>
 
-        {/* Challenges Tab */}
-        <TabsContent value="challenges" className="animate-fade-in">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {wellnessChallenges.map((challenge) => (
-              <Card key={challenge.id} className="glass-card hover-scale">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                         style={{
-                           background: `linear-gradient(135deg, 
-                             hsl(var(--warm-brown-500)) 0%, 
-                             hsl(var(--deep-burgundy-500)) 100%)`
-                         }}>
-                      <Award className="w-6 h-6 text-white" />
-                    </div>
-                    <Badge 
-                      className={`text-xs ${
-                        challenge.status === 'Completed' 
-                          ? 'bg-classic-red-100 text-classic-red-600 border-classic-red-500' 
-                          : challenge.status === 'In Progress' 
-                          ? 'bg-bright-orange-100 text-bright-orange-600 border-bright-orange-500' 
-                          : 'bg-light-peach-100 text-deep-burgundy-600 border-light-peach-500'
-                      }`}
-                    >
-                      {challenge.status}
-                    </Badge>
+          <TabsContent value="articles" className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              {articles.map((article) => (
+                <LiquidGlass 
+                  key={article.id} 
+                  variant="card" 
+                  floating 
+                  bubbles 
+                  className="p-6 hover-scale"
+                >
+                  <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                    <BookOpen className="w-6 h-6 text-crimson-wine" />
                   </div>
-                  
-                  <h3 className="font-bold text-lg mb-2 text-deep-navy-500">{challenge.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                    {challenge.description}
-                  </p>
-                  
-                  {challenge.status === 'In Progress' && (
-                    <div className="mb-4">
-                      <div className="flex justify-between text-sm mb-2">
-                        <span className="text-deep-navy-500">Progress</span>
-                        <span className="text-classic-red-600">{challenge.progress}%</span>
-                      </div>
-                      <Progress value={challenge.progress} className="h-2 progress-modern" />
-                    </div>
-                  )}
-                  
-                  <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {challenge.duration}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      {challenge.dailyTime}
-                    </div>
-                    <div className="flex items-center gap-2 col-span-2">
-                      <Users className="w-4 h-4" />
-                      {challenge.participants} participants
-                    </div>
+                  <Badge variant="outline" className="bg-muted-blush text-deep-charcoal mb-3">
+                    {article.category}
+                  </Badge>
+                  <h3 className="text-lg font-bold text-deep-charcoal mb-2">{article.title}</h3>
+                  <p className="text-warm-gray mb-4">{article.excerpt}</p>
+                  <div className="flex items-center justify-between text-sm text-warm-gray mb-4">
+                    <span>by {article.author}</span>
+                    <span>{article.readTime}</span>
+                    <span>{article.publishDate}</span>
                   </div>
-
-                  <Button 
-                    className={challenge.status === 'Completed' ? "btn-secondary-modern w-full" : "btn-primary-modern w-full"}
-                    variant={challenge.status === 'Completed' ? 'outline' : 'default'}
-                  >
-                    {challenge.status === 'Completed' ? 'View Results' : 
-                     challenge.status === 'In Progress' ? 'Continue' : 'Start Challenge'}
+                  <Button variant="outline" className="w-full btn-secondary-modern">
+                    Read Article
                   </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+                </LiquidGlass>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="challenges" className="space-y-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {challenges.map((challenge) => (
+                <LiquidGlass 
+                  key={challenge.id} 
+                  variant="card" 
+                  interactive 
+                  floating 
+                  liquidBorder 
+                  className="p-6"
+                >
+                  <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                    <Sparkles className="w-6 h-6 text-crimson-wine" />
+                  </div>
+                  <h3 className="text-lg font-bold text-deep-charcoal mb-2">{challenge.title}</h3>
+                  <p className="text-warm-gray mb-4">{challenge.description}</p>
+                  
+                  <div className="space-y-2 mb-4">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-warm-gray">Duration:</span>
+                      <span className="font-medium text-deep-charcoal">{challenge.duration}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-warm-gray">Participants:</span>
+                      <span className="font-medium text-deep-charcoal">{challenge.participants.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-warm-gray">Difficulty:</span>
+                      <Badge variant="secondary" className="bg-muted-blush text-deep-charcoal">
+                        {challenge.difficulty}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-emerald-splash-50 rounded-xl mb-4">
+                    <div className="flex items-center gap-2 text-sm text-emerald-splash-700">
+                      <Star className="w-4 h-4" />
+                      <span>Reward: {challenge.reward}</span>
+                    </div>
+                  </div>
+
+                  <Button className="w-full btn-primary-modern">Join Challenge</Button>
+                </LiquidGlass>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }

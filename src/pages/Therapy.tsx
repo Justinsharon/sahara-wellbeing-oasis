@@ -1,284 +1,198 @@
-import { useState } from "react";
-import { Search, Filter, Star, Clock, DollarSign, Video, Phone, MessageSquare, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Link } from "react-router-dom";
-import { Therapist } from "@/types";
 
-const mockTherapists: Therapist[] = [
+import { useState } from "react";
+import { Heart, Brain, MessageCircle, Calendar, Clock, Star, User, Phone, Video, ChevronRight } from "lucide-react";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+const therapists = [
   {
-    id: "1",
-    name: "Dr. Sarah Johnson",
-    image: "/placeholder.svg",
-    specializations: ["Anxiety", "Depression", "PTSD"],
-    languages: ["English", "Spanish"],
-    session_types: ["video", "audio", "chat"],
-    description: "Licensed clinical psychologist with 15 years of experience specializing in trauma-informed care and cognitive behavioral therapy.",
+    id: 1,
+    name: "Dr. Sarah Chen",
+    specialty: "Anxiety & Depression",
     rating: 4.9,
-    experience_years: 15,
-    fee_per_session: 12000,
-    availability: ["Monday", "Wednesday", "Friday"],
-    contact_info: {
-      email: "dr.johnson@sahara.com",
-      phone: "+1-555-0123"
-    }
+    experience: "8 years",
+    image: "/placeholder.svg",
+    nextAvailable: "Today 2:00 PM",
+    price: "$120/session"
   },
   {
-    id: "2",
-    name: "Dr. Michael Chen",
-    image: "/placeholder.svg",
-    specializations: ["Relationship Issues", "Family Therapy", "Stress Management"],
-    languages: ["English", "Mandarin"],
-    session_types: ["video", "audio"],
-    description: "Marriage and family therapist helping couples and families build stronger relationships through evidence-based approaches.",
+    id: 2,
+    name: "Dr. Michael Rodriguez",
+    specialty: "Relationship Counseling",
     rating: 4.8,
-    experience_years: 12,
-    fee_per_session: 9600,
-    availability: ["Tuesday", "Thursday", "Saturday"],
-    contact_info: {
-      email: "dr.chen@sahara.com"
-    }
+    experience: "12 years",
+    image: "/placeholder.svg",
+    nextAvailable: "Tomorrow 10:00 AM",
+    price: "$150/session"
   },
   {
-    id: "3",
-    name: "Dr. Emily Rodriguez",
-    image: "/placeholder.svg",
-    specializations: ["Teen Counseling", "ADHD", "Learning Disabilities"],
-    languages: ["English", "Spanish"],
-    session_types: ["video", "chat"],
-    description: "Child and adolescent psychologist dedicated to helping young people navigate challenges and build resilience.",
+    id: 3,
+    name: "Dr. Emma Thompson",
+    specialty: "Trauma & PTSD",
     rating: 4.9,
-    experience_years: 8,
-    fee_per_session: 10400,
-    availability: ["Monday", "Tuesday", "Thursday"],
-    contact_info: {
-      email: "dr.rodriguez@sahara.com",
-      phone: "+1-555-0456"
-    }
+    experience: "15 years",
+    image: "/placeholder.svg",
+    nextAvailable: "Today 4:30 PM",
+    price: "$180/session"
+  }
+];
+
+const sessionTypes = [
+  {
+    type: "Individual Therapy",
+    description: "One-on-one sessions with a licensed therapist",
+    duration: "50 minutes",
+    icon: User,
+    price: "From $120"
+  },
+  {
+    type: "Couples Therapy",
+    description: "Relationship counseling for couples",
+    duration: "60 minutes",
+    icon: Heart,
+    price: "From $180"
+  },
+  {
+    type: "Group Therapy",
+    description: "Supportive group sessions with peers",
+    duration: "90 minutes",
+    icon: MessageCircle,
+    price: "From $60"
   }
 ];
 
 export default function Therapy() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSpecialization, setSelectedSpecialization] = useState("all");
-  const [selectedLanguage, setSelectedLanguage] = useState("all");
-  const [filteredTherapists, setFilteredTherapists] = useState(mockTherapists);
-
-  const specializations = Array.from(
-    new Set(mockTherapists.flatMap(t => t.specializations))
-  );
-
-  const languages = Array.from(
-    new Set(mockTherapists.flatMap(t => t.languages))
-  );
-
-  const handleFilter = () => {
-    let filtered = mockTherapists;
-
-    if (searchTerm) {
-      filtered = filtered.filter(therapist =>
-        therapist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        therapist.specializations.some(spec => 
-          spec.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
-    }
-
-    if (selectedSpecialization && selectedSpecialization !== "all") {
-      filtered = filtered.filter(therapist =>
-        therapist.specializations.includes(selectedSpecialization)
-      );
-    }
-
-    if (selectedLanguage && selectedLanguage !== "all") {
-      filtered = filtered.filter(therapist =>
-        therapist.languages.includes(selectedLanguage)
-      );
-    }
-
-    setFilteredTherapists(filtered);
-  };
-
-  const getSessionTypeIcon = (type: string) => {
-    switch (type) {
-      case "video":
-        return <Video className="w-4 h-4" />;
-      case "audio":
-        return <Phone className="w-4 h-4" />;
-      case "chat":
-        return <MessageSquare className="w-4 h-4" />;
-      default:
-        return <Video className="w-4 h-4" />;
-    }
-  };
+  const [selectedTherapist, setSelectedTherapist] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen p-4 md:p-6 lg:p-8 pb-20 md:pb-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen wellness-gradient">
+      <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            Find Your Therapist
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl">
-            Connect with licensed mental health professionals who understand your needs.
+        <LiquidGlass variant="card" floating bubbles className="text-center p-8">
+          <div className="w-16 h-16 bg-crimson-wine rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+            <Brain className="w-8 h-8 text-off-white" />
+          </div>
+          <h1 className="text-4xl font-bold heading-gradient mb-4">Professional Therapy</h1>
+          <p className="text-lg text-warm-gray max-w-2xl mx-auto">
+            Connect with licensed therapists who understand your journey and provide personalized care.
           </p>
-        </div>
+        </LiquidGlass>
 
-        {/* Search and Filters */}
-        <Card className="mb-8">
-          <CardContent className="pt-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="md:col-span-2">
-                <div className="relative">
-                  <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search therapists or specializations..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
+        {/* Session Types */}
+        <LiquidGlass variant="crystal" liquidBorder className="p-6">
+          <h2 className="text-2xl font-bold text-crimson-wine mb-6">Choose Your Session Type</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {sessionTypes.map((session, index) => (
+              <LiquidGlass 
+                key={index} 
+                variant="card" 
+                interactive 
+                floating 
+                className="p-6 hover-scale transition-all duration-300"
+              >
+                <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                  <session.icon className="w-6 h-6 text-crimson-wine" />
                 </div>
-              </div>
-              <Select value={selectedSpecialization} onValueChange={setSelectedSpecialization}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Specialization" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Specializations</SelectItem>
-                  {specializations.map(spec => (
-                    <SelectItem key={spec} value={spec}>{spec}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Language" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Languages</SelectItem>
-                  {languages.map(lang => (
-                    <SelectItem key={lang} value={lang}>{lang}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="mt-4">
-              <Button onClick={handleFilter} className="w-full md:w-auto">
-                <Filter className="w-4 h-4 mr-2" />
-                Apply Filters
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+                <h3 className="text-xl font-bold text-deep-charcoal mb-2">{session.type}</h3>
+                <p className="text-warm-gray mb-4">{session.description}</p>
+                <div className="flex justify-between items-center">
+                  <Badge variant="secondary" className="bg-muted-blush text-deep-charcoal">
+                    {session.duration}
+                  </Badge>
+                  <span className="font-bold text-crimson-wine">{session.price}</span>
+                </div>
+              </LiquidGlass>
+            ))}
+          </div>
+        </LiquidGlass>
 
-        {/* Therapist Listings */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filteredTherapists.map((therapist) => (
-            <Card key={therapist.id} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-start gap-4">
-                  <img
-                    src={therapist.image}
-                    alt={therapist.name}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">{therapist.name}</CardTitle>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">{therapist.rating}</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-muted-foreground">
-                        <Clock className="w-4 h-4" />
-                        <span className="text-sm">{therapist.experience_years} years</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-muted-foreground">
-                        <DollarSign className="w-4 h-4" />
-                        <span className="text-sm">₹{therapist.fee_per_session.toLocaleString('en-IN')}/session</span>
-                      </div>
+        {/* Therapist Directory */}
+        <LiquidGlass variant="card" bubbles className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-crimson-wine">Available Therapists</h2>
+            <Button className="btn-secondary-modern">
+              <Calendar className="w-4 h-4 mr-2" />
+              View Schedule
+            </Button>
+          </div>
+
+          <div className="space-y-4">
+            {therapists.map((therapist) => (
+              <LiquidGlass 
+                key={therapist.id} 
+                variant="crystal" 
+                interactive 
+                floating 
+                liquidBorder 
+                className={`p-6 cursor-pointer transition-all duration-300 ${
+                  selectedTherapist === therapist.id ? 'ring-2 ring-crimson-wine' : ''
+                }`}
+                onClick={() => setSelectedTherapist(therapist.id)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 bg-soft-taupe rounded-2xl flex items-center justify-center shadow-lg">
+                      <User className="w-8 h-8 text-crimson-wine" />
                     </div>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="mb-4">
-                  {therapist.description}
-                </CardDescription>
-                
-                <div className="space-y-3">
-                  <div>
-                    <h4 className="text-sm font-medium mb-2">Specializations</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {therapist.specializations.map((spec, index) => (
-                        <Badge key={index} variant="secondary">{spec}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-sm font-medium mb-2">Languages</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {therapist.languages.map((lang, index) => (
-                        <Badge key={index} variant="outline">{lang}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-sm font-medium mb-2">Session Types</h4>
-                    <div className="flex gap-2">
-                      {therapist.session_types.map((type, index) => (
-                        <div key={index} className="flex items-center gap-1 text-sm text-muted-foreground">
-                          {getSessionTypeIcon(type)}
-                          <span className="capitalize">{type}</span>
+                    <div>
+                      <h3 className="text-xl font-bold text-deep-charcoal">{therapist.name}</h3>
+                      <p className="text-warm-gray">{therapist.specialty}</p>
+                      <div className="flex items-center space-x-4 mt-2">
+                        <div className="flex items-center">
+                          <Star className="w-4 h-4 text-yellow-500 mr-1" />
+                          <span className="text-sm font-medium">{therapist.rating}</span>
                         </div>
-                      ))}
+                        <span className="text-sm text-warm-gray">{therapist.experience}</span>
+                      </div>
                     </div>
                   </div>
-                  
-                  <div>
-                    <h4 className="text-sm font-medium mb-2">Available Days</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {therapist.availability.map((day, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">{day}</Badge>
-                      ))}
+                  <div className="text-right">
+                    <p className="text-lg font-bold text-crimson-wine">{therapist.price}</p>
+                    <p className="text-sm text-warm-gray mb-2">{therapist.nextAvailable}</p>
+                    <div className="flex space-x-2">
+                      <Button size="sm" variant="outline" className="btn-secondary-modern">
+                        <Video className="w-4 h-4" />
+                      </Button>
+                      <Button size="sm" variant="outline" className="btn-secondary-modern">
+                        <Phone className="w-4 h-4" />
+                      </Button>
+                      <Button size="sm" className="btn-primary-modern">
+                        Book
+                      </Button>
                     </div>
                   </div>
                 </div>
-                
-                <div className="mt-6 flex gap-2">
-                  <Button asChild className="flex-1">
-                    <Link to={`/therapy/${therapist.id}`}>
-                      View Profile
-                    </Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link to={`/therapy/${therapist.id}/book`}>
-                      Book Session
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+              </LiquidGlass>
+            ))}
+          </div>
+        </LiquidGlass>
 
-        {filteredTherapists.length === 0 && (
-          <Card>
-            <CardContent className="pt-6 text-center">
-              <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-medium mb-2">No therapists found</h3>
-              <p className="text-muted-foreground">
-                Try adjusting your search criteria or clear filters to see all available therapists.
-              </p>
-            </CardContent>
-          </Card>
-        )}
+        {/* Quick Actions */}
+        <LiquidGlass variant="overlay" floating className="p-6">
+          <h2 className="text-2xl font-bold text-crimson-wine mb-6">Quick Actions</h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            <LiquidGlass variant="card" interactive className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-deep-charcoal">Emergency Support</h3>
+                  <p className="text-sm text-warm-gray">24/7 crisis intervention</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-crimson-wine" />
+              </div>
+            </LiquidGlass>
+            <LiquidGlass variant="card" interactive className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-deep-charcoal">Self-Help Resources</h3>
+                  <p className="text-sm text-warm-gray">Guided exercises and tools</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-crimson-wine" />
+              </div>
+            </LiquidGlass>
+          </div>
+        </LiquidGlass>
       </div>
     </div>
   );
