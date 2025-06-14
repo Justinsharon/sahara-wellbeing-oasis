@@ -64,10 +64,9 @@ export default function Index() {
       <section className="mb-12">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-crimson-wine">
-            <span className="heading-gradient text-3xl md:text-4xl lg:text-5xl">
+            <span className="heading-gradient text-3xl md:text-4xl lg:text-5xl mb-1 block">
               Welcome to Your
             </span>
-            <br />
             <span className="heading-gradient">
               Wellness Oasis
             </span>
