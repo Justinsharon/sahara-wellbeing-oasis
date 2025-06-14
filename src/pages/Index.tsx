@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Heart, Users, TrendingUp, Search, MessageCircle, BarChart3, Shield, Clock, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { LiquidGlassButton, LiquidGlassInput, LiquidGlassForm } from "@/components/ui/liquid-glass-form";
 import { useMockAuth } from "@/hooks/useMockAuth";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const featureCards = [
   {
@@ -60,6 +61,18 @@ const stats = [
 
 export default function Index() {
   const { user } = useMockAuth();
+  const [moodInput, setMoodInput] = useState("");
+
+  const handleWellnessSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!moodInput.trim()) {
+      toast.error("Please share how you're feeling");
+      return;
+    }
+    
+    toast.success(user ? `Thanks for checking in, ${user.full_name}!` : "Thanks for checking in!");
+    setMoodInput("");
+  };
 
   return (
     <div className="min-h-screen p-4 md:p-6 lg:p-8">
@@ -176,27 +189,32 @@ export default function Index() {
         </LiquidGlass>
       </section>
 
-      {/* Demo Liquid Glass Form */}
+      {/* Personalized Liquid Glass Form */}
       <section className="mb-12">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold mb-4 text-crimson-wine">Experience Liquid Glass Design</h2>
         </div>
         
         <LiquidGlassForm 
-          title="Quick Wellness Check-in" 
-          description="Try our liquid glass form elements"
+          title={user ? `Hi ${user.full_name}, Quick Wellness Check-in` : "Quick Wellness Check-in"}
+          description={user ? "How are you feeling today?" : "Try our liquid glass form elements"}
           className="max-w-sm"
+          onSubmit={handleWellnessSubmit}
         >
+          {!user && (
+            <LiquidGlassInput 
+              label="Your Name" 
+              placeholder="Enter your name"
+            />
+          )}
           <LiquidGlassInput 
-            label="Your Name" 
-            placeholder="Enter your name"
+            label={user ? "Share your current mood" : "How are you feeling today?"} 
+            placeholder={user ? "I'm feeling..." : "Share your mood"}
+            value={moodInput}
+            onChange={(e) => setMoodInput(e.target.value)}
           />
-          <LiquidGlassInput 
-            label="How are you feeling today?" 
-            placeholder="Share your mood"
-          />
-          <LiquidGlassButton className="w-full">
-            Submit Check-in
+          <LiquidGlassButton type="submit" className="w-full">
+            {user ? "Submit Check-in" : "Try Demo"}
           </LiquidGlassButton>
         </LiquidGlassForm>
       </section>
