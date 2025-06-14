@@ -41,6 +41,31 @@
   animation: liquid-flow 6s ease-in-out infinite;
 }
 
+/* Text-optimized Glass variant for maximum readability */
+.liquid-glass-text {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+  border: 1px solid rgba(154, 131, 124, 0.2);
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 40px rgba(80, 17, 34, 0.15),
+    0 8px 16px rgba(80, 17, 34, 0.1);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Disable overlay animations for text containers */
+.liquid-glass-text::before {
+  display: none !important;
+}
+
+/* Override any text styling within glass components */
+.liquid-glass-text * {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+
 .frosted-glass-overlay {
   background: rgba(197, 163, 152, 0.4);
   backdrop-filter: blur(40px) saturate(180%) brightness(110%);
@@ -279,6 +304,25 @@
   box-shadow: 
     0 12px 24px rgba(80, 17, 34, 0.2),
     inset 0 1px 0 rgba(243, 236, 232, 0.3);
+}
+
+/* Text readability overrides */
+.liquid-glass-card.text-container,
+.liquid-glass-text,
+.frosted-glass-overlay.text-container {
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+
+.liquid-glass-card.text-container::before,
+.liquid-glass-text::before,
+.frosted-glass-overlay.text-container::before {
+  display: none !important;
+}
+
+.text-high-contrast {
+  color: #000000 !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
 }
 
 /* Animations */

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import "./liquid-glass.css";
 
 export interface LiquidGlassProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "card" | "overlay" | "crystal" | "input" | "button";
+  variant?: "card" | "overlay" | "crystal" | "input" | "button" | "text";
   interactive?: boolean;
   floating?: boolean;
   bubbles?: boolean;
@@ -28,7 +28,8 @@ const LiquidGlass = React.forwardRef<HTMLDivElement, LiquidGlassProps>(
       overlay: "frosted-glass-overlay",
       crystal: "crystal-glass-element",
       input: "liquid-glass-input",
-      button: "liquid-glass-button"
+      button: "liquid-glass-button",
+      text: "liquid-glass-text"
     };
 
     return (

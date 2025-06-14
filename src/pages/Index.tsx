@@ -38,22 +38,25 @@ const Index = () => {
             </LiquidGlass>
           </div>
 
-          {/* Hero Content with Enhanced Liquid Glass */}
+          {/* Hero Content with Text-Optimized Glass */}
           <div className="space-y-8 animate-fade-in">
-            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black header-font">
+            {/* Title with maximum contrast background */}
+            <LiquidGlass 
+              variant="text" 
+              className="p-8 rounded-3xl shadow-2xl"
+            >
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black header-font text-high-contrast">
                 Welcome to Sahara
               </h1>
-            </div>
+            </LiquidGlass>
             
-            {/* Main Tagline Card - Enhanced Liquid Glass with Better Text Visibility */}
+            {/* Main Tagline Card - Text-Optimized Glass */}
             <LiquidGlass 
-              variant="card" 
+              variant="text" 
               interactive
-              liquidBorder
-              className="p-8 rounded-3xl transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 bg-white/70 backdrop-blur-md"
+              className="p-8 rounded-3xl transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 shadow-2xl"
             >
-              <p className="text-xl md:text-2xl text-black leading-relaxed font-semibold">
+              <p className="text-xl md:text-2xl text-black leading-relaxed font-bold text-high-contrast">
                 Your personal wellness companion is here to support your mental health journey
               </p>
             </LiquidGlass>
@@ -78,22 +81,19 @@ const Index = () => {
                     </Button>
                   </LiquidGlass>
                   
-                  <LiquidGlass 
-                    variant="crystal" 
-                    interactive 
-                    className="w-full max-w-sm mx-auto block"
-                  >
+                  {/* Sign In Button with solid white background for maximum contrast */}
+                  <div className="w-full max-w-sm mx-auto block bg-white rounded-2xl shadow-2xl border-2 border-crimson-wine/50">
                     <Button 
                       variant="outline" 
                       size="lg" 
                       asChild 
-                      className="w-full bg-white/90 backdrop-blur-sm hover:bg-white text-black border-2 border-crimson-wine/50 text-lg py-6 rounded-2xl shadow-lg transition-all duration-300 font-semibold"
+                      className="w-full bg-transparent hover:bg-gray-50 text-black border-none text-lg py-6 rounded-2xl transition-all duration-300 font-bold"
                     >
                       <Link to="/auth">
                         Sign In
                       </Link>
                     </Button>
-                  </LiquidGlass>
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -114,46 +114,42 @@ const Index = () => {
                     </Button>
                   </LiquidGlass>
                   
-                  <LiquidGlass 
-                    variant="crystal" 
-                    interactive 
-                    className="w-full max-w-sm mx-auto block"
-                  >
+                  {/* Track Mood Button with solid white background */}
+                  <div className="w-full max-w-sm mx-auto block bg-white rounded-2xl shadow-2xl border-2 border-crimson-wine/50">
                     <Button 
                       variant="outline" 
                       size="lg" 
                       asChild 
-                      className="w-full bg-white/90 backdrop-blur-sm hover:bg-white text-black border-2 border-crimson-wine/50 text-lg py-6 rounded-2xl shadow-lg transition-all duration-300 font-semibold"
+                      className="w-full bg-transparent hover:bg-gray-50 text-black border-none text-lg py-6 rounded-2xl transition-all duration-300 font-bold"
                     >
                       <Link to="/personal-growth/unified-mood-journal">
                         Track Your Mood
                       </Link>
                     </Button>
-                  </LiquidGlass>
+                  </div>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Trust indicators with enhanced liquid glass and better text visibility */}
+          {/* Trust indicators with text-optimized glass */}
           <div className="mt-16 pt-12 border-t border-white/30">
             <LiquidGlass 
-              variant="overlay" 
-              bubbles
-              className="p-8 rounded-3xl transform transition-all duration-300 hover:scale-[1.01] bg-white/60 backdrop-blur-md"
+              variant="text" 
+              className="p-8 rounded-3xl shadow-2xl"
             >
               <div className="flex flex-wrap items-center justify-center gap-8">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse"></div>
-                  <span className="text-sm font-bold text-black">Licensed Therapists</span>
+                  <span className="text-sm font-bold text-black text-high-contrast">Licensed Therapists</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                  <span className="text-sm font-bold text-black">24/7 Support</span>
+                  <span className="text-sm font-bold text-black text-high-contrast">24/7 Support</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '1s' }}></div>
-                  <span className="text-sm font-bold text-black">Privacy Protected</span>
+                  <span className="text-sm font-bold text-black text-high-contrast">Privacy Protected</span>
                 </div>
               </div>
             </LiquidGlass>
