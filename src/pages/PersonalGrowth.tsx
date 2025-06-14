@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -12,7 +13,7 @@ import {
   Zap,
   Activity
 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
@@ -80,7 +81,13 @@ export default function PersonalGrowth() {
 
         {/* Stats Overview */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8">
-          <div className="metric-card animate-scale-in" style={{ animationDelay: "0.1s" }}>
+          <LiquidGlass 
+            variant="crystal" 
+            floating 
+            bubbles 
+            className="p-4 animate-scale-in" 
+            style={{ animationDelay: "0.1s" }}
+          >
             <div className="flex items-center justify-between mb-3">
               <Calendar className="w-8 h-8 text-soft-blush-600" />
               <Activity className="w-5 h-5 text-crimson-wine-500" />
@@ -90,9 +97,15 @@ export default function PersonalGrowth() {
               <p className="text-2xl font-bold text-crimson-wine-600">{currentStreak}</p>
               <p className="text-xs text-soft-blush-600 font-medium">days</p>
             </div>
-          </div>
+          </LiquidGlass>
 
-          <div className="metric-card animate-scale-in" style={{ animationDelay: "0.2s" }}>
+          <LiquidGlass 
+            variant="crystal" 
+            floating 
+            bubbles 
+            className="p-4 animate-scale-in" 
+            style={{ animationDelay: "0.2s" }}
+          >
             <div className="flex items-center justify-between mb-3">
               <Target className="w-8 h-8 text-emerald-splash-500" />
               <Award className="w-5 h-5 text-deep-teal-500" />
@@ -102,9 +115,15 @@ export default function PersonalGrowth() {
               <p className="text-2xl font-bold text-crimson-wine-600">{goalsCompleted}/{totalGoals}</p>
               <p className="text-xs text-emerald-splash-600 font-medium">completed</p>
             </div>
-          </div>
+          </LiquidGlass>
 
-          <div className="metric-card animate-scale-in col-span-2 md:col-span-1" style={{ animationDelay: "0.3s" }}>
+          <LiquidGlass 
+            variant="crystal" 
+            floating 
+            bubbles 
+            className="p-4 animate-scale-in col-span-2 md:col-span-1" 
+            style={{ animationDelay: "0.3s" }}
+          >
             <div className="flex items-center justify-between mb-3">
               <Brain className="w-8 h-8 text-misty-rosewood-500" />
               <Zap className="w-5 h-5 text-crimson-wine-500" />
@@ -114,7 +133,7 @@ export default function PersonalGrowth() {
               <p className="text-2xl font-bold text-crimson-wine-600">85%</p>
               <p className="text-xs text-misty-rosewood-600 font-medium">this week</p>
             </div>
-          </div>
+          </LiquidGlass>
         </div>
 
         {/* Quick Actions */}
@@ -122,9 +141,13 @@ export default function PersonalGrowth() {
           <h2 className="text-2xl font-bold heading-gradient mb-6">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {quickActions.map((action, index) => (
-              <Card 
+              <LiquidGlass 
                 key={action.title} 
-                className="soft-shadow border-0 hover:scale-105 transition-all duration-300 cursor-pointer group animate-scale-in relative"
+                variant="card"
+                interactive
+                floating
+                bubbles
+                className="p-6 hover:scale-105 transition-all duration-300 cursor-pointer group animate-scale-in relative"
                 style={{ animationDelay: `${0.1 * (index + 1)}s` }}
               >
                 {action.isNew && (
@@ -132,8 +155,8 @@ export default function PersonalGrowth() {
                     NEW
                   </div>
                 )}
-                <Link to={action.href}>
-                  <CardHeader className="pb-4">
+                <Link to={action.href} className="block">
+                  <div className="pb-4">
                     <div className="flex items-center gap-4">
                       <div 
                         className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}
@@ -146,35 +169,35 @@ export default function PersonalGrowth() {
                         <action.icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <CardTitle className="text-lg heading-gradient group-hover:scale-105 transition-transform">
+                        <h3 className="text-lg font-bold heading-gradient group-hover:scale-105 transition-transform">
                           {action.title}
-                        </CardTitle>
+                        </h3>
                       </div>
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-misty-rosewood-500">
+                  </div>
+                  <div>
+                    <p className="text-misty-rosewood-500">
                       {action.description}
-                    </CardDescription>
-                  </CardContent>
+                    </p>
+                  </div>
                 </Link>
-              </Card>
+              </LiquidGlass>
             ))}
           </div>
         </div>
 
         {/* Weekly Goals Progress */}
-        <Card className="soft-shadow border-0 mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3 heading-gradient">
+        <LiquidGlass variant="card" floating bubbles className="p-6 mb-8">
+          <div className="mb-6">
+            <h3 className="flex items-center gap-3 text-xl font-bold heading-gradient mb-2">
               <Target className="w-6 h-6 text-emerald-splash-500" />
               This Week's Goals
-            </CardTitle>
-            <CardDescription className="text-misty-rosewood-500">
+            </h3>
+            <p className="text-misty-rosewood-500">
               Track your progress towards weekly wellness targets
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
+            </p>
+          </div>
+          <div className="space-y-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="font-medium text-crimson-wine-600">Daily Mood Check-ins</span>
@@ -198,20 +221,20 @@ export default function PersonalGrowth() {
               </div>
               <Progress value={86} className="h-3" />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </LiquidGlass>
 
         {/* Recent Activity */}
-        <Card className="soft-shadow border-0">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3 heading-gradient">
+        <LiquidGlass variant="card" floating bubbles className="p-6">
+          <div className="mb-6">
+            <h3 className="flex items-center gap-3 text-xl font-bold heading-gradient">
               <Activity className="w-6 h-6 text-deep-teal-500" />
               Recent Activity
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 rounded-2xl glass-card">
+            </h3>
+          </div>
+          <div className="space-y-4">
+            <LiquidGlass variant="crystal" interactive className="p-4">
+              <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-xl bg-emerald-splash-100 flex items-center justify-center">
                   <Heart className="w-5 h-5 text-emerald-splash-600" />
                 </div>
@@ -220,8 +243,10 @@ export default function PersonalGrowth() {
                   <p className="text-sm text-misty-rosewood-500">Today at 9:30 AM</p>
                 </div>
               </div>
-              
-              <div className="flex items-center gap-4 p-4 rounded-2xl glass-card">
+            </LiquidGlass>
+            
+            <LiquidGlass variant="crystal" interactive className="p-4">
+              <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-xl bg-deep-teal-100 flex items-center justify-center">
                   <Target className="w-5 h-5 text-deep-teal-600" />
                 </div>
@@ -230,8 +255,10 @@ export default function PersonalGrowth() {
                   <p className="text-sm text-misty-rosewood-500">Yesterday at 7:00 PM</p>
                 </div>
               </div>
-              
-              <div className="flex items-center gap-4 p-4 rounded-2xl glass-card">
+            </LiquidGlass>
+            
+            <LiquidGlass variant="crystal" interactive className="p-4">
+              <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-xl bg-soft-blush-100 flex items-center justify-center">
                   <Award className="w-5 h-5 text-soft-blush-600" />
                 </div>
@@ -240,9 +267,9 @@ export default function PersonalGrowth() {
                   <p className="text-sm text-misty-rosewood-500">2 days ago</p>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </LiquidGlass>
+          </div>
+        </LiquidGlass>
       </div>
     </div>
   );
