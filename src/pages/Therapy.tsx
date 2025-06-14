@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Search, Filter, Star, Clock, DollarSign, Video, Phone, MessageSquare, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,7 +19,7 @@ const mockTherapists: Therapist[] = [
     description: "Licensed clinical psychologist with 15 years of experience specializing in trauma-informed care and cognitive behavioral therapy.",
     rating: 4.9,
     experience_years: 15,
-    fee_per_session: 150,
+    fee_per_session: 12000,
     availability: ["Monday", "Wednesday", "Friday"],
     contact_info: {
       email: "dr.johnson@sahara.com",
@@ -37,7 +36,7 @@ const mockTherapists: Therapist[] = [
     description: "Marriage and family therapist helping couples and families build stronger relationships through evidence-based approaches.",
     rating: 4.8,
     experience_years: 12,
-    fee_per_session: 120,
+    fee_per_session: 9600,
     availability: ["Tuesday", "Thursday", "Saturday"],
     contact_info: {
       email: "dr.chen@sahara.com"
@@ -53,7 +52,7 @@ const mockTherapists: Therapist[] = [
     description: "Child and adolescent psychologist dedicated to helping young people navigate challenges and build resilience.",
     rating: 4.9,
     experience_years: 8,
-    fee_per_session: 130,
+    fee_per_session: 10400,
     availability: ["Monday", "Tuesday", "Thursday"],
     contact_info: {
       email: "dr.rodriguez@sahara.com",
@@ -200,7 +199,7 @@ export default function Therapy() {
                       </div>
                       <div className="flex items-center gap-1 text-muted-foreground">
                         <DollarSign className="w-4 h-4" />
-                        <span className="text-sm">${therapist.fee_per_session}/session</span>
+                        <span className="text-sm">₹{therapist.fee_per_session.toLocaleString('en-IN')}/session</span>
                       </div>
                     </div>
                   </div>
