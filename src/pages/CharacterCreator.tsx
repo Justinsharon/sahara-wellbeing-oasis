@@ -110,6 +110,7 @@ export default function CharacterCreator() {
               <div className="flex items-center justify-center">
                 <CharacterAvatar
                   character={{
+                    id: 'preview',
                     name: name || 'Your Companion',
                     appearance: {
                       skin_tone: skinTone,
@@ -119,12 +120,19 @@ export default function CharacterCreator() {
                       accessories: accessories,
                       outfit: outfit,
                     },
+                    personality: {
+                      traits: [],
+                      communication_style: 'friendly',
+                      mood_response_style: 'empathetic'
+                    },
                     relationship: {
                       bond_level: 1,
                       milestones_achieved: [],
                       daily_interactions: 0,
                       total_interactions: 0,
-                    }
+                    },
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
                   }}
                   size="xl"
                 />
