@@ -101,6 +101,7 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: hsl(var(--crimson-wine-500));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -115,31 +116,18 @@
 }
 
 @layer components {
-  /* Updated gradient system with Crimson Wine background */
+  /* Solid background classes - no gradients */
   .modern-gradient {
-    background: linear-gradient(135deg, 
-      hsl(var(--crimson-wine-500)) 0%, 
-      hsl(var(--crimson-wine-600)) 25%, 
-      hsl(var(--misty-rosewood-600)) 50%, 
-      hsl(var(--emerald-splash-600)) 75%,
-      hsl(var(--deep-teal-600)) 100%);
+    background-color: hsl(var(--crimson-wine-500));
   }
 
   .wellness-gradient {
-    background: linear-gradient(135deg, 
-      hsl(var(--crimson-wine-500)) 0%, 
-      hsl(var(--crimson-wine-600)) 25%, 
-      hsl(var(--misty-rosewood-500)) 50%, 
-      hsl(var(--emerald-splash-600)) 75%,
-      hsl(var(--deep-teal-600)) 100%);
+    background-color: hsl(var(--crimson-wine-500));
   }
 
-  /* Advanced glassmorphism with darker crimson palette */
+  /* Glass morphism with solid backgrounds */
   .glass-card {
-    background: linear-gradient(135deg, 
-      rgba(80, 17, 34, 0.4) 0%, 
-      rgba(87, 65, 68, 0.3) 50%,
-      rgba(80, 17, 34, 0.2) 100%);
+    background-color: rgba(80, 17, 34, 0.4);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid rgba(191, 165, 168, 0.3);
@@ -150,10 +138,7 @@
   }
 
   .glass-nav {
-    background: linear-gradient(135deg, 
-      rgba(80, 17, 34, 0.5) 0%, 
-      rgba(87, 65, 68, 0.4) 50%,
-      rgba(80, 17, 34, 0.3) 100%);
+    background-color: rgba(80, 17, 34, 0.5);
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
     border: 1px solid rgba(191, 165, 168, 0.35);
@@ -162,11 +147,9 @@
       0 4px 16px rgba(80, 17, 34, 0.2);
   }
 
-  /* Neomorphic elements with darker colors */
+  /* Neomorphic elements with solid colors */
   .neo-card {
-    background: linear-gradient(145deg, 
-      hsl(var(--crimson-wine-500)), 
-      hsl(var(--crimson-wine-600)));
+    background-color: hsl(var(--crimson-wine-500));
     box-shadow: 
       20px 20px 40px rgba(80, 17, 34, 0.4),
       -20px -20px 40px rgba(191, 165, 168, 0.1),
@@ -175,9 +158,7 @@
   }
 
   .neo-button {
-    background: linear-gradient(145deg, 
-      hsl(var(--crimson-wine-500)), 
-      hsl(var(--crimson-wine-600)));
+    background-color: hsl(var(--crimson-wine-500));
     box-shadow: 
       8px 8px 16px rgba(80, 17, 34, 0.3),
       -8px -8px 16px rgba(191, 165, 168, 0.1);
@@ -190,21 +171,15 @@
       inset -8px -8px 16px rgba(191, 165, 168, 0.1);
   }
 
-  /* Modern card designs with darker crimson palette */
+  /* Modern card designs with solid backgrounds */
   .insight-card {
     @apply glass-card rounded-3xl p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2;
-    background: linear-gradient(135deg, 
-      rgba(80, 17, 34, 0.4) 0%, 
-      rgba(87, 65, 68, 0.3) 50%,
-      rgba(14, 124, 113, 0.2) 100%);
+    background-color: rgba(80, 17, 34, 0.4);
   }
 
   .metric-card {
     @apply relative overflow-hidden rounded-3xl p-6 transition-all duration-500 hover:scale-105;
-    background: linear-gradient(135deg, 
-      rgba(80, 17, 34, 0.5) 0%, 
-      rgba(87, 65, 68, 0.4) 50%,
-      rgba(14, 124, 113, 0.3) 100%);
+    background-color: rgba(80, 17, 34, 0.5);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(191, 165, 168, 0.35);
   }
@@ -216,42 +191,27 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, 
-      hsl(var(--soft-blush-500)) 0%, 
-      hsl(var(--emerald-splash-500)) 33%,
-      hsl(var(--deep-teal-500)) 66%,
-      hsl(var(--soft-blush-600)) 100%);
+    background-color: hsl(var(--soft-blush-500));
   }
 
-  /* Advanced typography with Soft Blush for headers */
+  /* Typography with Dancing Script and solid colors - NO GRADIENTS */
   .heading-xl {
-    @apply text-4xl md:text-5xl font-bold tracking-tight;
-    background: linear-gradient(135deg, 
-      hsl(var(--soft-blush-500)) 0%, 
-      hsl(var(--soft-blush-600)) 50%,
-      hsl(var(--soft-blush-100)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+    font-family: 'Dancing Script', cursive;
+    color: hsl(var(--soft-blush-500));
+    font-weight: 700;
   }
 
   .heading-gradient {
-    background: linear-gradient(135deg, 
-      hsl(var(--soft-blush-500)) 0%, 
-      hsl(var(--soft-blush-600)) 33%,
-      hsl(var(--soft-blush-100)) 66%,
-      hsl(var(--soft-blush-500)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: 'Dancing Script', cursive;
+    color: hsl(var(--soft-blush-500));
+    font-weight: 600;
   }
 
-  /* Modern buttons with crimson palette */
+  /* Modern buttons with solid colors */
   .btn-primary-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
-    background: linear-gradient(135deg, 
-      hsl(var(--crimson-wine-500)) 0%, 
-      hsl(var(--crimson-wine-600)) 100%);
+    background-color: hsl(var(--crimson-wine-500));
     box-shadow: 
       0 10px 25px rgba(80, 17, 34, 0.35),
       0 4px 12px rgba(80, 17, 34, 0.25);
@@ -259,9 +219,7 @@
 
   .btn-primary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background: linear-gradient(135deg, 
-      hsl(var(--crimson-wine-600)) 0%, 
-      hsl(var(--misty-rosewood-600)) 100%);
+    background-color: hsl(var(--crimson-wine-600));
     box-shadow: 
       0 15px 35px rgba(80, 17, 34, 0.45),
       0 6px 18px rgba(80, 17, 34, 0.35);
@@ -275,28 +233,20 @@
 
   .btn-secondary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background: linear-gradient(135deg, 
-      rgba(80, 17, 34, 0.3) 0%, 
-      rgba(14, 124, 113, 0.2) 100%);
+    background-color: rgba(80, 17, 34, 0.3);
   }
 
   .btn-accent-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
-    background: linear-gradient(135deg, 
-      hsl(var(--emerald-splash-500)) 0%, 
-      hsl(var(--emerald-splash-600)) 100%);
+    background-color: hsl(var(--emerald-splash-500));
     box-shadow: 
       0 10px 25px rgba(14, 124, 113, 0.35),
       0 4px 12px rgba(14, 124, 113, 0.25);
   }
 
-  /* Enhanced Mobile Navigation with darker crimson palette */
+  /* Enhanced Mobile Navigation with solid backgrounds */
   .enhanced-mobile-nav {
-    background: linear-gradient(135deg, 
-      rgba(80, 17, 34, 0.6) 0%, 
-      rgba(87, 65, 68, 0.5) 33%,
-      rgba(80, 17, 34, 0.4) 66%,
-      rgba(14, 124, 113, 0.3) 100%);
+    background-color: rgba(80, 17, 34, 0.6);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border-top: 1px solid rgba(191, 165, 168, 0.4);
@@ -314,39 +264,26 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, 
-      hsl(var(--soft-blush-500)) 0%, 
-      hsl(var(--emerald-splash-500)) 20%,
-      hsl(var(--deep-teal-500)) 40%,
-      hsl(var(--soft-blush-600)) 60%,
-      hsl(var(--misty-rosewood-500)) 80%,
-      hsl(var(--soft-blush-500)) 100%);
+    background-color: hsl(var(--soft-blush-500));
     opacity: 0.9;
   }
 
-  /* Updated progress indicators with crimson palette */
+  /* Progress indicators with solid colors */
   .progress-modern {
     @apply relative h-3 overflow-hidden rounded-full;
-    background: linear-gradient(90deg, 
-      rgba(80, 17, 34, 0.3) 0%, 
-      rgba(14, 124, 113, 0.2) 100%);
+    background-color: rgba(80, 17, 34, 0.3);
   }
 
   .progress-modern .progress-fill {
     @apply h-full rounded-full transition-all duration-700 ease-out;
-    background: linear-gradient(90deg, 
-      hsl(var(--soft-blush-500)) 0%, 
-      hsl(var(--emerald-splash-500)) 50%,
-      hsl(var(--deep-teal-500)) 100%);
+    background-color: hsl(var(--emerald-splash-500));
     box-shadow: 0 4px 12px rgba(191, 165, 168, 0.4);
   }
 
-  /* Floating elements with crimson colors */
+  /* Floating elements with solid colors */
   .floating-action {
     @apply fixed bottom-24 right-6 w-16 h-16 rounded-full shadow-2xl transition-all duration-300 z-50;
-    background: linear-gradient(135deg, 
-      hsl(var(--crimson-wine-500)) 0%, 
-      hsl(var(--crimson-wine-600)) 100%);
+    background-color: hsl(var(--crimson-wine-500));
     box-shadow: 
       0 15px 35px rgba(80, 17, 34, 0.45),
       0 6px 18px rgba(80, 17, 34, 0.35);
@@ -356,68 +293,51 @@
     @apply scale-110 -translate-y-1;
   }
 
-  /* Chart enhancements with darker crimson palette */
+  /* Chart enhancements with solid backgrounds */
   .chart-container {
     @apply glass-card rounded-3xl p-6;
-    background: linear-gradient(135deg, 
-      rgba(80, 17, 34, 0.4) 0%, 
-      rgba(87, 65, 68, 0.3) 50%,
-      rgba(14, 124, 113, 0.2) 100%);
+    background-color: rgba(80, 17, 34, 0.4);
   }
 
-  /* Loading animations with darker colors */
+  /* Loading animations with solid colors */
   .skeleton-modern {
     @apply animate-pulse rounded-2xl;
-    background: linear-gradient(90deg, 
-      rgba(80, 17, 34, 0.4) 0%, 
-      rgba(191, 165, 168, 0.3) 50%, 
-      rgba(80, 17, 34, 0.4) 100%);
-    background-size: 200% 100%;
+    background-color: rgba(80, 17, 34, 0.4);
     animation: shimmer 2s infinite ease-in-out;
   }
 
-  /* Tab styles with crimson palette */
+  /* Tab styles with solid colors */
   .tab-modern {
     @apply transition-all duration-300 rounded-xl px-4 py-2;
     color: hsl(var(--soft-blush-100));
   }
 
   .tab-modern[data-state="active"] {
-    background: linear-gradient(135deg, 
-      hsl(var(--soft-blush-500)) 0%, 
-      hsl(var(--soft-blush-600)) 100%);
+    background-color: hsl(var(--soft-blush-500));
     color: hsl(var(--crimson-wine-600));
     box-shadow: 
       0 8px 20px rgba(191, 165, 168, 0.25),
       0 4px 12px rgba(191, 165, 168, 0.15);
   }
 
-  /* Tab trigger styles */
+  /* Tab trigger styles with solid colors */
   .tab-trigger-crimson[data-state="active"] {
-    background: linear-gradient(135deg, 
-      hsl(var(--crimson-wine-500)) 0%, 
-      hsl(var(--crimson-wine-600)) 100%);
+    background-color: hsl(var(--crimson-wine-500));
     color: white;
   }
 
   .tab-trigger-emerald[data-state="active"] {
-    background: linear-gradient(135deg, 
-      hsl(var(--emerald-splash-500)) 0%, 
-      hsl(var(--emerald-splash-600)) 100%);
+    background-color: hsl(var(--emerald-splash-500));
     color: white;
   }
 
   .tab-trigger-teal[data-state="active"] {
-    background: linear-gradient(135deg, 
-      hsl(var(--deep-teal-500)) 0%, 
-      hsl(var(--deep-teal-600)) 100%);
+    background-color: hsl(var(--deep-teal-500));
     color: white;
   }
 
   .tab-trigger-blush[data-state="active"] {
-    background: linear-gradient(135deg, 
-      hsl(var(--soft-blush-500)) 0%, 
-      hsl(var(--soft-blush-600)) 100%);
+    background-color: hsl(var(--soft-blush-500));
     color: hsl(var(--crimson-wine-600));
   }
 
@@ -437,11 +357,9 @@
       0 4px 12px rgba(80, 17, 34, 0.15);
   }
 
-  /* Glass input */
+  /* Glass input with solid background */
   .glass-input {
-    background: linear-gradient(135deg, 
-      rgba(80, 17, 34, 0.4) 0%, 
-      rgba(87, 65, 68, 0.3) 100%);
+    background-color: rgba(80, 17, 34, 0.4);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(191, 165, 168, 0.35);
     color: hsl(var(--soft-blush-100));
@@ -536,6 +454,11 @@
 
   .animate-scale-in {
     animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Header typography utilities */
+  .header-font {
+    font-family: 'Dancing Script', cursive;
   }
 }
 
