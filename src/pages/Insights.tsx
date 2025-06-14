@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Calendar, TrendingUp, BarChart3, Brain, Target, Clock, Award, Heart, Sparkles, Zap, Star } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Area, AreaChart } from "recharts";
+import { CharacterAvatar } from "@/components/character/CharacterAvatar";
+import { useCharacter } from "@/hooks/useCharacter";
 
 const moodData = [
   { date: "Mon", mood: 4, energy: 3.5 },
@@ -37,13 +38,14 @@ export default function Insights() {
   const [completedGoals, setCompletedGoals] = useState(5);
   const [averageMood, setAverageMood] = useState(4.1);
   const [wellnessScore, setWellnessScore] = useState(85);
+  const { character } = useCharacter();
 
-  const getMoodEmoji = (mood: number) => {
-    if (mood >= 4.5) return "😊";
-    if (mood >= 3.5) return "🙂";
-    if (mood >= 2.5) return "😐";
-    if (mood >= 1.5) return "😔";
-    return "😞";
+  const getMoodExpression = (mood: number) => {
+    if (mood >= 4.5) return { type: 'excited' as const, intensity: 'high' as const };
+    if (mood >= 3.5) return { type: 'happy' as const, intensity: 'medium' as const };
+    if (mood >= 2.5) return { type: 'neutral' as const, intensity: 'medium' as const };
+    if (mood >= 1.5) return { type: 'concerned' as const, intensity: 'medium' as const };
+    return { type: 'sad' as const, intensity: 'high' as const };
   };
 
   const getMoodColor = (mood: number) => {
@@ -150,7 +152,16 @@ export default function Insights() {
           <div className="metric-card animate-scale-in" style={{ animationDelay: "0.3s" }}>
             <div className="flex items-center justify-between mb-3">
               <Heart className="w-8 h-8 text-crimson-wine-500" />
-              <span className="text-2xl">{getMoodEmoji(averageMood)}</span>
+              {character ? (
+                <CharacterAvatar
+                  character={character}
+                  expression={getMoodExpression(averageMood)}
+                  size="sm"
+                  animated={false}
+                />
+              ) : (
+                <span className="text-2xl">🙂</span>
+              )}
             </div>
             <div>
               <p className="text-sm font-medium text-misty-rosewood-500">Avg Mood</p>
@@ -234,9 +245,20 @@ export default function Insights() {
                   {moodData.map((day, index) => (
                     <div key={index} className="text-center glass-card p-3 rounded-2xl">
                       <p className="text-sm font-semibold text-misty-rosewood-600">{day.date}</p>
-                      <p className={`text-3xl my-2 ${getMoodColor(day.mood)}`}>
-                        {getMoodEmoji(day.mood)}
-                      </p>
+                      <div className="my-2 flex justify-center">
+                        {character ? (
+                          <CharacterAvatar
+                            character={character}
+                            expression={getMoodExpression(day.mood)}
+                            size="md"
+                            animated={false}
+                          />
+                        ) : (
+                          <p className={`text-3xl ${getMoodColor(day.mood)}`}>
+                            🙂
+                          </p>
+                        )}
+                      </div>
                       <p className="text-xs font-medium text-emerald-splash-600">{day.mood}/5</p>
                     </div>
                   ))}
