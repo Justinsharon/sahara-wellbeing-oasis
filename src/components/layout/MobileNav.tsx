@@ -41,15 +41,19 @@ export function MobileNav() {
                 {isActive(item.url) && (
                   <LiquidGlass 
                     variant="crystal" 
-                    className="absolute inset-1 bg-crimson-wine rounded-2xl shadow-lg animate-scale-in" 
-                  />
+                    className="absolute inset-1 bg-crimson-wine rounded-2xl shadow-lg animate-scale-in"
+                  >
+                    <div />
+                  </LiquidGlass>
                 )}
                 
                 {/* Hover background with frosted glass */}
                 <LiquidGlass 
                   variant="overlay" 
-                  className="absolute inset-1 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
-                />
+                  className="absolute inset-1 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                >
+                  <div />
+                </LiquidGlass>
                 
                 {/* Icon container with enhanced effects */}
                 <div className={`relative z-10 w-8 h-8 flex items-center justify-center transition-all duration-300 ${
