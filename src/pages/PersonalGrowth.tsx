@@ -1,206 +1,249 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Target, BookOpen, TrendingUp, Brain, Plus, Calendar, Award, Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { 
+  Target, 
+  BookOpen, 
+  TrendingUp, 
+  Calendar, 
+  Award, 
+  Heart,
+  Brain,
+  Sparkles,
+  Zap,
+  Activity
+} from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { useMockAuth } from "@/hooks/useMockAuth";
 
-const featureCards = [
+const quickActions = [
   {
-    title: "Goal Setting",
-    description: "Set, track, and achieve your personal wellness goals",
-    icon: Target,
-    href: "/personal-growth/goals",
-    color: "text-green-500",
-    bgColor: "bg-green-50",
+    title: "Enhanced Mood Journal",
+    description: "Track your mood, stress, and sleep with our advanced wellness tracker",
+    icon: Heart,
+    color: "crimson-wine",
+    href: "/personal-growth/enhanced-mood-journal",
+    isNew: true
   },
   {
-    title: "Mood Journaling",
-    description: "Daily mood tracking and emotional insights",
+    title: "Original Mood Journal",
+    description: "Simple daily mood tracking and reflection",
     icon: BookOpen,
+    color: "emerald-splash",
     href: "/personal-growth/mood-journal",
-    color: "text-blue-500",
-    bgColor: "bg-blue-50",
   },
   {
-    title: "Self-Assessments",
-    description: "Guided assessments for anxiety, depression, and more",
-    icon: Brain,
-    href: "/personal-growth/assessments",
-    color: "text-purple-500",
-    bgColor: "bg-purple-50",
+    title: "Goals & Milestones",
+    description: "Set and track your personal development goals",
+    icon: Target,
+    color: "deep-teal",
+    href: "/personal-growth/goals",
   },
-];
-
-const achievements = [
-  { title: "First Goal Set", description: "Set your first wellness goal", unlocked: true },
-  { title: "Week Streak", description: "Track mood for 7 consecutive days", unlocked: true },
-  { title: "Goal Achiever", description: "Complete your first goal", unlocked: false },
-  { title: "Self-Aware", description: "Complete 3 self-assessments", unlocked: false },
+  {
+    title: "Progress Insights",
+    description: "View detailed analytics of your wellness journey",
+    icon: TrendingUp,
+    color: "soft-blush",
+    href: "/insights",
+  },
 ];
 
 export default function PersonalGrowth() {
-  const { user } = useMockAuth();
-  const [currentStreak, setCurrentStreak] = useState(5);
-  const [totalGoals, setTotalGoals] = useState(3);
-  const [completedGoals, setCompletedGoals] = useState(1);
+  const [currentStreak, setCurrentStreak] = useState(12);
+  const [goalsCompleted, setGoalsCompleted] = useState(3);
+  const [totalGoals, setTotalGoals] = useState(8);
 
   return (
-    <div className="min-h-screen p-4 md:p-6 lg:p-8 pb-20 md:pb-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-          Personal Growth Hub
-        </h1>
-        <p className="text-muted-foreground text-lg max-w-2xl">
-          Track your progress, set meaningful goals, and develop healthy habits on your wellness journey.
-        </p>
-      </div>
-
-      {/* Progress Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card className="soft-shadow border-0">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-orange-600" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Current Streak</p>
-                <p className="text-2xl font-bold text-primary">{currentStreak} days</p>
-              </div>
+    <div className="min-h-screen wellness-gradient p-4 md:p-6 lg:p-8 pb-24 md:pb-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Enhanced Header */}
+        <div className="mb-8 animate-slide-up">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg"
+                 style={{
+                   background: `linear-gradient(135deg, 
+                     hsl(var(--emerald-splash-500)) 0%, 
+                     hsl(var(--deep-teal-500)) 100%)`
+                 }}>
+              <Sparkles className="w-6 h-6 text-white" />
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className="soft-shadow border-0">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <Target className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Goals Progress</p>
-                <p className="text-2xl font-bold text-primary">{completedGoals}/{totalGoals}</p>
-              </div>
+            <div>
+              <h1 className="heading-xl">
+                Personal Growth
+              </h1>
+              <p className="text-lg text-misty-rosewood-500 font-medium">
+                Your journey to mental wellness and self-discovery
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card className="soft-shadow border-0">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Weekly Progress</p>
-                <Progress value={75} className="w-full mt-2" />
-              </div>
+        {/* Stats Overview */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+          <div className="metric-card animate-scale-in" style={{ animationDelay: "0.1s" }}>
+            <div className="flex items-center justify-between mb-3">
+              <Calendar className="w-8 h-8 text-soft-blush-600" />
+              <Activity className="w-5 h-5 text-crimson-wine-500" />
             </div>
-          </CardContent>
-        </Card>
-      </div>
+            <div>
+              <p className="text-sm font-medium text-misty-rosewood-500">Current Streak</p>
+              <p className="text-2xl font-bold text-crimson-wine-600">{currentStreak}</p>
+              <p className="text-xs text-soft-blush-600 font-medium">days</p>
+            </div>
+          </div>
 
-      {/* Feature Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {featureCards.map((card, index) => (
-          <Link key={index} to={card.href} className="group">
-            <Card className="card-hover soft-shadow border-0 h-full">
-              <CardHeader>
-                <div className={`w-12 h-12 ${card.bgColor} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <card.icon className={`w-6 h-6 ${card.color}`} />
-                </div>
-                <CardTitle className="text-xl">{card.title}</CardTitle>
-                <CardDescription>{card.description}</CardDescription>
-              </CardHeader>
-            </Card>
-          </Link>
-        ))}
-      </div>
+          <div className="metric-card animate-scale-in" style={{ animationDelay: "0.2s" }}>
+            <div className="flex items-center justify-between mb-3">
+              <Target className="w-8 h-8 text-emerald-splash-500" />
+              <Award className="w-5 h-5 text-deep-teal-500" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-misty-rosewood-500">Goals Progress</p>
+              <p className="text-2xl font-bold text-crimson-wine-600">{goalsCompleted}/{totalGoals}</p>
+              <p className="text-xs text-emerald-splash-600 font-medium">completed</p>
+            </div>
+          </div>
 
-      {/* Achievements */}
-      <Card className="soft-shadow border-0 mb-8">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Award className="w-5 h-5 text-yellow-500" />
-            Achievements
-          </CardTitle>
-          <CardDescription>
-            Celebrate your wellness milestones
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {achievements.map((achievement, index) => (
-              <div
-                key={index}
-                className={`p-4 rounded-lg border ${
-                  achievement.unlocked
-                    ? "bg-yellow-50 border-yellow-200"
-                    : "bg-gray-50 border-gray-200"
-                }`}
+          <div className="metric-card animate-scale-in col-span-2 md:col-span-1" style={{ animationDelay: "0.3s" }}>
+            <div className="flex items-center justify-between mb-3">
+              <Brain className="w-8 h-8 text-misty-rosewood-500" />
+              <Zap className="w-5 h-5 text-crimson-wine-500" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-misty-rosewood-500">Wellness Score</p>
+              <p className="text-2xl font-bold text-crimson-wine-600">85%</p>
+              <p className="text-xs text-misty-rosewood-600 font-medium">this week</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold heading-gradient mb-6">Quick Actions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {quickActions.map((action, index) => (
+              <Card 
+                key={action.title} 
+                className="soft-shadow border-0 hover:scale-105 transition-all duration-300 cursor-pointer group animate-scale-in relative"
+                style={{ animationDelay: `${0.1 * (index + 1)}s` }}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    achievement.unlocked ? "bg-yellow-500" : "bg-gray-300"
-                  }`}>
-                    <Award className={`w-4 h-4 ${
-                      achievement.unlocked ? "text-white" : "text-gray-500"
-                    }`} />
+                {action.isNew && (
+                  <div className="absolute -top-2 -right-2 bg-crimson-wine-500 text-white text-xs px-2 py-1 rounded-full font-bold z-10">
+                    NEW
                   </div>
-                  <div>
-                    <p className={`font-medium ${
-                      achievement.unlocked ? "text-yellow-800" : "text-gray-500"
-                    }`}>
-                      {achievement.title}
-                    </p>
-                    <p className={`text-sm ${
-                      achievement.unlocked ? "text-yellow-600" : "text-gray-400"
-                    }`}>
-                      {achievement.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
+                )}
+                <Link to={action.href}>
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center gap-4">
+                      <div 
+                        className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}
+                        style={{
+                          background: `linear-gradient(135deg, 
+                            hsl(var(--${action.color}-500)) 0%, 
+                            hsl(var(--${action.color}-600)) 100%)`
+                        }}
+                      >
+                        <action.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-lg heading-gradient group-hover:scale-105 transition-transform">
+                          {action.title}
+                        </CardTitle>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-misty-rosewood-500">
+                      {action.description}
+                    </CardDescription>
+                  </CardContent>
+                </Link>
+              </Card>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      {/* Quick Actions */}
-      <Card className="soft-shadow border-0">
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>
-            Jump into your wellness activities
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-4">
-            <Button asChild>
-              <Link to="/personal-growth/goals">
-                <Plus className="w-4 h-4 mr-2" />
-                Add New Goal
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link to="/personal-growth/mood-journal">
-                <Heart className="w-4 h-4 mr-2" />
-                Log Today's Mood
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link to="/personal-growth/assessments">
-                <Brain className="w-4 h-4 mr-2" />
-                Take Assessment
-              </Link>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Weekly Goals Progress */}
+        <Card className="soft-shadow border-0 mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3 heading-gradient">
+              <Target className="w-6 h-6 text-emerald-splash-500" />
+              This Week's Goals
+            </CardTitle>
+            <CardDescription className="text-misty-rosewood-500">
+              Track your progress towards weekly wellness targets
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-crimson-wine-600">Daily Mood Check-ins</span>
+                <span className="text-sm text-emerald-splash-600 font-medium">5/7 days</span>
+              </div>
+              <Progress value={71} className="h-3" />
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-crimson-wine-600">Meditation Sessions</span>
+                <span className="text-sm text-emerald-splash-600 font-medium">4/5 sessions</span>
+              </div>
+              <Progress value={80} className="h-3" />
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-crimson-wine-600">Sleep Quality Tracking</span>
+                <span className="text-sm text-emerald-splash-600 font-medium">6/7 nights</span>
+              </div>
+              <Progress value={86} className="h-3" />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Recent Activity */}
+        <Card className="soft-shadow border-0">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3 heading-gradient">
+              <Activity className="w-6 h-6 text-deep-teal-500" />
+              Recent Activity
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 p-4 rounded-2xl glass-card">
+                <div className="w-10 h-10 rounded-xl bg-emerald-splash-100 flex items-center justify-center">
+                  <Heart className="w-5 h-5 text-emerald-splash-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium text-crimson-wine-600">Completed mood check-in</p>
+                  <p className="text-sm text-misty-rosewood-500">Today at 9:30 AM</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-4 p-4 rounded-2xl glass-card">
+                <div className="w-10 h-10 rounded-xl bg-deep-teal-100 flex items-center justify-center">
+                  <Target className="w-5 h-5 text-deep-teal-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium text-crimson-wine-600">Achieved daily meditation goal</p>
+                  <p className="text-sm text-misty-rosewood-500">Yesterday at 7:00 PM</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-4 p-4 rounded-2xl glass-card">
+                <div className="w-10 h-10 rounded-xl bg-soft-blush-100 flex items-center justify-center">
+                  <Award className="w-5 h-5 text-soft-blush-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium text-crimson-wine-600">Earned 7-day streak badge</p>
+                  <p className="text-sm text-misty-rosewood-500">2 days ago</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
