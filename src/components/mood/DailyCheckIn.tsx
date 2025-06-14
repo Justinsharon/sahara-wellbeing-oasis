@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { VoiceAnalysisMoodSelector } from "./VoiceAnalysisMoodSelector";
 import { CircularMoodSelector } from "./CircularMoodSelector";
 import { StressLevelTracker } from "./StressLevelTracker";
 import { SleepQualityTracker } from "./SleepQualityTracker";
@@ -7,7 +8,7 @@ import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Calendar, Heart, Save } from "lucide-react";
+import { Calendar, Heart, Save, Mic, MicOff } from "lucide-react";
 import { toast } from "sonner";
 
 interface DailyCheckInData {
@@ -17,6 +18,10 @@ interface DailyCheckInData {
   hoursSlept: number;
   notes: string;
   date: string;
+  voiceAnalysis?: {
+    confidence: number;
+    analysisType: 'voice' | 'manual';
+  };
 }
 
 interface DailyCheckInProps {
@@ -33,6 +38,18 @@ export function DailyCheckIn({ onSave, initialData }: DailyCheckInProps) {
   const [currentDate, setCurrentDate] = useState(
     initialData?.date || new Date().toISOString().split('T')[0]
   );
+  const [useVoiceAnalysis, setUseVoiceAnalysis] = useState(true);
+  const [voiceConfidence, setVoiceConfidence] = useState<number | null>(null);
+
+  const handleVoiceMoodDetected = (detectedMood: string, confidence: number) => {
+    setMood(detectedMood);
+    setVoiceConfidence(confidence);
+  };
+
+  const handleManualFallback = () => {
+    setUseVoiceAnalysis(false);
+    setVoiceConfidence(null);
+  };
 
   const handleSave = () => {
     if (!mood) {
@@ -55,6 +72,13 @@ export function DailyCheckIn({ onSave, initialData }: DailyCheckInProps) {
       hoursSlept,
       notes: notes.trim(),
       date: currentDate,
+      voiceAnalysis: voiceConfidence ? {
+        confidence: voiceConfidence,
+        analysisType: 'voice'
+      } : {
+        confidence: 1,
+        analysisType: 'manual'
+      }
     };
 
     onSave(checkInData);
@@ -110,11 +134,31 @@ export function DailyCheckIn({ onSave, initialData }: DailyCheckInProps) {
 
       {/* Mood Selection */}
       <LiquidGlass variant="card" floating bubbles className="p-6 animate-scale-in" style={{ animationDelay: "0.1s" }}>
-        <div className="mb-6">
-          <h3 className="text-xl font-bold heading-gradient mb-2">Express Your Current Mood</h3>
-          <p className="text-misty-rosewood-500">Choose the mood that best represents how you're feeling right now</p>
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h3 className="text-xl font-bold heading-gradient mb-2">Express Your Current Mood</h3>
+            <p className="text-misty-rosewood-500">
+              {useVoiceAnalysis ? "Let AI analyze your voice to detect your mood" : "Choose the mood that best represents how you're feeling"}
+            </p>
+          </div>
+          <Button
+            onClick={() => setUseVoiceAnalysis(!useVoiceAnalysis)}
+            variant="outline"
+            className="liquid-glass-button"
+          >
+            {useVoiceAnalysis ? <MicOff className="w-4 h-4 mr-2" /> : <Mic className="w-4 h-4 mr-2" />}
+            {useVoiceAnalysis ? "Manual" : "Voice"}
+          </Button>
         </div>
-        <CircularMoodSelector selectedMood={mood} onMoodSelect={setMood} />
+        
+        {useVoiceAnalysis ? (
+          <VoiceAnalysisMoodSelector
+            onMoodDetected={handleVoiceMoodDetected}
+            onManualFallback={handleManualFallback}
+          />
+        ) : (
+          <CircularMoodSelector selectedMood={mood} onMoodSelect={setMood} />
+        )}
       </LiquidGlass>
 
       {/* Stress and Sleep in a grid */}
