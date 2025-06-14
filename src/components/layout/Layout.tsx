@@ -33,7 +33,7 @@ export function Layout({ children }: LayoutProps) {
     return (
       <div className="min-h-screen flex items-center justify-center wellness-gradient">
         <div className="text-center animate-slide-up">
-          <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl animate-float">
+          <div className="w-20 h-20 bg-gradient-to-br from-deep-red-500 to-deep-red-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl animate-float">
             <Heart className="w-10 h-10 text-white animate-pulse-slow" />
           </div>
           <div className="space-y-4">
@@ -51,7 +51,7 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen flex flex-col wellness-gradient">
-      {/* Enhanced Mobile-First Header */}
+      {/* Enhanced Mobile-First Header with bold red theme */}
       <header className="sticky top-0 z-50 safe-area-top">
         <div className="glass-nav border-b border-white/20">
           <div className="flex h-16 items-center justify-between px-4">
@@ -68,7 +68,7 @@ export function Layout({ children }: LayoutProps) {
                   <SheetHeader className="pb-6">
                     <SheetTitle className="text-left">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl">
+                        <div className="w-12 h-12 bg-gradient-to-br from-deep-red-500 to-deep-red-600 rounded-2xl flex items-center justify-center shadow-xl">
                           <Heart className="w-6 h-6 text-white" />
                         </div>
                         <div>
@@ -87,8 +87,8 @@ export function Layout({ children }: LayoutProps) {
                         onClick={() => setSideMenuOpen(false)}
                         className="flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 hover:bg-white/60 hover:scale-105 active:scale-95"
                       >
-                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
-                          <item.icon className="w-5 h-5 text-emerald-600" />
+                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-coral-100 to-coral-200 flex items-center justify-center">
+                          <item.icon className="w-5 h-5 text-deep-red-600" />
                         </div>
                         <span className="font-semibold text-gray-700">{item.title}</span>
                       </Link>
@@ -106,9 +106,9 @@ export function Layout({ children }: LayoutProps) {
                 </SheetContent>
               </Sheet>
 
-              {/* Enhanced Clickable Logo */}
+              {/* Enhanced Clickable Logo with bold red */}
               <Link to="/" className="flex items-center gap-3 transition-all duration-300 hover:scale-105 active:scale-95">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-deep-red-500 to-deep-red-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <Heart className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -143,14 +143,14 @@ export function Layout({ children }: LayoutProps) {
       {/* Enhanced Mobile Navigation */}
       {user && <MobileNav />}
 
-      {/* Floating Nia Chat Button */}
+      {/* Floating Nia Chat Button with bold red */}
       {user && <FloatingChatButton />}
 
-      {/* Enhanced Auth Overlay */}
+      {/* Enhanced Auth Overlay with bold theme */}
       {!user && (
         <div className="fixed inset-0 z-40 glass-nav flex items-center justify-center p-6">
           <div className="glass-card rounded-3xl p-8 text-center shadow-2xl max-w-sm w-full animate-scale-in">
-            <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl">
+            <div className="w-24 h-24 bg-gradient-to-br from-deep-red-500 to-deep-red-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl">
               <Heart className="w-12 h-12 text-white" />
             </div>
             <h2 className="text-3xl font-bold mb-4 heading-gradient">
