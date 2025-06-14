@@ -1,5 +1,5 @@
 
-import { useAuth } from "@/hooks/useAuth";
+import { useMockAuth } from "@/hooks/useMockAuth";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { MobileNav } from "./MobileNav";
@@ -12,7 +12,7 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps) {
-  const { user, loading } = useAuth();
+  const { user, loading } = useMockAuth();
 
   if (loading) {
     return (

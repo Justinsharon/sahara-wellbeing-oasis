@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
@@ -30,7 +29,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
+import { useMockAuth } from "@/hooks/useMockAuth";
 
 const mainNavItems = [
   { title: "Home", url: "/", icon: Home },
@@ -52,7 +51,7 @@ const featuresNavItems = [
 export function AppSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
-  const { user, signOut } = useAuth();
+  const { user, signOut } = useMockAuth();
   const currentPath = location.pathname;
 
   const isActive = (path: string) => currentPath === path;

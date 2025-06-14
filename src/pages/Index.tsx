@@ -1,9 +1,8 @@
-
 import { Link } from "react-router-dom";
 import { Heart, Users, TrendingUp, Search, MessageCircle, BarChart3, Shield, Clock, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from "@/hooks/useAuth";
+import { useMockAuth } from "@/hooks/useMockAuth";
 
 const featureCards = [
   {
@@ -63,7 +62,7 @@ const stats = [
 ];
 
 export default function Index() {
-  const { user } = useAuth();
+  const { user } = useMockAuth();
 
   return (
     <div className="min-h-screen p-4 md:p-6 lg:p-8">
