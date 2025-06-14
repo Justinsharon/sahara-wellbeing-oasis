@@ -1,11 +1,10 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Calendar, TrendingUp, Heart, BarChart3, BookOpen, Target } from "lucide-react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { DailyCheckIn } from "@/components/mood/DailyCheckIn";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
@@ -45,7 +44,7 @@ const mockUnifiedEntries: ExtendedMoodEntry[] = [
     id: "2",
     user_id: "user1",
     mood: "neutral",
-    entry_type: "simple",
+    entry_type: "enhanced",
     notes: "Quick check-in - feeling okay today.",
     date: "2024-06-13",
     created_at: "2024-06-13T20:00:00Z",
@@ -66,9 +65,6 @@ const mockUnifiedEntries: ExtendedMoodEntry[] = [
 
 export default function UnifiedMoodJournal() {
   const [moodEntries, setMoodEntries] = useState<ExtendedMoodEntry[]>(mockUnifiedEntries);
-  const [selectedMood, setSelectedMood] = useState<string>("");
-  const [notes, setNotes] = useState("");
-  const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
   const { character } = useCharacter();
 
   const handleSaveEnhancedCheckIn = (data: any) => {
@@ -87,31 +83,6 @@ export default function UnifiedMoodJournal() {
 
     const updatedEntries = moodEntries.filter(entry => entry.date !== data.date);
     setMoodEntries([newEntry, ...updatedEntries]);
-  };
-
-  const handleSaveSimpleEntry = () => {
-    if (!selectedMood) {
-      toast.error("Please select your mood");
-      return;
-    }
-
-    const newEntry: ExtendedMoodEntry = {
-      id: Date.now().toString(),
-      user_id: "user1",
-      mood: selectedMood as ExtendedMoodEntry['mood'],
-      entry_type: "simple",
-      notes: notes.trim(),
-      date: currentDate,
-      created_at: new Date().toISOString(),
-    };
-
-    const updatedEntries = moodEntries.filter(entry => entry.date !== currentDate);
-    setMoodEntries([newEntry, ...updatedEntries]);
-    
-    setSelectedMood("");
-    setNotes("");
-    setCurrentDate(new Date().toISOString().split('T')[0]);
-    toast.success("Mood entry saved successfully!");
   };
 
   const getMoodOption = (mood: string) => {
@@ -185,7 +156,7 @@ export default function UnifiedMoodJournal() {
         <div className="mb-8 text-center animate-slide-up">
           <h1 className="heading-xl mb-2">Mood Journal</h1>
           <p className="text-lg text-misty-rosewood-500">
-            Track your emotional wellness journey with simple or detailed entries
+            Track your emotional wellness journey with daily check-ins
           </p>
         </div>
 
@@ -249,12 +220,9 @@ export default function UnifiedMoodJournal() {
           </LiquidGlass>
         </div>
 
-        <Tabs defaultValue="simple" className="space-y-6">
+        <Tabs defaultValue="enhanced" className="space-y-6">
           <LiquidGlass variant="crystal" className="p-2">
-            <TabsList className="grid w-full grid-cols-4 h-16 bg-transparent">
-              <TabsTrigger value="simple" className="liquid-glass-button text-white rounded-xl font-medium">
-                Simple Entry
-              </TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 h-16 bg-transparent">
               <TabsTrigger value="enhanced" className="liquid-glass-button text-white rounded-xl font-medium">
                 Daily Check-In
               </TabsTrigger>
@@ -266,70 +234,6 @@ export default function UnifiedMoodJournal() {
               </TabsTrigger>
             </TabsList>
           </LiquidGlass>
-
-          <TabsContent value="simple">
-            <LiquidGlass variant="card" floating bubbles className="p-8">
-              <div className="max-w-2xl mx-auto space-y-6">
-                <div className="text-center mb-6">
-                  <h2 className="text-2xl font-bold heading-gradient mb-2">Quick Mood Check-In</h2>
-                  <p className="text-misty-rosewood-500">Simple and fast daily mood tracking</p>
-                </div>
-
-                <div className="space-y-4">
-                  <Label htmlFor="date">Date</Label>
-                  <input
-                    id="date"
-                    type="date"
-                    value={currentDate}
-                    onChange={(e) => setCurrentDate(e.target.value)}
-                    className="liquid-glass-input w-full"
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <Label>Your Mood</Label>
-                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                    {moodOptions.map((mood) => (
-                      <LiquidGlass
-                        key={mood.value}
-                        variant="crystal"
-                        interactive
-                        className={`p-4 cursor-pointer text-center transition-all ${
-                          selectedMood === mood.value
-                            ? "scale-105 shadow-lg border-2 border-crimson-wine-400"
-                            : ""
-                        }`}
-                        onClick={() => setSelectedMood(mood.value)}
-                      >
-                        <div className="text-2xl mb-2">{mood.emoji}</div>
-                        <div className={`text-sm font-medium ${mood.color}`}>
-                          {mood.label}
-                        </div>
-                      </LiquidGlass>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <Label htmlFor="notes">Notes (Optional)</Label>
-                  <Textarea
-                    id="notes"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    placeholder="What's on your mind today? Share your thoughts and feelings..."
-                    className="liquid-glass-input min-h-24"
-                    rows={4}
-                  />
-                </div>
-
-                <div className="text-center">
-                  <Button onClick={handleSaveSimpleEntry} className="liquid-glass-button px-8 py-3">
-                    Save Mood Entry
-                  </Button>
-                </div>
-              </div>
-            </LiquidGlass>
-          </TabsContent>
 
           <TabsContent value="enhanced">
             <DailyCheckIn onSave={handleSaveEnhancedCheckIn} />
@@ -403,12 +307,8 @@ export default function UnifiedMoodJournal() {
                                   <p className="text-sm text-misty-rosewood-500">
                                     {new Date(entry.date).toLocaleDateString()}
                                   </p>
-                                  <span className={`text-xs px-2 py-1 rounded-full ${
-                                    entry.entry_type === 'enhanced' 
-                                      ? 'bg-emerald-splash-100 text-emerald-splash-600' 
-                                      : 'bg-soft-blush-100 text-soft-blush-600'
-                                  }`}>
-                                    {entry.entry_type === 'enhanced' ? 'Enhanced' : 'Simple'}
+                                  <span className="text-xs px-2 py-1 rounded-full bg-emerald-splash-100 text-emerald-splash-600">
+                                    Enhanced
                                   </span>
                                 </div>
                               </div>

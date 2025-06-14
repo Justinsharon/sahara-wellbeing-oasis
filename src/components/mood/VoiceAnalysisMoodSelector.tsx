@@ -2,7 +2,7 @@
 import { useState, useRef } from "react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff, Play, Square, Loader2 } from "lucide-react";
+import { Mic, MicOff, Play, Square, Loader2, Pause } from "lucide-react";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { useCharacter } from "@/hooks/useCharacter";
 import { supabase } from "@/lib/supabase";
@@ -15,6 +15,7 @@ interface VoiceAnalysisMoodSelectorProps {
 
 export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: VoiceAnalysisMoodSelectorProps) {
   const [isRecording, setIsRecording] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
   const [hasRecorded, setHasRecorded] = useState(false);
@@ -56,21 +57,33 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
       
       mediaRecorder.start();
       setIsRecording(true);
+      setIsPaused(false);
       setRecordingTime(0);
       
       // Start timer
-      intervalRef.current = setInterval(() => {
-        setRecordingTime(prev => {
-          if (prev >= 30) {
-            stopRecording();
-            return 30;
-          }
-          return prev + 1;
-        });
-      }, 1000);
+      startTimer();
       
     } catch (error) {
       toast.error("Could not access microphone. Please check permissions.");
+    }
+  };
+
+  const pauseRecording = () => {
+    if (mediaRecorderRef.current && isRecording && !isPaused) {
+      mediaRecorderRef.current.pause();
+      setIsPaused(true);
+      
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    }
+  };
+
+  const resumeRecording = () => {
+    if (mediaRecorderRef.current && isRecording && isPaused) {
+      mediaRecorderRef.current.resume();
+      setIsPaused(false);
+      startTimer();
     }
   };
 
@@ -79,11 +92,24 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
       mediaRecorderRef.current.stop();
       mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
       setIsRecording(false);
+      setIsPaused(false);
       
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
     }
+  };
+
+  const startTimer = () => {
+    intervalRef.current = setInterval(() => {
+      setRecordingTime(prev => {
+        if (prev >= 30) {
+          stopRecording();
+          return 30;
+        }
+        return prev + 1;
+      });
+    }, 1000);
   };
 
   const analyzeVoice = async (audioBase64: string) => {
@@ -132,6 +158,7 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
     setDetectedMood(null);
     setConfidence(null);
     setRecordingTime(0);
+    setIsPaused(false);
     if (audioUrl) {
       URL.revokeObjectURL(audioUrl);
     }
@@ -185,20 +212,42 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
           {isRecording && (
             <div className="space-y-4">
               <div className="relative w-32 h-32 mx-auto">
+                <div className={`absolute inset-0 rounded-full border-4 ${isPaused ? 'border-yellow-500' : 'border-red-500'} ${!isPaused ? 'animate-pulse' : ''}`} />
+              </div>
+              
+              <div className="flex gap-4 justify-center">
+                {!isPaused ? (
+                  <Button
+                    onClick={pauseRecording}
+                    className="liquid-glass-button rounded-full w-16 h-16"
+                  >
+                    <Pause className="w-6 h-6" />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={resumeRecording}
+                    className="liquid-glass-button rounded-full w-16 h-16"
+                  >
+                    <Play className="w-6 h-6" />
+                  </Button>
+                )}
+                
                 <Button
                   onClick={stopRecording}
-                  className="liquid-glass-button w-full h-full rounded-full bg-red-500 hover:bg-red-600"
+                  className="liquid-glass-button rounded-full w-16 h-16 bg-red-500 hover:bg-red-600"
                 >
-                  <Square className="w-8 h-8" />
+                  <Square className="w-6 h-6" />
                 </Button>
-                <div className="absolute inset-0 rounded-full border-4 border-red-500 animate-pulse" />
               </div>
+              
               <div className="text-2xl font-bold text-crimson-wine-600">
-                {recordingTime}s / 30s
+                {recordingTime}s / 30s {isPaused && "(Paused)"}
               </div>
               <div className="w-full bg-soft-blush-100 rounded-full h-2">
                 <div
-                  className="bg-gradient-to-r from-emerald-splash-500 to-deep-teal-500 h-2 rounded-full transition-all duration-300"
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    isPaused ? 'bg-gradient-to-r from-yellow-400 to-yellow-500' : 'bg-gradient-to-r from-emerald-splash-500 to-deep-teal-500'
+                  }`}
                   style={{ width: `${(recordingTime / 30) * 100}%` }}
                 />
               </div>
