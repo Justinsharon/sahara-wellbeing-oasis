@@ -11,6 +11,8 @@ import Layout from "@/components/layout/Layout";
 import Index from "@/pages/Index";
 import PersonalGrowthRoutes from "@/routes/personalGrowthRoutes";
 import AuthPage from "@/pages/auth/AuthPage";
+import ForgotPassword from "@/pages/auth/ForgotPassword";
+import ResetPassword from "@/pages/auth/ResetPassword";
 import OnboardingAssessment from "@/pages/OnboardingAssessment";
 
 const Therapy = lazy(() => import("@/pages/Therapy"));
@@ -35,6 +37,8 @@ function App() {
             <CharacterProvider>
               <Routes>
                 <Route path="/auth" element={<AuthPage />} />
+                <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+                <Route path="/auth/reset-password" element={<ResetPassword />} />
                 <Route path="/character-creator" element={<CharacterCreator />} />
                 <Route path="/onboarding-assessment" element={<OnboardingAssessment />} />
                 <Route

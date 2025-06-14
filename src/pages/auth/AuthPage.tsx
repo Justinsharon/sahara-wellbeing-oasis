@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -109,6 +108,17 @@ export default function AuthPage() {
                   className="mt-1"
                 />
               </div>
+              
+              {!isSignUp && (
+                <div className="flex justify-end">
+                  <Link 
+                    to="/auth/forgot-password" 
+                    className="text-sm text-primary hover:underline"
+                  >
+                    Forgot your password?
+                  </Link>
+                </div>
+              )}
               
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? 'Loading...' : (isSignUp ? 'Create Account' : 'Sign In')}
