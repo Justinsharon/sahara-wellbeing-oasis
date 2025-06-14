@@ -1,4 +1,4 @@
-import { useMockAuth } from "@/hooks/useMockAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { useCharacter } from "@/hooks/useCharacter";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { MobileNav } from "./MobileNav";
@@ -26,8 +26,8 @@ const sideMenuItems = [
   { title: "Help & Support", url: "/help", icon: HelpCircle },
 ];
 
-export function Layout({ children }: LayoutProps) {
-  const { user, loading } = useMockAuth();
+export default function Layout({ children }: LayoutProps) {
+  const { user, loading } = useAuth();
   const { character, hasCharacter } = useCharacter();
   const navigate = useNavigate();
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
@@ -225,10 +225,10 @@ export function Layout({ children }: LayoutProps) {
             </p>
             <div className="space-y-4">
               <Button asChild className="btn-primary-modern w-full">
-                <Link to="/auth/signup">Get Started</Link>
+                <Link to="/auth">Get Started</Link>
               </Button>
               <Button variant="outline" asChild className="btn-secondary-modern w-full">
-                <Link to="/auth/signin">Sign In</Link>
+                <Link to="/auth">Sign In</Link>
               </Button>
             </div>
           </div>
@@ -237,5 +237,3 @@ export function Layout({ children }: LayoutProps) {
     </div>
   );
 }
-
-export default Layout;
