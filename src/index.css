@@ -3,91 +3,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Modern Design System for Sahara - 2025 Enhanced with Earthy 5-Color Palette */
+/* Modern Design System for Sahara - 2025 Enhanced with New 4-Color Palette */
 
 @layer base {
   :root {
-    /* New earthy 5-color palette with Light Soft Blush background */
-    --background: 345 20% 85%; /* Light Soft Blush for background */
-    --foreground: 350 65% 15%; /* Deep Crimson Wine for text */
+    /* New 4-color palette with Ivory background */
+    --background: 35 36% 95%; /* Ivory #F4F0ED for background */
+    --foreground: 210 20% 64%; /* French Blue #88A5BC for text */
 
-    --card: 345 15% 82%;
-    --card-foreground: 350 65% 15%;
+    --card: 22 28% 82%; /* Blush #E1C8BC */
+    --card-foreground: 210 20% 64%;
 
-    --popover: 345 15% 82%;
-    --popover-foreground: 350 65% 15%;
+    --popover: 22 28% 82%;
+    --popover-foreground: 210 20% 64%;
 
-    /* Primary - Crimson Wine */
-    --primary: 350 65% 22%; /* Crimson wine #501122 */
-    --primary-foreground: 0 0% 98%;
+    /* Primary - French Blue */
+    --primary: 210 20% 64%; /* French Blue #88A5BC */
+    --primary-foreground: 35 36% 95%;
 
-    /* Secondary - Misty Rosewood */
-    --secondary: 15 15% 36%; /* Misty rosewood #574144 */
-    --secondary-foreground: 0 0% 98%;
+    /* Secondary - Sage */
+    --secondary: 80 5% 64%; /* Sage #A1A79E */
+    --secondary-foreground: 35 36% 95%;
 
-    --muted: 345 10% 75%; /* Lighter muted for light background */
-    --muted-foreground: 350 65% 25%;
+    --muted: 22 28% 85%; /* Lighter version of Blush */
+    --muted-foreground: 210 20% 50%;
 
-    /* Accent - Soft Blush */
-    --accent: 345 20% 70%; /* Soft blush #bfa5a8 */
-    --accent-foreground: 350 65% 15%;
+    /* Accent - Sage */
+    --accent: 80 5% 64%; /* Sage #A1A79E */
+    --accent-foreground: 35 36% 95%;
 
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 345 15% 75%;
-    --input: 345 15% 80%;
-    --ring: 350 65% 22%;
+    --border: 22 28% 75%;
+    --input: 22 28% 80%;
+    --ring: 210 20% 64%;
 
     --radius: 2rem;
 
-    /* Extended earthy 5-color system */
-    --crimson-wine-50: 350 50% 95%;
-    --crimson-wine-100: 350 45% 85%;
-    --crimson-wine-500: 350 65% 22%;
-    --crimson-wine-600: 350 70% 18%;
-    
-    --misty-rosewood-50: 15 25% 90%;
-    --misty-rosewood-100: 15 20% 80%;
-    --misty-rosewood-500: 15 15% 36%;
-    --misty-rosewood-600: 15 20% 30%;
-    
-    --soft-blush-50: 345 30% 95%;
-    --soft-blush-100: 345 25% 85%;
-    --soft-blush-500: 345 20% 70%;
-    --soft-blush-600: 345 25% 60%;
-    
-    --deep-teal-50: 175 100% 90%;
-    --deep-teal-100: 175 80% 80%;
-    --deep-teal-500: 175 100% 15%;
-    --deep-teal-600: 175 100% 12%;
-    
-    --emerald-splash-50: 170 80% 90%;
-    --emerald-splash-100: 170 70% 80%;
-    --emerald-splash-500: 170 79% 28%;
-    --emerald-splash-600: 170 85% 22%;
-
     /* Custom colors for prototype */
-    --font-color: #2d1a1c; /* Dark color for light background */
-    --box-feature-color: #dfa9ae;
+    --font-color: #88A5BC; /* French Blue for typography */
+    --box-feature-color: #E1C8BC; /* Blush for rounded boxes */
+    --sage-color: #A1A79E; /* Sage for soft accents */
   }
 
   .dark {
-    --background: 350 65% 8%;
-    --foreground: 15 25% 95%;
-    --card: 350 65% 10%;
-    --card-foreground: 15 25% 95%;
-    --primary: 350 60% 30%;
-    --primary-foreground: 350 65% 8%;
-    --secondary: 15 20% 25%;
-    --secondary-foreground: 15 25% 95%;
-    --muted: 350 60% 15%;
-    --muted-foreground: 15 15% 65%;
-    --accent: 345 25% 50%;
-    --accent-foreground: 0 0% 98%;
-    --border: 350 60% 18%;
-    --input: 350 60% 18%;
-    --ring: 350 60% 30%;
+    --background: 210 20% 8%;
+    --foreground: 35 36% 95%;
+    --card: 210 20% 10%;
+    --card-foreground: 35 36% 95%;
+    --primary: 210 20% 50%;
+    --primary-foreground: 210 20% 8%;
+    --secondary: 80 5% 40%;
+    --secondary-foreground: 35 36% 95%;
+    --muted: 210 20% 15%;
+    --muted-foreground: 35 36% 65%;
+    --accent: 80 5% 50%;
+    --accent-foreground: 35 36% 95%;
+    --border: 210 20% 18%;
+    --input: 210 20% 18%;
+    --ring: 210 20% 50%;
   }
 }
 
@@ -105,8 +80,8 @@
   body {
     @apply bg-background antialiased;
     font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background-color: hsl(var(--background));
-    color: var(--font-color);
+    background-color: #F4F0ED; /* Ivory background */
+    color: #88A5BC; /* French Blue typography */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -121,74 +96,74 @@
 }
 
 @layer components {
-  /* Solid background classes - no gradients */
+  /* Solid background classes */
   .modern-gradient {
-    background-color: hsl(var(--crimson-wine-500));
+    background-color: #88A5BC; /* French Blue */
   }
 
   .wellness-gradient {
-    background-color: hsl(var(--crimson-wine-500));
+    background-color: #F4F0ED; /* Ivory */
   }
 
-  /* Glass morphism with solid backgrounds */
+  /* Glass morphism with new colors */
   .glass-card {
-    background-color: var(--box-feature-color);
+    background-color: #E1C8BC; /* Blush */
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(233, 211, 204, 0.3);
+    border: 1px solid rgba(136, 165, 188, 0.2);
     box-shadow: 
-      0 20px 40px rgba(80, 17, 34, 0.3),
-      0 8px 32px rgba(80, 17, 34, 0.2),
-      inset 0 1px 0 rgba(233, 211, 204, 0.4);
+      0 20px 40px rgba(136, 165, 188, 0.15),
+      0 8px 32px rgba(136, 165, 188, 0.1),
+      inset 0 1px 0 rgba(244, 240, 237, 0.4);
   }
 
   .glass-nav {
-    background-color: var(--box-feature-color);
+    background-color: #E1C8BC; /* Blush */
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(233, 211, 204, 0.35);
+    border: 1px solid rgba(136, 165, 188, 0.2);
     box-shadow: 
-      0 16px 32px rgba(80, 17, 34, 0.3),
-      0 4px 16px rgba(80, 17, 34, 0.2);
+      0 16px 32px rgba(136, 165, 188, 0.15),
+      0 4px 16px rgba(136, 165, 188, 0.1);
   }
 
-  /* Neomorphic elements with solid colors */
+  /* Neomorphic elements */
   .neo-card {
-    background-color: var(--box-feature-color);
+    background-color: #E1C8BC; /* Blush */
     box-shadow: 
-      20px 20px 40px rgba(80, 17, 34, 0.4),
-      -20px -20px 40px rgba(233, 211, 204, 0.1),
-      inset 0 1px 0 rgba(233, 211, 204, 0.2);
-    border: 1px solid rgba(233, 211, 204, 0.15);
+      20px 20px 40px rgba(136, 165, 188, 0.2),
+      -20px -20px 40px rgba(244, 240, 237, 0.1),
+      inset 0 1px 0 rgba(244, 240, 237, 0.2);
+    border: 1px solid rgba(136, 165, 188, 0.15);
   }
 
   .neo-button {
-    background-color: var(--box-feature-color);
+    background-color: #E1C8BC; /* Blush */
     box-shadow: 
-      8px 8px 16px rgba(80, 17, 34, 0.3),
-      -8px -8px 16px rgba(233, 211, 204, 0.1);
+      8px 8px 16px rgba(136, 165, 188, 0.15),
+      -8px -8px 16px rgba(244, 240, 237, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .neo-button:active {
     box-shadow: 
-      inset 8px 8px 16px rgba(80, 17, 34, 0.3),
-      inset -8px -8px 16px rgba(233, 211, 204, 0.1);
+      inset 8px 8px 16px rgba(136, 165, 188, 0.15),
+      inset -8px -8px 16px rgba(244, 240, 237, 0.1);
   }
 
-  /* Modern card designs with solid backgrounds */
+  /* Modern card designs */
   .insight-card {
     @apply rounded-3xl p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2;
-    background-color: var(--box-feature-color);
+    background-color: #E1C8BC; /* Blush */
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(233, 211, 204, 0.3);
+    border: 1px solid rgba(136, 165, 188, 0.2);
   }
 
   .metric-card {
     @apply relative overflow-hidden rounded-3xl p-6 transition-all duration-500 hover:scale-105;
-    background-color: var(--box-feature-color);
+    background-color: #E1C8BC; /* Blush */
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(233, 211, 204, 0.35);
+    border: 1px solid rgba(136, 165, 188, 0.2);
   }
 
   .metric-card::before {
@@ -198,70 +173,70 @@
     left: 0;
     right: 0;
     height: 4px;
-    background-color: var(--font-color);
+    background-color: #88A5BC; /* French Blue */
   }
 
-  /* Typography with Dancing Script and solid colors - NO GRADIENTS */
+  /* Typography with Dancing Script */
   .heading-xl {
     @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
     font-family: 'Dancing Script', cursive;
-    color: var(--font-color);
+    color: #88A5BC; /* French Blue */
     font-weight: 700;
   }
 
   .heading-gradient {
     font-family: 'Dancing Script', cursive;
-    color: var(--font-color);
+    color: #88A5BC; /* French Blue */
     font-weight: 600;
   }
 
-  /* Modern buttons with solid colors */
+  /* Modern buttons */
   .btn-primary-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
-    background-color: hsl(var(--crimson-wine-500));
+    background-color: #88A5BC; /* French Blue */
     box-shadow: 
-      0 10px 25px rgba(80, 17, 34, 0.35),
-      0 4px 12px rgba(80, 17, 34, 0.25);
+      0 10px 25px rgba(136, 165, 188, 0.25),
+      0 4px 12px rgba(136, 165, 188, 0.15);
   }
 
   .btn-primary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background-color: hsl(var(--crimson-wine-600));
+    background-color: #7A9BB5; /* Darker French Blue */
     box-shadow: 
-      0 15px 35px rgba(80, 17, 34, 0.45),
-      0 6px 18px rgba(80, 17, 34, 0.35);
+      0 15px 35px rgba(136, 165, 188, 0.35),
+      0 6px 18px rgba(136, 165, 188, 0.25);
   }
 
   .btn-secondary-modern {
     @apply rounded-2xl px-8 py-4 font-semibold transition-all duration-300;
-    background-color: var(--box-feature-color);
-    color: var(--font-color);
-    border: 1px solid rgba(233, 211, 204, 0.3);
+    background-color: #E1C8BC; /* Blush */
+    color: #88A5BC; /* French Blue */
+    border: 1px solid rgba(136, 165, 188, 0.2);
   }
 
   .btn-secondary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background-color: rgba(223, 169, 174, 0.8);
+    background-color: rgba(225, 200, 188, 0.8);
   }
 
   .btn-accent-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
-    background-color: hsl(var(--emerald-splash-500));
+    background-color: #A1A79E; /* Sage */
     box-shadow: 
-      0 10px 25px rgba(14, 124, 113, 0.35),
-      0 4px 12px rgba(14, 124, 113, 0.25);
+      0 10px 25px rgba(161, 167, 158, 0.25),
+      0 4px 12px rgba(161, 167, 158, 0.15);
   }
 
-  /* Enhanced Mobile Navigation with solid backgrounds */
+  /* Enhanced Mobile Navigation */
   .enhanced-mobile-nav {
-    background-color: var(--box-feature-color);
+    background-color: #E1C8BC; /* Blush */
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-top: 1px solid rgba(233, 211, 204, 0.4);
+    border-top: 1px solid rgba(136, 165, 188, 0.2);
     box-shadow: 
-      0 -20px 40px rgba(80, 17, 34, 0.3),
-      0 -8px 32px rgba(80, 17, 34, 0.2),
-      inset 0 1px 0 rgba(233, 211, 204, 0.5);
+      0 -20px 40px rgba(136, 165, 188, 0.15),
+      0 -8px 32px rgba(136, 165, 188, 0.1),
+      inset 0 1px 0 rgba(244, 240, 237, 0.4);
     position: relative;
   }
 
@@ -272,82 +247,77 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: var(--font-color);
+    background-color: #88A5BC; /* French Blue */
     opacity: 0.9;
   }
 
-  /* Progress indicators with solid colors */
+  /* Progress indicators */
   .progress-modern {
     @apply relative h-3 overflow-hidden rounded-full;
-    background-color: rgba(80, 17, 34, 0.3);
+    background-color: rgba(136, 165, 188, 0.2);
   }
 
   .progress-modern .progress-fill {
     @apply h-full rounded-full transition-all duration-700 ease-out;
-    background-color: hsl(var(--emerald-splash-500));
-    box-shadow: 0 4px 12px rgba(233, 211, 204, 0.4);
+    background-color: #A1A79E; /* Sage */
+    box-shadow: 0 4px 12px rgba(161, 167, 158, 0.3);
   }
 
-  /* Floating elements with solid colors */
+  /* Floating elements */
   .floating-action {
     @apply fixed bottom-24 right-6 w-16 h-16 rounded-full shadow-2xl transition-all duration-300 z-50;
-    background-color: hsl(var(--crimson-wine-500));
+    background-color: #88A5BC; /* French Blue */
     box-shadow: 
-      0 15px 35px rgba(80, 17, 34, 0.45),
-      0 6px 18px rgba(80, 17, 34, 0.35);
+      0 15px 35px rgba(136, 165, 188, 0.35),
+      0 6px 18px rgba(136, 165, 188, 0.25);
   }
 
   .floating-action:hover {
     @apply scale-110 -translate-y-1;
   }
 
-  /* Chart enhancements with solid backgrounds */
+  /* Chart enhancements */
   .chart-container {
     @apply rounded-3xl p-6;
-    background-color: var(--box-feature-color);
-    border: 1px solid rgba(233, 211, 204, 0.3);
+    background-color: #E1C8BC; /* Blush */
+    border: 1px solid rgba(136, 165, 188, 0.2);
   }
 
-  /* Loading animations with solid colors */
+  /* Loading animations */
   .skeleton-modern {
     @apply animate-pulse rounded-2xl;
-    background-color: var(--box-feature-color);
+    background-color: #E1C8BC; /* Blush */
     animation: shimmer 2s infinite ease-in-out;
   }
 
-  /* Tab styles with solid colors */
+  /* Tab styles */
   .tab-modern {
     @apply transition-all duration-300 rounded-xl px-4 py-2;
-    color: var(--font-color);
+    color: #88A5BC; /* French Blue */
   }
 
   .tab-modern[data-state="active"] {
-    background-color: var(--font-color);
-    color: hsl(var(--crimson-wine-600));
+    background-color: #88A5BC; /* French Blue */
+    color: #F4F0ED; /* Ivory */
     box-shadow: 
-      0 8px 20px rgba(233, 211, 204, 0.25),
-      0 4px 12px rgba(233, 211, 204, 0.15);
+      0 8px 20px rgba(136, 165, 188, 0.25),
+      0 4px 12px rgba(136, 165, 188, 0.15);
   }
 
-  /* Tab trigger styles with solid colors */
-  .tab-trigger-crimson[data-state="active"] {
-    background-color: hsl(var(--crimson-wine-500));
+  /* Tab trigger styles */
+  .tab-trigger-primary[data-state="active"] {
+    background-color: #88A5BC; /* French Blue */
     color: white;
   }
 
-  .tab-trigger-emerald[data-state="active"] {
-    background-color: hsl(var(--emerald-splash-500));
-    color: white;
-  }
-
-  .tab-trigger-teal[data-state="active"] {
-    background-color: hsl(var(--deep-teal-500));
+  .tab-trigger-sage[data-state="active"] {
+    background-color: #A1A79E; /* Sage */
     color: white;
   }
 
   .tab-trigger-blush[data-state="active"] {
-    background-color: var(--font-color);
-    color: hsl(var(--crimson-wine-600));
+    background-color: #E1C8BC; /* Blush */
+    color: #88A5BC; /* French Blue */
   }
 
   /* Hover effects */
@@ -362,16 +332,16 @@
   /* Card with shadow */
   .soft-shadow {
     box-shadow: 
-      0 10px 25px rgba(80, 17, 34, 0.25),
-      0 4px 12px rgba(80, 17, 34, 0.15);
+      0 10px 25px rgba(136, 165, 188, 0.15),
+      0 4px 12px rgba(136, 165, 188, 0.1);
   }
 
-  /* Glass input with solid background */
+  /* Glass input */
   .glass-input {
-    background-color: var(--box-feature-color);
+    background-color: #E1C8BC; /* Blush */
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(233, 211, 204, 0.35);
-    color: var(--font-color);
+    border: 1px solid rgba(136, 165, 188, 0.2);
+    color: #88A5BC; /* French Blue */
   }
 
   /* Animate utilities */
@@ -397,60 +367,20 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* Color utilities for earthy 5-color palette */
-  .text-crimson-wine-50 { color: hsl(var(--crimson-wine-50)); }
-  .text-crimson-wine-100 { color: hsl(var(--crimson-wine-100)); }
-  .text-crimson-wine-500 { color: hsl(var(--crimson-wine-500)); }
-  .text-crimson-wine-600 { color: hsl(var(--crimson-wine-600)); }
+  /* Color utilities for new 4-color palette */
+  .text-ivory { color: #F4F0ED; }
+  .text-french-blue { color: #88A5BC; }
+  .text-blush { color: #E1C8BC; }
+  .text-sage { color: #A1A79E; }
   
-  .text-misty-rosewood-50 { color: hsl(var(--misty-rosewood-50)); }
-  .text-misty-rosewood-100 { color: hsl(var(--misty-rosewood-100)); }
-  .text-misty-rosewood-500 { color: hsl(var(--misty-rosewood-500)); }
-  .text-misty-rosewood-600 { color: hsl(var(--misty-rosewood-600)); }
-  
-  .text-soft-blush-50 { color: hsl(var(--soft-blush-50)); }
-  .text-soft-blush-100 { color: hsl(var(--soft-blush-100)); }
-  .text-soft-blush-500 { color: hsl(var(--soft-blush-500)); }
-  .text-soft-blush-600 { color: hsl(var(--soft-blush-600)); }
-  
-  .text-deep-teal-50 { color: hsl(var(--deep-teal-50)); }
-  .text-deep-teal-100 { color: hsl(var(--deep-teal-100)); }
-  .text-deep-teal-500 { color: hsl(var(--deep-teal-500)); }
-  .text-deep-teal-600 { color: hsl(var(--deep-teal-600)); }
-  
-  .text-emerald-splash-50 { color: hsl(var(--emerald-splash-50)); }
-  .text-emerald-splash-100 { color: hsl(var(--emerald-splash-100)); }
-  .text-emerald-splash-500 { color: hsl(var(--emerald-splash-500)); }
-  .text-emerald-splash-600 { color: hsl(var(--emerald-splash-600)); }
-
-  .bg-crimson-wine-50 { background-color: hsl(var(--crimson-wine-50)); }
-  .bg-crimson-wine-100 { background-color: hsl(var(--crimson-wine-100)); }
-  .bg-crimson-wine-500 { background-color: hsl(var(--crimson-wine-500)); }
-  .bg-crimson-wine-600 { background-color: hsl(var(--crimson-wine-600)); }
-  
-  .bg-misty-rosewood-50 { background-color: hsl(var(--misty-rosewood-50)); }
-  .bg-misty-rosewood-100 { background-color: hsl(var(--misty-rosewood-100)); }
-  .bg-misty-rosewood-500 { background-color: hsl(var(--misty-rosewood-500)); }
-  .bg-misty-rosewood-600 { background-color: hsl(var(--misty-rosewood-600)); }
-  
-  .bg-soft-blush-50 { background-color: hsl(var(--soft-blush-50)); }
-  .bg-soft-blush-100 { background-color: hsl(var(--soft-blush-100)); }
-  .bg-soft-blush-500 { background-color: hsl(var(--soft-blush-500)); }
-  .bg-soft-blush-600 { background-color: hsl(var(--soft-blush-600)); }
-  
-  .bg-deep-teal-50 { background-color: hsl(var(--deep-teal-50)); }
-  .bg-deep-teal-100 { background-color: hsl(var(--deep-teal-100)); }
-  .bg-deep-teal-500 { background-color: hsl(var(--deep-teal-500)); }
-  .bg-deep-teal-600 { background-color: hsl(var(--deep-teal-600)); }
-  
-  .bg-emerald-splash-50 { background-color: hsl(var(--emerald-splash-50)); }
-  .bg-emerald-splash-100 { background-color: hsl(var(--emerald-splash-100)); }
-  .bg-emerald-splash-500 { background-color: hsl(var(--emerald-splash-500)); }
-  .bg-emerald-splash-600 { background-color: hsl(var(--emerald-splash-600)); }
+  .bg-ivory { background-color: #F4F0ED; }
+  .bg-french-blue { background-color: #88A5BC; }
+  .bg-blush { background-color: #E1C8BC; }
+  .bg-sage { background-color: #A1A79E; }
 
   /* Custom prototype colors */
-  .text-font-color { color: var(--font-color); }
-  .bg-box-feature { background-color: var(--box-feature-color); }
+  .text-font-color { color: #88A5BC; }
+  .bg-box-feature { background-color: #E1C8BC; }
 
   /* Modern animations */
   .animate-float {
