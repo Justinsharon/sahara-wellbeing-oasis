@@ -66,6 +66,10 @@
     --emerald-splash-100: 170 70% 80%;
     --emerald-splash-500: 170 79% 28%;
     --emerald-splash-600: 170 85% 22%;
+
+    /* Custom colors for prototype */
+    --font-color: #e9d3cc;
+    --box-feature-color: #dfa9ae;
   }
 
   .dark {
@@ -99,9 +103,10 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background antialiased;
     font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background-color: hsl(var(--crimson-wine-500));
+    color: var(--font-color);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -127,21 +132,21 @@
 
   /* Glass morphism with solid backgrounds */
   .glass-card {
-    background-color: rgba(80, 17, 34, 0.4);
+    background-color: var(--box-feature-color);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(191, 165, 168, 0.3);
+    border: 1px solid rgba(233, 211, 204, 0.3);
     box-shadow: 
       0 20px 40px rgba(80, 17, 34, 0.3),
       0 8px 32px rgba(80, 17, 34, 0.2),
-      inset 0 1px 0 rgba(191, 165, 168, 0.4);
+      inset 0 1px 0 rgba(233, 211, 204, 0.4);
   }
 
   .glass-nav {
-    background-color: rgba(80, 17, 34, 0.5);
+    background-color: var(--box-feature-color);
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(191, 165, 168, 0.35);
+    border: 1px solid rgba(233, 211, 204, 0.35);
     box-shadow: 
       0 16px 32px rgba(80, 17, 34, 0.3),
       0 4px 16px rgba(80, 17, 34, 0.2);
@@ -149,39 +154,41 @@
 
   /* Neomorphic elements with solid colors */
   .neo-card {
-    background-color: hsl(var(--crimson-wine-500));
+    background-color: var(--box-feature-color);
     box-shadow: 
       20px 20px 40px rgba(80, 17, 34, 0.4),
-      -20px -20px 40px rgba(191, 165, 168, 0.1),
-      inset 0 1px 0 rgba(191, 165, 168, 0.2);
-    border: 1px solid rgba(191, 165, 168, 0.15);
+      -20px -20px 40px rgba(233, 211, 204, 0.1),
+      inset 0 1px 0 rgba(233, 211, 204, 0.2);
+    border: 1px solid rgba(233, 211, 204, 0.15);
   }
 
   .neo-button {
-    background-color: hsl(var(--crimson-wine-500));
+    background-color: var(--box-feature-color);
     box-shadow: 
       8px 8px 16px rgba(80, 17, 34, 0.3),
-      -8px -8px 16px rgba(191, 165, 168, 0.1);
+      -8px -8px 16px rgba(233, 211, 204, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .neo-button:active {
     box-shadow: 
       inset 8px 8px 16px rgba(80, 17, 34, 0.3),
-      inset -8px -8px 16px rgba(191, 165, 168, 0.1);
+      inset -8px -8px 16px rgba(233, 211, 204, 0.1);
   }
 
   /* Modern card designs with solid backgrounds */
   .insight-card {
-    @apply glass-card rounded-3xl p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2;
-    background-color: rgba(80, 17, 34, 0.4);
+    @apply rounded-3xl p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2;
+    background-color: var(--box-feature-color);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(233, 211, 204, 0.3);
   }
 
   .metric-card {
     @apply relative overflow-hidden rounded-3xl p-6 transition-all duration-500 hover:scale-105;
-    background-color: rgba(80, 17, 34, 0.5);
+    background-color: var(--box-feature-color);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(191, 165, 168, 0.35);
+    border: 1px solid rgba(233, 211, 204, 0.35);
   }
 
   .metric-card::before {
@@ -191,20 +198,20 @@
     left: 0;
     right: 0;
     height: 4px;
-    background-color: hsl(var(--soft-blush-500));
+    background-color: var(--font-color);
   }
 
   /* Typography with Dancing Script and solid colors - NO GRADIENTS */
   .heading-xl {
     @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
     font-family: 'Dancing Script', cursive;
-    color: hsl(var(--soft-blush-500));
+    color: var(--font-color);
     font-weight: 700;
   }
 
   .heading-gradient {
     font-family: 'Dancing Script', cursive;
-    color: hsl(var(--soft-blush-500));
+    color: var(--font-color);
     font-weight: 600;
   }
 
@@ -226,14 +233,15 @@
   }
 
   .btn-secondary-modern {
-    @apply glass-card rounded-2xl px-8 py-4 font-semibold transition-all duration-300;
-    color: hsl(var(--soft-blush-100));
-    border: 1px solid rgba(191, 165, 168, 0.3);
+    @apply rounded-2xl px-8 py-4 font-semibold transition-all duration-300;
+    background-color: var(--box-feature-color);
+    color: var(--font-color);
+    border: 1px solid rgba(233, 211, 204, 0.3);
   }
 
   .btn-secondary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background-color: rgba(80, 17, 34, 0.3);
+    background-color: rgba(223, 169, 174, 0.8);
   }
 
   .btn-accent-modern {
@@ -246,14 +254,14 @@
 
   /* Enhanced Mobile Navigation with solid backgrounds */
   .enhanced-mobile-nav {
-    background-color: rgba(80, 17, 34, 0.6);
+    background-color: var(--box-feature-color);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-top: 1px solid rgba(191, 165, 168, 0.4);
+    border-top: 1px solid rgba(233, 211, 204, 0.4);
     box-shadow: 
       0 -20px 40px rgba(80, 17, 34, 0.3),
       0 -8px 32px rgba(80, 17, 34, 0.2),
-      inset 0 1px 0 rgba(191, 165, 168, 0.5);
+      inset 0 1px 0 rgba(233, 211, 204, 0.5);
     position: relative;
   }
 
@@ -264,7 +272,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: hsl(var(--soft-blush-500));
+    background-color: var(--font-color);
     opacity: 0.9;
   }
 
@@ -277,7 +285,7 @@
   .progress-modern .progress-fill {
     @apply h-full rounded-full transition-all duration-700 ease-out;
     background-color: hsl(var(--emerald-splash-500));
-    box-shadow: 0 4px 12px rgba(191, 165, 168, 0.4);
+    box-shadow: 0 4px 12px rgba(233, 211, 204, 0.4);
   }
 
   /* Floating elements with solid colors */
@@ -295,29 +303,30 @@
 
   /* Chart enhancements with solid backgrounds */
   .chart-container {
-    @apply glass-card rounded-3xl p-6;
-    background-color: rgba(80, 17, 34, 0.4);
+    @apply rounded-3xl p-6;
+    background-color: var(--box-feature-color);
+    border: 1px solid rgba(233, 211, 204, 0.3);
   }
 
   /* Loading animations with solid colors */
   .skeleton-modern {
     @apply animate-pulse rounded-2xl;
-    background-color: rgba(80, 17, 34, 0.4);
+    background-color: var(--box-feature-color);
     animation: shimmer 2s infinite ease-in-out;
   }
 
   /* Tab styles with solid colors */
   .tab-modern {
     @apply transition-all duration-300 rounded-xl px-4 py-2;
-    color: hsl(var(--soft-blush-100));
+    color: var(--font-color);
   }
 
   .tab-modern[data-state="active"] {
-    background-color: hsl(var(--soft-blush-500));
+    background-color: var(--font-color);
     color: hsl(var(--crimson-wine-600));
     box-shadow: 
-      0 8px 20px rgba(191, 165, 168, 0.25),
-      0 4px 12px rgba(191, 165, 168, 0.15);
+      0 8px 20px rgba(233, 211, 204, 0.25),
+      0 4px 12px rgba(233, 211, 204, 0.15);
   }
 
   /* Tab trigger styles with solid colors */
@@ -337,7 +346,7 @@
   }
 
   .tab-trigger-blush[data-state="active"] {
-    background-color: hsl(var(--soft-blush-500));
+    background-color: var(--font-color);
     color: hsl(var(--crimson-wine-600));
   }
 
@@ -359,10 +368,10 @@
 
   /* Glass input with solid background */
   .glass-input {
-    background-color: rgba(80, 17, 34, 0.4);
+    background-color: var(--box-feature-color);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(191, 165, 168, 0.35);
-    color: hsl(var(--soft-blush-100));
+    border: 1px solid rgba(233, 211, 204, 0.35);
+    color: var(--font-color);
   }
 
   /* Animate utilities */
@@ -438,6 +447,10 @@
   .bg-emerald-splash-100 { background-color: hsl(var(--emerald-splash-100)); }
   .bg-emerald-splash-500 { background-color: hsl(var(--emerald-splash-500)); }
   .bg-emerald-splash-600 { background-color: hsl(var(--emerald-splash-600)); }
+
+  /* Custom prototype colors */
+  .text-font-color { color: var(--font-color); }
+  .bg-box-feature { background-color: var(--box-feature-color); }
 
   /* Modern animations */
   .animate-float {
