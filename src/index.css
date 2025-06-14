@@ -1,6 +1,10 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import liquid glass styles */
+@import url('./components/ui/liquid-glass.css');
 
 /* Modern Design System for Sahara - 2025 Enhanced with Color Mapping Palette */
 

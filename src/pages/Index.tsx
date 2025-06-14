@@ -1,7 +1,10 @@
+
 import { Link } from "react-router-dom";
 import { Heart, Users, TrendingUp, Search, MessageCircle, BarChart3, Shield, Clock, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
+import { LiquidGlassButton, LiquidGlassInput, LiquidGlassForm } from "@/components/ui/liquid-glass-form";
 import { useMockAuth } from "@/hooks/useMockAuth";
 
 const featureCards = [
@@ -60,9 +63,14 @@ export default function Index() {
 
   return (
     <div className="min-h-screen p-4 md:p-6 lg:p-8">
-      {/* Hero Section */}
+      {/* Enhanced Hero Section with Liquid Glass */}
       <section className="mb-12">
-        <div className="text-center max-w-4xl mx-auto">
+        <LiquidGlass 
+          variant="card" 
+          floating 
+          bubbles 
+          className="text-center max-w-4xl mx-auto p-8"
+        >
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-crimson-wine">
             <span className="heading-gradient">
               Welcome to Your Wellness Oasis
@@ -75,44 +83,48 @@ export default function Index() {
           
           {!user ? (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="btn-primary-modern rounded-xl" asChild>
+              <LiquidGlassButton size="lg" asChild>
                 <Link to="/auth/signup">Start Your Journey</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="btn-secondary-modern rounded-xl" asChild>
+              </LiquidGlassButton>
+              <LiquidGlassButton variant="ghost" size="lg" asChild>
                 <Link to="/auth/signin">Welcome Back</Link>
-              </Button>
+              </LiquidGlassButton>
             </div>
           ) : (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="btn-primary-modern rounded-xl" asChild>
+              <LiquidGlassButton size="lg" asChild>
                 <Link to="/therapy">Book a Session</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="btn-accent-modern rounded-xl" asChild>
+              </LiquidGlassButton>
+              <LiquidGlassButton variant="ghost" size="lg" asChild>
                 <Link to="/chat">Chat with Nia</Link>
-              </Button>
+              </LiquidGlassButton>
             </div>
           )}
-        </div>
+        </LiquidGlass>
       </section>
 
-      {/* Stats Section */}
+      {/* Enhanced Stats Section with Crystal Glass */}
       <section className="mb-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {stats.map((stat, index) => (
-            <Card key={index} className="text-center soft-shadow border-0 glass-card">
-              <CardContent className="pt-6">
-                <div className="w-12 h-12 rounded-lg bg-crimson-wine flex items-center justify-center mx-auto mb-4">
-                  <stat.icon className="w-6 h-6 text-off-white" />
-                </div>
-                <div className="text-3xl font-bold mb-2 text-deep-charcoal">{stat.value}</div>
-                <div className="text-warm-gray">{stat.label}</div>
-              </CardContent>
-            </Card>
+            <LiquidGlass 
+              key={index} 
+              variant="crystal" 
+              interactive 
+              floating 
+              className="text-center p-6"
+            >
+              <div className="w-12 h-12 rounded-lg bg-crimson-wine flex items-center justify-center mx-auto mb-4">
+                <stat.icon className="w-6 h-6 text-off-white" />
+              </div>
+              <div className="text-3xl font-bold mb-2 text-deep-charcoal">{stat.value}</div>
+              <div className="text-warm-gray">{stat.label}</div>
+            </LiquidGlass>
           ))}
         </div>
       </section>
 
-      {/* Feature Cards */}
+      {/* Feature Cards with Liquid Glass Effects */}
       <section className="mb-12">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-4 text-crimson-wine">Comprehensive Wellness Support</h2>
@@ -124,43 +136,69 @@ export default function Index() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {featureCards.map((card, index) => (
             <Link key={index} to={user ? card.href : "/auth/signup"} className="group">
-              <Card className="card-hover soft-shadow border-0 h-full glass-card">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-crimson-wine flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <card.icon className="w-6 h-6 text-off-white" />
-                  </div>
-                  <CardTitle className="text-xl text-deep-charcoal">{card.title}</CardTitle>
-                  <CardDescription className="text-warm-gray">
-                    {card.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <LiquidGlass 
+                variant="card" 
+                interactive 
+                floating 
+                bubbles={index % 2 === 0}
+                liquidBorder={index % 3 === 0}
+                className="h-full p-6"
+              >
+                <div className="w-12 h-12 rounded-lg bg-crimson-wine flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <card.icon className="w-6 h-6 text-off-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-deep-charcoal">{card.title}</h3>
+                <p className="text-warm-gray">{card.description}</p>
+              </LiquidGlass>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Enhanced CTA Section with Frosted Glass */}
       <section className="text-center py-12">
-        <Card className="max-w-2xl mx-auto soft-shadow border-0 bg-box-feature">
-          <CardContent className="pt-8">
-            <h3 className="text-2xl font-bold mb-4 text-deep-charcoal">
-              Ready to Begin Your Healing Journey?
-            </h3>
-            <p className="text-warm-gray mb-6">
-              Join thousands who have found support, growth, and healing through Sahara.
-            </p>
-            {!user ? (
-              <Button size="lg" className="btn-primary-modern rounded-xl" asChild>
-                <Link to="/auth/signup">Get Started Today</Link>
-              </Button>
-            ) : (
-              <Button size="lg" className="btn-accent-modern rounded-xl" asChild>
-                <Link to="/personal-growth">Continue Your Growth</Link>
-              </Button>
-            )}
-          </CardContent>
-        </Card>
+        <LiquidGlass variant="overlay" floating bubbles className="max-w-2xl mx-auto p-8">
+          <h3 className="text-2xl font-bold mb-4 text-deep-charcoal">
+            Ready to Begin Your Healing Journey?
+          </h3>
+          <p className="text-warm-gray mb-6">
+            Join thousands who have found support, growth, and healing through Sahara.
+          </p>
+          {!user ? (
+            <LiquidGlassButton size="lg" asChild>
+              <Link to="/auth/signup">Get Started Today</Link>
+            </LiquidGlassButton>
+          ) : (
+            <LiquidGlassButton variant="ghost" size="lg" asChild>
+              <Link to="/personal-growth">Continue Your Growth</Link>
+            </LiquidGlassButton>
+          )}
+        </LiquidGlass>
+      </section>
+
+      {/* Demo Liquid Glass Form */}
+      <section className="mb-12">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold mb-4 text-crimson-wine">Experience Liquid Glass Design</h2>
+        </div>
+        
+        <LiquidGlassForm 
+          title="Quick Wellness Check-in" 
+          description="Try our liquid glass form elements"
+          className="max-w-sm"
+        >
+          <LiquidGlassInput 
+            label="Your Name" 
+            placeholder="Enter your name"
+          />
+          <LiquidGlassInput 
+            label="How are you feeling today?" 
+            placeholder="Share your mood"
+          />
+          <LiquidGlassButton className="w-full">
+            Submit Check-in
+          </LiquidGlassButton>
+        </LiquidGlassForm>
       </section>
     </div>
   );
