@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -18,7 +17,7 @@ export const useAssessment = () => {
         .from('assessment_sessions')
         .insert({
           user_id: userId,
-          status: 'in_progress',
+          status: 'in_progress' as const,
           current_question_id: assessmentQuestions[0].id,
         })
         .select()
@@ -29,7 +28,7 @@ export const useAssessment = () => {
       const newSession: AssessmentSession = {
         id: data.id,
         userId: data.user_id,
-        status: data.status,
+        status: data.status as 'in_progress' | 'completed' | 'abandoned',
         currentQuestionId: data.current_question_id,
         emotionalScore: data.emotional_score,
         physicalScore: data.physical_score,
@@ -210,7 +209,7 @@ export const useAssessment = () => {
       await supabase
         .from('assessment_sessions')
         .update({
-          status: 'completed',
+          status: 'completed' as const,
           completed_at: new Date().toISOString(),
         })
         .eq('id', currentSession.id);

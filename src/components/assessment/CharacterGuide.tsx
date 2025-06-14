@@ -44,16 +44,16 @@ export function CharacterGuide({ character, currentQuestion, responses }: Charac
   const getCharacterExpression = () => {
     const lastResponse = responses[responses.length - 1];
     
-    if (!lastResponse) return 'friendly';
+    if (!lastResponse) return { type: 'neutral' as const, intensity: 'medium' as const };
     
     // Determine expression based on recent responses
     if (lastResponse.emotionalScore >= 3 || lastResponse.physicalScore >= 3) {
-      return 'concerned';
+      return { type: 'concerned' as const, intensity: 'medium' as const };
     } else if (lastResponse.emotionalScore <= 0 && lastResponse.physicalScore <= 0) {
-      return 'happy';
+      return { type: 'happy' as const, intensity: 'medium' as const };
     }
     
-    return 'empathetic';
+    return { type: 'neutral' as const, intensity: 'medium' as const };
   };
 
   return (

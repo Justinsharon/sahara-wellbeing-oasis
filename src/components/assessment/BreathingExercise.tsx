@@ -96,7 +96,7 @@ export function BreathingExercise({ character, onComplete }: BreathingExercisePr
             <CharacterAvatar 
               character={character} 
               size="lg"
-              expression="calm"
+              expression={{ type: 'neutral', intensity: 'medium' }}
             />
             
             <div className="text-center">

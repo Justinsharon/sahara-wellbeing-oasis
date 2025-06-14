@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { CharacterAvatar } from '@/components/character/CharacterAvatar';
 import { CharacterCompanion } from '@/types/character';
 import { TherapyRecommendation } from '@/types/assessment';
-import { Heart, Brain, Lotus, Palette, TreePine, Activity, MessageCircle } from 'lucide-react';
+import { Heart, Brain, Flower, Palette, TreePine, Activity, MessageCircle } from 'lucide-react';
 
 interface TherapyRecommendationsProps {
   recommendations: TherapyRecommendation[];
@@ -19,7 +19,7 @@ export function TherapyRecommendations({ recommendations, character, onFinish }:
       case 'CBT': return Brain;
       case 'DBT': return Heart;
       case 'ACT': return TreePine;
-      case 'Mindfulness': return Lotus;
+      case 'Mindfulness': return Flower;
       case 'Yoga': return Activity;
       case 'Mandala Art': return Palette;
       case 'Humanistic': return MessageCircle;
@@ -66,7 +66,7 @@ export function TherapyRecommendations({ recommendations, character, onFinish }:
               <CharacterAvatar 
                 character={character} 
                 size="lg"
-                expression="happy"
+                expression={{ type: 'happy', intensity: 'medium' }}
               />
               <div>
                 <CardTitle className="text-2xl mb-2">Assessment Complete!</CardTitle>
