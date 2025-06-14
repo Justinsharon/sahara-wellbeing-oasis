@@ -17,8 +17,15 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const { user, signUp, signIn } = useAuth();
 
-  // Redirect if already logged in
+  // Redirect based on onboarding status
   if (user) {
+    if (!user.onboarding_completed) {
+      if (!user.character_companion) {
+        return <Navigate to="/character-creator" replace />;
+      } else {
+        return <Navigate to="/onboarding-assessment" replace />;
+      }
+    }
     return <Navigate to="/personal-growth" replace />;
   }
 

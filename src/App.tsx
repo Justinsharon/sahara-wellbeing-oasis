@@ -11,6 +11,7 @@ import Layout from "@/components/layout/Layout";
 import Index from "@/pages/Index";
 import PersonalGrowthRoutes from "@/routes/personalGrowthRoutes";
 import AuthPage from "@/pages/auth/AuthPage";
+import OnboardingAssessment from "@/pages/OnboardingAssessment";
 
 const Therapy = lazy(() => import("@/pages/Therapy"));
 const Community = lazy(() => import("@/pages/Community"));
@@ -34,6 +35,8 @@ function App() {
             <CharacterProvider>
               <Routes>
                 <Route path="/auth" element={<AuthPage />} />
+                <Route path="/character-creator" element={<CharacterCreator />} />
+                <Route path="/onboarding-assessment" element={<OnboardingAssessment />} />
                 <Route
                   path="/*"
                   element={
@@ -47,7 +50,6 @@ function App() {
                           <Route path="/insights/*" element={<Insights />} />
                           <Route path="/emergency/*" element={<Emergency />} />
                           <Route path="/chat/*" element={<Chat />} />
-                          <Route path="/character-creator/*" element={<CharacterCreator />} />
                           <Route path="/personal-growth/*" element={<PersonalGrowthRoutes />} />
                           <Route path="*" element={<NotFound />} />
                         </Routes>

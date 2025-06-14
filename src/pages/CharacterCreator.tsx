@@ -6,14 +6,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { CharacterAvatar } from '@/components/character/CharacterAvatar';
 import { CharacterAppearance } from '@/types/character';
 
 export default function CharacterCreator() {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -33,13 +32,18 @@ export default function CharacterCreator() {
   };
 
   const handleSubmit = async () => {
-    if (!name) {
+    if (!name.trim()) {
       toast.error('Please enter a name for your character.');
       return;
     }
 
+    if (!user) {
+      toast.error('Please sign in to create your character.');
+      return;
+    }
+
     const characterData = {
-      name: name,
+      name: name.trim(),
       appearance: {
         skin_tone: skinTone,
         hair_color: hairColor,
@@ -47,6 +51,11 @@ export default function CharacterCreator() {
         eye_color: eyeColor,
         accessories: accessories,
         outfit: outfit,
+      },
+      personality: {
+        traits: [],
+        communication_style: 'friendly' as const,
+        mood_response_style: 'empathetic' as const
       },
       relationship: {
         bond_level: 1,
@@ -59,21 +68,14 @@ export default function CharacterCreator() {
     };
 
     try {
-      const response = await fetch('/api/create-character', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(characterData),
+      // Store character data as JSON string in the database
+      await updateProfile({
+        character_companion: JSON.stringify(characterData)
       });
 
-      if (response.ok) {
-        toast.success('Character created successfully!');
-        navigate('/');
-      } else {
-        const errorData = await response.json();
-        toast.error(`Failed to create character: ${errorData.message || 'Unknown error'}`);
-      }
+      toast.success('Character created successfully!');
+      // Navigate to onboarding assessment
+      navigate('/onboarding-assessment');
     } catch (error: any) {
       console.error('Error creating character:', error);
       toast.error(`Failed to create character: ${error.message || 'Unknown error'}`);
@@ -98,11 +100,11 @@ export default function CharacterCreator() {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6 lg:p-8 pb-20 md:pb-8">
+    <div className="min-h-screen p-4 md:p-6 lg:p-8 pb-20 md:pb-8 wellness-gradient">
       <div className="max-w-4xl mx-auto">
         <Card className="soft-shadow border-0 mb-8">
           <CardHeader>
-            <CardTitle>Create Your Character</CardTitle>
+            <CardTitle>Create Your Companion</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -147,6 +149,7 @@ export default function CharacterCreator() {
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter companion name"
                   />
                 </div>
 
@@ -243,7 +246,7 @@ export default function CharacterCreator() {
             </div>
 
             <Button onClick={handleSubmit} className="w-full md:w-auto">
-              Create Character
+              Create Companion & Start Assessment
             </Button>
           </CardContent>
         </Card>
