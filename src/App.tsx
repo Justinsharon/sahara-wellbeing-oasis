@@ -9,6 +9,9 @@ import { Layout } from "@/components/layout/Layout";
 import Index from "./pages/Index";
 import SignUp from "./pages/auth/SignUp";
 import SignIn from "./pages/auth/SignIn";
+import PersonalGrowth from "./pages/PersonalGrowth";
+import Goals from "./pages/personal-growth/Goals";
+import MoodJournal from "./pages/personal-growth/MoodJournal";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
