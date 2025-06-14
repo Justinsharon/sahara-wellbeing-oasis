@@ -2,7 +2,7 @@
 import { useState, useRef } from "react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff, Play, Square, Loader2, Pause } from "lucide-react";
+import { Mic, MicOff, Play, Square, Loader2, Pause, AlertCircle } from "lucide-react";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { useCharacter } from "@/hooks/useCharacter";
 import { supabase } from "@/lib/supabase";
@@ -22,6 +22,7 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [detectedMood, setDetectedMood] = useState<string | null>(null);
   const [confidence, setConfidence] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -30,18 +31,40 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
 
   const startRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
+      setError(null);
+      console.log('Starting recording...');
+      
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 44100
+        }
+      });
+      
+      // Check if MediaRecorder supports WAV
+      const options = { mimeType: 'audio/wav' };
+      if (!MediaRecorder.isTypeSupported('audio/wav')) {
+        console.log('WAV not supported, using webm');
+        options.mimeType = 'audio/webm';
+      }
+      
+      const mediaRecorder = new MediaRecorder(stream, options);
+      console.log('MediaRecorder created with type:', options.mimeType);
       
       mediaRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
       
       mediaRecorder.ondataavailable = (event) => {
+        console.log('Data available:', event.data.size, 'bytes');
         audioChunksRef.current.push(event.data);
       };
       
       mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+        console.log('Recording stopped, processing audio...');
+        const audioBlob = new Blob(audioChunksRef.current, { type: options.mimeType });
+        console.log('Audio blob created:', audioBlob.size, 'bytes');
+        
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
         setHasRecorded(true);
@@ -50,6 +73,7 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
         const reader = new FileReader();
         reader.onloadend = () => {
           const base64 = (reader.result as string).split(',')[1];
+          console.log('Base64 audio length:', base64.length);
           analyzeVoice(base64);
         };
         reader.readAsDataURL(audioBlob);
@@ -64,6 +88,9 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
       startTimer();
       
     } catch (error) {
+      console.error('Recording error:', error);
+      const errorMessage = error instanceof Error ? error.message : "Could not access microphone";
+      setError(errorMessage);
       toast.error("Could not access microphone. Please check permissions.");
     }
   };
@@ -114,22 +141,51 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
 
   const analyzeVoice = async (audioBase64: string) => {
     setIsProcessing(true);
+    setError(null);
     
     try {
+      console.log('Sending audio for analysis...');
+      
       const { data, error } = await supabase.functions.invoke('analyze-voice-mood', {
         body: { audioData: audioBase64 }
       });
       
-      if (error) throw error;
+      console.log('Supabase function response:', { data, error });
       
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw new Error(error.message || 'Failed to analyze voice');
+      }
+
+      if (data?.error) {
+        console.error('Voice analysis error:', data.error);
+        throw new Error(data.error);
+      }
+      
+      if (!data?.mood) {
+        throw new Error('No mood data received from analysis');
+      }
+      
+      console.log('Analysis successful:', data);
       setDetectedMood(data.mood);
       setConfidence(data.confidence);
       onMoodDetected(data.mood, data.confidence);
-      toast.success(`Mood detected: ${data.mood} (${Math.round(data.confidence * 100)}% confidence)`);
+      toast.success(`Mood detected: ${data.mood.replace('_', ' ')} (${Math.round(data.confidence * 100)}% confidence)`);
       
     } catch (error) {
-      toast.error("Failed to analyze voice. Please try manual selection.");
-      onManualFallback();
+      console.error('Voice analysis failed:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setError(errorMessage);
+      
+      if (errorMessage.includes('Kintsugi API key not configured')) {
+        toast.error("Voice analysis not configured. Please set up Kintsugi API key.");
+      } else if (errorMessage.includes('Kintsugi API error')) {
+        toast.error("Voice analysis service temporarily unavailable. Please try manual selection.");
+      } else {
+        toast.error("Failed to analyze voice. Please try manual selection.");
+      }
+      
+      // Don't automatically fallback, let user choose
     } finally {
       setIsProcessing(false);
     }
@@ -184,6 +240,19 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
             Record 30 seconds of your voice and let AI detect your mood
           </p>
         </div>
+
+        {/* Error Display */}
+        {error && (
+          <LiquidGlass variant="crystal" className="p-4 bg-red-50 border border-red-200">
+            <div className="flex items-center gap-3 text-red-700">
+              <AlertCircle className="w-5 h-5" />
+              <div className="text-left">
+                <p className="font-medium">Analysis Failed</p>
+                <p className="text-sm">{error}</p>
+              </div>
+            </div>
+          </LiquidGlass>
+        )}
 
         {/* Character Avatar */}
         <div className="flex justify-center mb-6">
@@ -295,10 +364,10 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
         </div>
 
         {/* Fallback Option */}
-        {!hasRecorded && !isRecording && (
+        {(!hasRecorded && !isRecording) || error && (
           <div className="pt-4 border-t border-soft-blush-200">
             <p className="text-sm text-misty-rosewood-500 mb-3">
-              Prefer to select manually?
+              {error ? "Having trouble? Try manual selection:" : "Prefer to select manually?"}
             </p>
             <Button onClick={onManualFallback} variant="outline" className="liquid-glass-button">
               <MicOff className="w-4 h-4 mr-2" />

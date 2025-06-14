@@ -12,21 +12,34 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Received voice analysis request')
+    
     const { audioData } = await req.json()
+    console.log('Audio data length:', audioData?.length)
+    
+    if (!audioData) {
+      throw new Error('No audio data provided')
+    }
     
     // Get Kintsugi API key from secrets
     const kintsugiApiKey = Deno.env.get('KINTSUGI_API_KEY')
+    console.log('Kintsugi API key exists:', !!kintsugiApiKey)
+    
     if (!kintsugiApiKey) {
-      throw new Error('Kintsugi API key not configured')
+      throw new Error('Kintsugi API key not configured in Supabase secrets')
     }
 
     // Convert base64 audio to blob for Kintsugi API
+    console.log('Converting audio data...')
     const audioBlob = Uint8Array.from(atob(audioData), c => c.charCodeAt(0))
+    console.log('Audio blob size:', audioBlob.length)
     
     // Create FormData for Kintsugi API
     const formData = new FormData()
-    formData.append('audio', new Blob([audioBlob], { type: 'audio/wav' }))
-    formData.append('duration', '30') // 30 seconds as specified
+    formData.append('audio', new Blob([audioBlob], { type: 'audio/wav' }), 'recording.wav')
+    formData.append('duration', '30')
+    
+    console.log('Calling Kintsugi API...')
     
     // Call Kintsugi API
     const response = await fetch('https://api.kintsugi-platform.com/v1/analyze', {
@@ -37,11 +50,16 @@ serve(async (req) => {
       body: formData
     })
 
+    console.log('Kintsugi API response status:', response.status)
+    
     if (!response.ok) {
-      throw new Error(`Kintsugi API error: ${response.statusText}`)
+      const errorText = await response.text()
+      console.error('Kintsugi API error:', response.status, errorText)
+      throw new Error(`Kintsugi API error: ${response.status} - ${errorText}`)
     }
 
     const analysis = await response.json()
+    console.log('Kintsugi analysis result:', JSON.stringify(analysis))
     
     // Map Kintsugi results to our mood system
     const moodMapping = {
@@ -55,11 +73,14 @@ serve(async (req) => {
     }
     
     const detectedMood = moodMapping[analysis.primary_emotion] || 'neutral'
+    const confidence = analysis.confidence || 0.5
+    
+    console.log('Mapped mood:', detectedMood, 'confidence:', confidence)
     
     return new Response(
       JSON.stringify({
         mood: detectedMood,
-        confidence: analysis.confidence,
+        confidence: confidence,
         raw_analysis: analysis
       }),
       {
@@ -68,8 +89,12 @@ serve(async (req) => {
       },
     )
   } catch (error) {
+    console.error('Voice analysis error:', error.message)
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: 'Check the console logs for more information'
+      }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 400,
