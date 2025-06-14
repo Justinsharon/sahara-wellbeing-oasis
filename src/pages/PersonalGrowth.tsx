@@ -19,33 +19,33 @@ import { Progress } from "@/components/ui/progress";
 
 const quickActions = [
   {
-    title: "Enhanced Mood Journal",
-    description: "Track your mood, stress, and sleep with our advanced wellness tracker",
+    title: "Mood Journal",
+    description: "Track your mood, stress, and sleep with our comprehensive wellness tracker",
     icon: Heart,
     color: "crimson-wine",
-    href: "/personal-growth/enhanced-mood-journal",
-    isNew: true
-  },
-  {
-    title: "Original Mood Journal",
-    description: "Simple daily mood tracking and reflection",
-    icon: BookOpen,
-    color: "emerald-splash",
     href: "/personal-growth/mood-journal",
+    isNew: false
   },
   {
     title: "Goals & Milestones",
     description: "Set and track your personal development goals",
     icon: Target,
-    color: "deep-teal",
+    color: "emerald-splash",
     href: "/personal-growth/goals",
   },
   {
     title: "Progress Insights",
     description: "View detailed analytics of your wellness journey",
     icon: TrendingUp,
-    color: "soft-blush",
+    color: "deep-teal",
     href: "/insights",
+  },
+  {
+    title: "Wellness Resources",
+    description: "Discover tools and techniques for mental wellness",
+    icon: BookOpen,
+    color: "soft-blush",
+    href: "/explore-heal",
   },
 ];
 

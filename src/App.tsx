@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,7 @@ import Insights from "./pages/Insights";
 import Community from "./pages/Community";
 import ExploreHeal from "./pages/ExploreHeal";
 import NotFound from "./pages/NotFound";
+import UnifiedMoodJournal from "./pages/personal-growth/UnifiedMoodJournal";
 
 const queryClient = new QueryClient();
 
@@ -50,8 +50,7 @@ const App = () => (
               {/* Personal Growth routes */}
               <Route path="/personal-growth" element={<Layout><PersonalGrowth /></Layout>} />
               <Route path="/personal-growth/goals" element={<Layout><Goals /></Layout>} />
-              <Route path="/personal-growth/mood-journal" element={<Layout><MoodJournal /></Layout>} />
-              <Route path="/personal-growth/enhanced-mood-journal" element={<Layout><EnhancedMoodJournal /></Layout>} />
+              <Route path="/personal-growth/mood-journal" element={<Layout><UnifiedMoodJournal /></Layout>} />
               
               {/* Feature routes */}
               <Route path="/chat" element={<Layout><Chat /></Layout>} />
