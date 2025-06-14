@@ -175,39 +175,19 @@ export default function Insights() {
         {/* Enhanced Tabs */}
         <Tabs defaultValue="mood" className="space-y-8">
           <TabsList className="glass-nav grid w-full grid-cols-4 h-16 p-2 rounded-2xl">
-            <TabsTrigger value="mood" className="rounded-xl font-medium data-[state=active]:text-white"
-                         style={{
-                           'data-[state=active]:background': `linear-gradient(135deg, 
-                             hsl(var(--crimson-wine-500)) 0%, 
-                             hsl(var(--crimson-wine-600)) 100%)`
-                         }}>
+            <TabsTrigger value="mood" className="tab-trigger-crimson rounded-xl font-medium">
               <Heart className="w-4 h-4 mr-2" />
               Mood
             </TabsTrigger>
-            <TabsTrigger value="goals" className="rounded-xl font-medium data-[state=active]:text-white"
-                         style={{
-                           'data-[state=active]:background': `linear-gradient(135deg, 
-                             hsl(var(--emerald-splash-500)) 0%, 
-                             hsl(var(--emerald-splash-600)) 100%)`
-                         }}>
+            <TabsTrigger value="goals" className="tab-trigger-emerald rounded-xl font-medium">
               <Target className="w-4 h-4 mr-2" />
               Goals
             </TabsTrigger>
-            <TabsTrigger value="assessments" className="rounded-xl font-medium data-[state=active]:text-white"
-                         style={{
-                           'data-[state=active]:background': `linear-gradient(135deg, 
-                             hsl(var(--deep-teal-500)) 0%, 
-                             hsl(var(--deep-teal-600)) 100%)`
-                         }}>
+            <TabsTrigger value="assessments" className="tab-trigger-teal rounded-xl font-medium">
               <Brain className="w-4 h-4 mr-2" />
               Health
             </TabsTrigger>
-            <TabsTrigger value="weekly" className="rounded-xl font-medium data-[state=active]:text-white"
-                         style={{
-                           'data-[state=active]:background': `linear-gradient(135deg, 
-                             hsl(var(--soft-blush-500)) 0%, 
-                             hsl(var(--soft-blush-600)) 100%)`
-                         }}>
+            <TabsTrigger value="weekly" className="tab-trigger-blush rounded-xl font-medium">
               <BarChart3 className="w-4 h-4 mr-2" />
               Trends
             </TabsTrigger>
