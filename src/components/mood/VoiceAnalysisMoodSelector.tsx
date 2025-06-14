@@ -2,7 +2,7 @@
 import { useState, useRef } from "react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff, Play, Square, Loader2, Pause, AlertCircle } from "lucide-react";
+import { Mic, MicOff, Play, Square, Loader2, Pause, AlertCircle, Waves } from "lucide-react";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { useCharacter } from "@/hooks/useCharacter";
 import { supabase } from "@/lib/supabase";
@@ -23,6 +23,7 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
   const [detectedMood, setDetectedMood] = useState<string | null>(null);
   const [confidence, setConfidence] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [analysisDetails, setAnalysisDetails] = useState<any>(null);
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -144,16 +145,16 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
     setError(null);
     
     try {
-      console.log('Sending audio for analysis...');
+      console.log('Sending audio for local AI analysis...');
       
       const { data, error } = await supabase.functions.invoke('analyze-voice-mood', {
         body: { audioData: audioBase64 }
       });
       
-      console.log('Supabase function response:', { data, error });
+      console.log('Analysis response:', { data, error });
       
       if (error) {
-        console.error('Supabase function error:', error);
+        console.error('Analysis function error:', error);
         throw new Error(error.message || 'Failed to analyze voice');
       }
 
@@ -169,7 +170,9 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
       console.log('Analysis successful:', data);
       setDetectedMood(data.mood);
       setConfidence(data.confidence);
+      setAnalysisDetails(data.raw_analysis);
       onMoodDetected(data.mood, data.confidence);
+      
       toast.success(`Mood detected: ${data.mood.replace('_', ' ')} (${Math.round(data.confidence * 100)}% confidence)`);
       
     } catch (error) {
@@ -177,15 +180,8 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       setError(errorMessage);
       
-      if (errorMessage.includes('Kintsugi API key not configured')) {
-        toast.error("Voice analysis not configured. Please set up Kintsugi API key.");
-      } else if (errorMessage.includes('Kintsugi API error')) {
-        toast.error("Voice analysis service temporarily unavailable. Please try manual selection.");
-      } else {
-        toast.error("Failed to analyze voice. Please try manual selection.");
-      }
+      toast.error("Failed to analyze voice. Please try recording again or use manual selection.");
       
-      // Don't automatically fallback, let user choose
     } finally {
       setIsProcessing(false);
     }
@@ -235,10 +231,14 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
     <LiquidGlass variant="card" floating bubbles className="p-8">
       <div className="text-center space-y-6">
         <div className="mb-6">
-          <h3 className="text-xl font-bold heading-gradient mb-2">Voice Mood Analysis</h3>
+          <h3 className="text-xl font-bold heading-gradient mb-2">AI Voice Mood Analysis</h3>
           <p className="text-misty-rosewood-500">
-            Record 30 seconds of your voice and let AI detect your mood
+            Record your voice and let our AI analyze your mood from speech patterns
           </p>
+          <div className="flex items-center justify-center gap-2 mt-2 text-sm text-emerald-splash-600">
+            <Waves className="w-4 h-4" />
+            <span>Local AI Processing • Privacy Protected</span>
+          </div>
         </div>
 
         {/* Error Display */}
@@ -269,19 +269,27 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
         {/* Recording Controls */}
         <div className="space-y-4">
           {!hasRecorded && !isRecording && (
-            <Button
-              onClick={startRecording}
-              className="liquid-glass-button w-32 h-32 rounded-full"
-              size="lg"
-            >
-              <Mic className="w-8 h-8" />
-            </Button>
+            <div className="space-y-4">
+              <Button
+                onClick={startRecording}
+                className="liquid-glass-button w-32 h-32 rounded-full"
+                size="lg"
+              >
+                <Mic className="w-8 h-8" />
+              </Button>
+              <p className="text-sm text-misty-rosewood-500">
+                Speak naturally for 15-30 seconds for best results
+              </p>
+            </div>
           )}
 
           {isRecording && (
             <div className="space-y-4">
               <div className="relative w-32 h-32 mx-auto">
                 <div className={`absolute inset-0 rounded-full border-4 ${isPaused ? 'border-yellow-500' : 'border-red-500'} ${!isPaused ? 'animate-pulse' : ''}`} />
+                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center">
+                  {isPaused ? <Pause className="w-8 h-8 text-white" /> : <Mic className="w-8 h-8 text-white animate-pulse" />}
+                </div>
               </div>
               
               <div className="flex gap-4 justify-center">
@@ -325,8 +333,16 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
 
           {isProcessing && (
             <div className="space-y-4">
-              <Loader2 className="w-12 h-12 animate-spin mx-auto text-emerald-splash-500" />
-              <p className="text-misty-rosewood-500">Analyzing your voice...</p>
+              <div className="flex justify-center">
+                <div className="relative">
+                  <Loader2 className="w-12 h-12 animate-spin text-emerald-splash-500" />
+                  <Waves className="w-6 h-6 absolute top-3 left-3 text-deep-teal-500 animate-pulse" />
+                </div>
+              </div>
+              <div>
+                <p className="text-misty-rosewood-500 font-medium">Analyzing your voice...</p>
+                <p className="text-sm text-misty-rosewood-400">Processing speech patterns and emotional cues</p>
+              </div>
             </div>
           )}
 
@@ -341,13 +357,23 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
               )}
               
               {detectedMood && confidence && (
-                <LiquidGlass variant="crystal" className="p-4">
-                  <p className="font-semibold text-emerald-splash-600">
-                    Detected Mood: {detectedMood.replace('_', ' ')}
-                  </p>
-                  <p className="text-sm text-misty-rosewood-500">
-                    Confidence: {Math.round(confidence * 100)}%
-                  </p>
+                <LiquidGlass variant="crystal" className="p-4 space-y-3">
+                  <div>
+                    <p className="font-semibold text-emerald-splash-600 text-lg">
+                      Detected Mood: {detectedMood.replace('_', ' ')}
+                    </p>
+                    <p className="text-sm text-misty-rosewood-500">
+                      Confidence: {Math.round(confidence * 100)}%
+                    </p>
+                  </div>
+                  
+                  {analysisDetails && (
+                    <div className="text-xs text-misty-rosewood-400 space-y-1">
+                      <p>Analysis type: {analysisDetails.analysis_type}</p>
+                      <p>Quality score: {Math.round(analysisDetails.quality_score * 100)}%</p>
+                      <p>Processing time: {analysisDetails.processing_time}</p>
+                    </div>
+                  )}
                 </LiquidGlass>
               )}
               
