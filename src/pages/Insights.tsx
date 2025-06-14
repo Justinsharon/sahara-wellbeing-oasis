@@ -70,14 +70,19 @@ export default function Insights() {
         {/* Enhanced Header */}
         <div className="mb-8 animate-slide-up">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg"
+                 style={{
+                   background: `linear-gradient(135deg, 
+                     hsl(var(--emerald-splash-500)) 0%, 
+                     hsl(var(--emerald-splash-600)) 100%)`
+                 }}>
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <div>
               <h1 className="heading-xl">
                 Personal Insights
               </h1>
-              <p className="text-lg text-muted-foreground font-medium">
+              <p className="text-lg text-misty-rosewood-500 font-medium">
                 Your wellness journey at a glance
               </p>
             </div>
@@ -87,17 +92,22 @@ export default function Insights() {
           <div className="glass-card rounded-3xl p-6 mb-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                     style={{
+                       background: `linear-gradient(135deg, 
+                         hsl(var(--emerald-splash-500)) 0%, 
+                         hsl(var(--deep-teal-500)) 100%)`
+                     }}>
                   <Heart className="w-8 h-8 text-white" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold heading-gradient">Wellness Score</h2>
-                  <p className="text-muted-foreground">Your overall mental health progress</p>
+                  <p className="text-misty-rosewood-500">Your overall mental health progress</p>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-4xl font-bold text-emerald-600">{wellnessScore}</div>
-                <div className="text-sm text-emerald-600 font-medium">+12% this week</div>
+                <div className="text-4xl font-bold text-emerald-splash-600">{wellnessScore}</div>
+                <div className="text-sm text-emerald-splash-600 font-medium">+12% this week</div>
               </div>
             </div>
             <div className="mt-4">
@@ -115,49 +125,49 @@ export default function Insights() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
           <div className="metric-card animate-scale-in" style={{ animationDelay: "0.1s" }}>
             <div className="flex items-center justify-between mb-3">
-              <Calendar className="w-8 h-8 text-orange-500" />
-              <Star className="w-5 h-5 text-yellow-500" />
+              <Calendar className="w-8 h-8 text-soft-blush-600" />
+              <Star className="w-5 h-5 text-crimson-wine-500" />
             </div>
             <div>
-              <p className="text-sm font-medium text-muted-foreground">Streak</p>
-              <p className="text-2xl font-bold text-gray-900">{currentStreak}</p>
-              <p className="text-xs text-orange-600 font-medium">days</p>
+              <p className="text-sm font-medium text-misty-rosewood-500">Streak</p>
+              <p className="text-2xl font-bold text-crimson-wine-600">{currentStreak}</p>
+              <p className="text-xs text-soft-blush-600 font-medium">days</p>
             </div>
           </div>
 
           <div className="metric-card animate-scale-in" style={{ animationDelay: "0.2s" }}>
             <div className="flex items-center justify-between mb-3">
-              <Target className="w-8 h-8 text-emerald-500" />
-              <Zap className="w-5 h-5 text-emerald-400" />
+              <Target className="w-8 h-8 text-emerald-splash-500" />
+              <Zap className="w-5 h-5 text-deep-teal-500" />
             </div>
             <div>
-              <p className="text-sm font-medium text-muted-foreground">Goals</p>
-              <p className="text-2xl font-bold text-gray-900">{completedGoals}/{totalGoals}</p>
-              <p className="text-xs text-emerald-600 font-medium">completed</p>
+              <p className="text-sm font-medium text-misty-rosewood-500">Goals</p>
+              <p className="text-2xl font-bold text-crimson-wine-600">{completedGoals}/{totalGoals}</p>
+              <p className="text-xs text-emerald-splash-600 font-medium">completed</p>
             </div>
           </div>
 
           <div className="metric-card animate-scale-in" style={{ animationDelay: "0.3s" }}>
             <div className="flex items-center justify-between mb-3">
-              <Heart className="w-8 h-8 text-pink-500" />
+              <Heart className="w-8 h-8 text-crimson-wine-500" />
               <span className="text-2xl">{getMoodEmoji(averageMood)}</span>
             </div>
             <div>
-              <p className="text-sm font-medium text-muted-foreground">Avg Mood</p>
-              <p className="text-2xl font-bold text-gray-900">{averageMood}</p>
-              <p className="text-xs text-pink-600 font-medium">this week</p>
+              <p className="text-sm font-medium text-misty-rosewood-500">Avg Mood</p>
+              <p className="text-2xl font-bold text-crimson-wine-600">{averageMood}</p>
+              <p className="text-xs text-soft-blush-600 font-medium">this week</p>
             </div>
           </div>
 
           <div className="metric-card animate-scale-in" style={{ animationDelay: "0.4s" }}>
             <div className="flex items-center justify-between mb-3">
-              <Brain className="w-8 h-8 text-purple-500" />
-              <Award className="w-5 h-5 text-purple-400" />
+              <Brain className="w-8 h-8 text-misty-rosewood-500" />
+              <Award className="w-5 h-5 text-crimson-wine-500" />
             </div>
             <div>
-              <p className="text-sm font-medium text-muted-foreground">Check-ins</p>
-              <p className="text-2xl font-bold text-gray-900">{assessmentHistory.length}</p>
-              <p className="text-xs text-purple-600 font-medium">completed</p>
+              <p className="text-sm font-medium text-misty-rosewood-500">Check-ins</p>
+              <p className="text-2xl font-bold text-crimson-wine-600">{assessmentHistory.length}</p>
+              <p className="text-xs text-misty-rosewood-600 font-medium">completed</p>
             </div>
           </div>
         </div>
@@ -165,19 +175,39 @@ export default function Insights() {
         {/* Enhanced Tabs */}
         <Tabs defaultValue="mood" className="space-y-8">
           <TabsList className="glass-nav grid w-full grid-cols-4 h-16 p-2 rounded-2xl">
-            <TabsTrigger value="mood" className="rounded-xl font-medium data-[state=active]:bg-white data-[state=active]:shadow-md">
+            <TabsTrigger value="mood" className="rounded-xl font-medium data-[state=active]:text-white"
+                         style={{
+                           'data-[state=active]:background': `linear-gradient(135deg, 
+                             hsl(var(--crimson-wine-500)) 0%, 
+                             hsl(var(--crimson-wine-600)) 100%)`
+                         }}>
               <Heart className="w-4 h-4 mr-2" />
               Mood
             </TabsTrigger>
-            <TabsTrigger value="goals" className="rounded-xl font-medium data-[state=active]:bg-white data-[state=active]:shadow-md">
+            <TabsTrigger value="goals" className="rounded-xl font-medium data-[state=active]:text-white"
+                         style={{
+                           'data-[state=active]:background': `linear-gradient(135deg, 
+                             hsl(var(--emerald-splash-500)) 0%, 
+                             hsl(var(--emerald-splash-600)) 100%)`
+                         }}>
               <Target className="w-4 h-4 mr-2" />
               Goals
             </TabsTrigger>
-            <TabsTrigger value="assessments" className="rounded-xl font-medium data-[state=active]:bg-white data-[state=active]:shadow-md">
+            <TabsTrigger value="assessments" className="rounded-xl font-medium data-[state=active]:text-white"
+                         style={{
+                           'data-[state=active]:background': `linear-gradient(135deg, 
+                             hsl(var(--deep-teal-500)) 0%, 
+                             hsl(var(--deep-teal-600)) 100%)`
+                         }}>
               <Brain className="w-4 h-4 mr-2" />
               Health
             </TabsTrigger>
-            <TabsTrigger value="weekly" className="rounded-xl font-medium data-[state=active]:bg-white data-[state=active]:shadow-md">
+            <TabsTrigger value="weekly" className="rounded-xl font-medium data-[state=active]:text-white"
+                         style={{
+                           'data-[state=active]:background': `linear-gradient(135deg, 
+                             hsl(var(--soft-blush-500)) 0%, 
+                             hsl(var(--soft-blush-600)) 100%)`
+                         }}>
               <BarChart3 className="w-4 h-4 mr-2" />
               Trends
             </TabsTrigger>
@@ -187,7 +217,7 @@ export default function Insights() {
             <div className="chart-container">
               <CardHeader className="pb-4">
                 <CardTitle className="text-xl font-bold heading-gradient">Mood & Energy Patterns</CardTitle>
-                <CardDescription className="text-base">
+                <CardDescription className="text-base text-misty-rosewood-500">
                   Track your emotional wellbeing and energy levels
                 </CardDescription>
               </CardHeader>
@@ -196,38 +226,38 @@ export default function Insights() {
                   <AreaChart data={moodData}>
                     <defs>
                       <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#10b981" stopOpacity={0.05}/>
+                        <stop offset="5%" stopColor="hsl(var(--emerald-splash-500))" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="hsl(var(--emerald-splash-500))" stopOpacity={0.05}/>
                       </linearGradient>
                       <linearGradient id="energyGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.05}/>
+                        <stop offset="5%" stopColor="hsl(var(--soft-blush-500))" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="hsl(var(--soft-blush-500))" stopOpacity={0.05}/>
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
-                    <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
-                    <YAxis domain={[1, 5]} stroke="#6b7280" fontSize={12} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--misty-rosewood-100))" />
+                    <XAxis dataKey="date" stroke="hsl(var(--misty-rosewood-500))" fontSize={12} />
+                    <YAxis domain={[1, 5]} stroke="hsl(var(--misty-rosewood-500))" fontSize={12} />
                     <Tooltip 
                       contentStyle={{ 
                         backgroundColor: 'rgba(255, 255, 255, 0.95)', 
                         border: 'none', 
                         borderRadius: '16px',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
+                        boxShadow: '0 8px 32px rgba(80, 17, 34, 0.1)'
                       }} 
                     />
-                    <Area type="monotone" dataKey="mood" stroke="#10b981" strokeWidth={3} fill="url(#moodGradient)" name="Mood" />
-                    <Area type="monotone" dataKey="energy" stroke="#f59e0b" strokeWidth={3} fill="url(#energyGradient)" name="Energy" />
+                    <Area type="monotone" dataKey="mood" stroke="hsl(var(--emerald-splash-500))" strokeWidth={3} fill="url(#moodGradient)" name="Mood" />
+                    <Area type="monotone" dataKey="energy" stroke="hsl(var(--soft-blush-500))" strokeWidth={3} fill="url(#energyGradient)" name="Energy" />
                   </AreaChart>
                 </ResponsiveContainer>
                 
                 <div className="grid grid-cols-7 gap-2 mt-8">
                   {moodData.map((day, index) => (
                     <div key={index} className="text-center glass-card p-3 rounded-2xl">
-                      <p className="text-sm font-semibold text-gray-700">{day.date}</p>
+                      <p className="text-sm font-semibold text-misty-rosewood-600">{day.date}</p>
                       <p className={`text-3xl my-2 ${getMoodColor(day.mood)}`}>
                         {getMoodEmoji(day.mood)}
                       </p>
-                      <p className="text-xs font-medium text-emerald-600">{day.mood}/5</p>
+                      <p className="text-xs font-medium text-emerald-splash-600">{day.mood}/5</p>
                     </div>
                   ))}
                 </div>
@@ -235,19 +265,20 @@ export default function Insights() {
             </div>
           </TabsContent>
 
+          {/* Goals Tab */}
           <TabsContent value="goals" className="space-y-6">
             <div className="chart-container">
               <CardHeader>
                 <CardTitle className="heading-gradient">Goal Achievement Dashboard</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-misty-rosewood-500">
                   Your progress towards wellness milestones
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="font-semibold text-gray-700">Overall Progress</span>
-                    <span className="text-lg font-bold text-emerald-600">{Math.round((completedGoals / totalGoals) * 100)}%</span>
+                    <span className="font-semibold text-misty-rosewood-600">Overall Progress</span>
+                    <span className="text-lg font-bold text-emerald-splash-600">{Math.round((completedGoals / totalGoals) * 100)}%</span>
                   </div>
                   <div className="progress-modern">
                     <div 
@@ -259,24 +290,24 @@ export default function Insights() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <h4 className="font-bold text-emerald-700 flex items-center gap-2">
+                    <h4 className="font-bold text-emerald-splash-600 flex items-center gap-2">
                       <Award className="w-5 h-5" />
                       Completed Goals
                     </h4>
                     <div className="space-y-3">
                       {[
-                        { name: "Daily Meditation", days: 21, color: "emerald" },
-                        { name: "Exercise 3x/week", days: 14, color: "blue" },
-                        { name: "Gratitude Journal", days: 30, color: "purple" }
+                        { name: "Daily Meditation", days: 21, color: "emerald-splash" },
+                        { name: "Exercise 3x/week", days: 14, color: "deep-teal" },
+                        { name: "Gratitude Journal", days: 30, color: "crimson-wine" }
                       ].map((goal, index) => (
                         <div key={index} className="glass-card p-4 rounded-2xl">
                           <div className="flex items-center justify-between">
                             <div>
-                              <p className="font-semibold text-gray-800">{goal.name}</p>
-                              <p className="text-sm text-muted-foreground">Completed {goal.days} days ago</p>
+                              <p className="font-semibold text-crimson-wine-600">{goal.name}</p>
+                              <p className="text-sm text-misty-rosewood-500">Completed {goal.days} days ago</p>
                             </div>
-                            <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
-                              <Award className="w-4 h-4 text-emerald-600" />
+                            <div className="w-8 h-8 rounded-full bg-emerald-splash-100 flex items-center justify-center">
+                              <Award className="w-4 h-4 text-emerald-splash-600" />
                             </div>
                           </div>
                         </div>
@@ -285,7 +316,7 @@ export default function Insights() {
                   </div>
                   
                   <div className="space-y-4">
-                    <h4 className="font-bold text-blue-700 flex items-center gap-2">
+                    <h4 className="font-bold text-deep-teal-600 flex items-center gap-2">
                       <Target className="w-5 h-5" />
                       Active Goals
                     </h4>
@@ -297,7 +328,7 @@ export default function Insights() {
                       ].map((goal, index) => (
                         <div key={index} className="glass-card p-4 rounded-2xl">
                           <div className="mb-2">
-                            <p className="font-semibold text-gray-800">{goal.name}</p>
+                            <p className="font-semibold text-crimson-wine-600">{goal.name}</p>
                           </div>
                           <div className="progress-modern">
                             <div 
@@ -305,7 +336,7 @@ export default function Insights() {
                               style={{ width: `${goal.progress}%` }}
                             />
                           </div>
-                          <p className="text-xs text-blue-600 font-medium mt-1">{goal.progress}% complete</p>
+                          <p className="text-xs text-deep-teal-600 font-medium mt-1">{goal.progress}% complete</p>
                         </div>
                       ))}
                     </div>
@@ -315,38 +346,39 @@ export default function Insights() {
             </div>
           </TabsContent>
 
+          {/* Assessments Tab */}
           <TabsContent value="assessments" className="space-y-6">
             <div className="chart-container">
               <CardHeader>
                 <CardTitle className="heading-gradient">Mental Health Assessments</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-misty-rosewood-500">
                   Track your progress with professional assessment tools
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {assessmentHistory.map((assessment) => (
-                    <div key={assessment.id} className="glass-card p-6 rounded-2xl border border-white/30">
+                    <div key={assessment.id} className="glass-card p-6 rounded-2xl border border-soft-blush-100">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
-                            <Brain className="w-5 h-5 text-purple-600" />
+                          <div className="w-10 h-10 rounded-xl bg-misty-rosewood-100 flex items-center justify-center">
+                            <Brain className="w-5 h-5 text-misty-rosewood-600" />
                           </div>
                           <div>
-                            <h4 className="font-bold text-gray-800">{assessment.type} Assessment</h4>
-                            <p className="text-sm text-muted-foreground">{new Date(assessment.date).toLocaleDateString()}</p>
+                            <h4 className="font-bold text-crimson-wine-600">{assessment.type} Assessment</h4>
+                            <p className="text-sm text-misty-rosewood-500">{new Date(assessment.date).toLocaleDateString()}</p>
                           </div>
                         </div>
                         <div className="text-right">
                           <Badge className={`${getLevelColor(assessment.level)} px-3 py-1 rounded-full font-medium`}>
                             {assessment.level}
                           </Badge>
-                          <p className="text-sm text-emerald-600 font-medium mt-1">{assessment.improvement}</p>
+                          <p className="text-sm text-emerald-splash-600 font-medium mt-1">{assessment.improvement}</p>
                         </div>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-600">Score: {assessment.score}</span>
-                        <TrendingUp className="w-4 h-4 text-emerald-500" />
+                        <span className="text-sm font-medium text-misty-rosewood-600">Score: {assessment.score}</span>
+                        <TrendingUp className="w-4 h-4 text-emerald-splash-500" />
                       </div>
                     </div>
                   ))}
@@ -360,11 +392,12 @@ export default function Insights() {
             </div>
           </TabsContent>
 
+          {/* Weekly Trends Tab */}
           <TabsContent value="weekly" className="space-y-6">
             <div className="chart-container">
               <CardHeader>
                 <CardTitle className="heading-gradient">4-Week Wellness Trends</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-misty-rosewood-500">
                   Comprehensive view of your mental health journey
                 </CardDescription>
               </CardHeader>
@@ -373,23 +406,23 @@ export default function Insights() {
                   <BarChart data={weeklyProgress}>
                     <defs>
                       <linearGradient id="colorMood" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#10b981" stopOpacity={0.3}/>
+                        <stop offset="5%" stopColor="hsl(var(--emerald-splash-500))" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="hsl(var(--emerald-splash-500))" stopOpacity={0.3}/>
                       </linearGradient>
                       <linearGradient id="colorGoals" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                        <stop offset="5%" stopColor="hsl(var(--deep-teal-500))" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="hsl(var(--deep-teal-500))" stopOpacity={0.3}/>
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
-                    <XAxis dataKey="week" stroke="#6b7280" fontSize={12} />
-                    <YAxis stroke="#6b7280" fontSize={12} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--misty-rosewood-100))" />
+                    <XAxis dataKey="week" stroke="hsl(var(--misty-rosewood-500))" fontSize={12} />
+                    <YAxis stroke="hsl(var(--misty-rosewood-500))" fontSize={12} />
                     <Tooltip 
                       contentStyle={{ 
                         backgroundColor: 'rgba(255, 255, 255, 0.95)', 
                         border: 'none', 
                         borderRadius: '16px',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
+                        boxShadow: '0 8px 32px rgba(80, 17, 34, 0.1)'
                       }} 
                     />
                     <Bar dataKey="mood" fill="url(#colorMood)" name="Average Mood" radius={[8, 8, 0, 0]} />
@@ -399,24 +432,24 @@ export default function Insights() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                   <div className="metric-card text-center">
-                    <TrendingUp className="w-10 h-10 text-emerald-500 mx-auto mb-3" />
-                    <p className="text-sm font-medium text-muted-foreground">Mood Trend</p>
-                    <p className="text-xl font-bold text-emerald-600">↗ Improving</p>
-                    <p className="text-xs text-emerald-500 mt-1">+18% this month</p>
+                    <TrendingUp className="w-10 h-10 text-emerald-splash-500 mx-auto mb-3" />
+                    <p className="text-sm font-medium text-misty-rosewood-500">Mood Trend</p>
+                    <p className="text-xl font-bold text-emerald-splash-600">↗ Improving</p>
+                    <p className="text-xs text-emerald-splash-500 mt-1">+18% this month</p>
                   </div>
                   
                   <div className="metric-card text-center">
-                    <Target className="w-10 h-10 text-blue-500 mx-auto mb-3" />
-                    <p className="text-sm font-medium text-muted-foreground">Goal Achievement</p>
-                    <p className="text-xl font-bold text-blue-600">85% This Week</p>
-                    <p className="text-xs text-blue-500 mt-1">Personal best!</p>
+                    <Target className="w-10 h-10 text-deep-teal-500 mx-auto mb-3" />
+                    <p className="text-sm font-medium text-misty-rosewood-500">Goal Achievement</p>
+                    <p className="text-xl font-bold text-deep-teal-600">85% This Week</p>
+                    <p className="text-xs text-deep-teal-500 mt-1">Personal best!</p>
                   </div>
                   
                   <div className="metric-card text-center">
-                    <Award className="w-10 h-10 text-yellow-500 mx-auto mb-3" />
-                    <p className="text-sm font-medium text-muted-foreground">Streak Record</p>
-                    <p className="text-xl font-bold text-yellow-600">{currentStreak} Days</p>
-                    <p className="text-xs text-yellow-500 mt-1">Keep it up!</p>
+                    <Award className="w-10 h-10 text-crimson-wine-500 mx-auto mb-3" />
+                    <p className="text-sm font-medium text-misty-rosewood-500">Streak Record</p>
+                    <p className="text-xl font-bold text-crimson-wine-600">{currentStreak} Days</p>
+                    <p className="text-xs text-crimson-wine-500 mt-1">Keep it up!</p>
                   </div>
                 </div>
               </CardContent>

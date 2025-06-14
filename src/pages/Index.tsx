@@ -11,48 +11,48 @@ const featureCards = [
     description: "Connect with certified therapists for personalized support",
     icon: Heart,
     href: "/therapy",
-    gradientColors: "hsl(var(--classic-red-500)), hsl(var(--classic-red-600))",
-    bgColor: "bg-classic-red-50",
+    gradientColors: "hsl(var(--crimson-wine-500)), hsl(var(--crimson-wine-600))",
+    bgColor: "bg-crimson-wine-50",
   },
   {
     title: "Community Support",
     description: "Join a supportive community of peers on similar journeys",
     icon: Users,
     href: "/community",
-    gradientColors: "hsl(var(--deep-burgundy-500)), hsl(var(--deep-burgundy-600))",
-    bgColor: "bg-deep-burgundy-50",
+    gradientColors: "hsl(var(--misty-rosewood-500)), hsl(var(--misty-rosewood-600))",
+    bgColor: "bg-misty-rosewood-50",
   },
   {
     title: "Personal Growth",
     description: "Set goals, track progress, and celebrate achievements",
     icon: TrendingUp,
     href: "/personal-growth",
-    gradientColors: "hsl(var(--bright-orange-500)), hsl(var(--bright-orange-600))",
-    bgColor: "bg-bright-orange-50",
+    gradientColors: "hsl(var(--emerald-splash-500)), hsl(var(--emerald-splash-600))",
+    bgColor: "bg-emerald-splash-50",
   },
   {
     title: "Explore & Heal",
     description: "Discover wellness activities, articles, and healing resources",
     icon: Search,
     href: "/explore-heal",
-    gradientColors: "hsl(var(--muted-purple-500)), hsl(var(--muted-purple-600))",
-    bgColor: "bg-muted-purple-50",
+    gradientColors: "hsl(var(--deep-teal-500)), hsl(var(--deep-teal-600))",
+    bgColor: "bg-deep-teal-50",
   },
   {
     title: "Chat with Nia",
     description: "24/7 AI-powered support for immediate guidance",
     icon: MessageCircle,
     href: "/chat",
-    gradientColors: "hsl(var(--soft-pink-500)), hsl(var(--soft-pink-600))",
-    bgColor: "bg-soft-pink-50",
+    gradientColors: "hsl(var(--soft-blush-500)), hsl(var(--soft-blush-600))",
+    bgColor: "bg-soft-blush-50",
   },
   {
     title: "My Daily Insights",
     description: "Track your mood, view analytics, and get personalized insights",
     icon: BarChart3,
     href: "/insights",
-    gradientColors: "hsl(var(--warm-brown-500)), hsl(var(--warm-brown-600))",
-    bgColor: "bg-warm-brown-50",
+    gradientColors: "hsl(var(--crimson-wine-500)), hsl(var(--emerald-splash-500))",
+    bgColor: "bg-crimson-wine-50",
   },
 ];
 
@@ -70,13 +70,13 @@ export default function Index() {
       {/* Hero Section */}
       <section className="mb-12">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-deep-navy-500">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-crimson-wine-600">
             Welcome to Your{" "}
             <span className="heading-gradient">
               Wellness Oasis
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-misty-rosewood-500 mb-8 max-w-2xl mx-auto">
             Sahara provides a safe, supportive space for your mental health journey. 
             Connect with licensed therapists, build healthy habits, and find your path to wellbeing.
           </p>
@@ -112,13 +112,13 @@ export default function Index() {
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4"
                      style={{
                        background: `linear-gradient(135deg, 
-                         hsl(var(--classic-red-100)) 0%, 
-                         hsl(var(--bright-orange-100)) 100%)`
+                         hsl(var(--crimson-wine-100)) 0%, 
+                         hsl(var(--emerald-splash-100)) 100%)`
                      }}>
-                  <stat.icon className="w-6 h-6 text-classic-red-600" />
+                  <stat.icon className="w-6 h-6 text-crimson-wine-600" />
                 </div>
-                <div className="text-3xl font-bold mb-2 text-classic-red-600">{stat.value}</div>
-                <div className="text-muted-foreground">{stat.label}</div>
+                <div className="text-3xl font-bold mb-2 text-crimson-wine-600">{stat.value}</div>
+                <div className="text-misty-rosewood-500">{stat.label}</div>
               </CardContent>
             </Card>
           ))}
@@ -128,8 +128,8 @@ export default function Index() {
       {/* Feature Cards */}
       <section className="mb-12">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-4 text-deep-navy-500">Comprehensive Wellness Support</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold mb-4 text-crimson-wine-600">Comprehensive Wellness Support</h2>
+          <p className="text-misty-rosewood-500 max-w-2xl mx-auto">
             Every tool you need for your mental health journey, all in one place
           </p>
         </div>
@@ -145,8 +145,8 @@ export default function Index() {
                        }}>
                     <card.icon className="w-6 h-6 text-white" />
                   </div>
-                  <CardTitle className="text-xl text-deep-navy-500">{card.title}</CardTitle>
-                  <CardDescription className="text-muted-foreground">
+                  <CardTitle className="text-xl text-crimson-wine-600">{card.title}</CardTitle>
+                  <CardDescription className="text-misty-rosewood-500">
                     {card.description}
                   </CardDescription>
                 </CardHeader>
@@ -161,15 +161,15 @@ export default function Index() {
         <Card className="max-w-2xl mx-auto soft-shadow border-0"
               style={{
                 background: `linear-gradient(135deg, 
-                  rgba(245, 213, 174, 0.3) 0%, 
-                  rgba(248, 225, 225, 0.2) 50%,
-                  rgba(251, 239, 249, 0.1) 100%)`
+                  rgba(191, 165, 168, 0.15) 0%, 
+                  rgba(87, 65, 68, 0.1) 50%,
+                  rgba(14, 124, 113, 0.05) 100%)`
               }}>
           <CardContent className="pt-8">
-            <h3 className="text-2xl font-bold mb-4 text-deep-navy-500">
+            <h3 className="text-2xl font-bold mb-4 text-crimson-wine-600">
               Ready to Begin Your Healing Journey?
             </h3>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-misty-rosewood-500 mb-6">
               Join thousands who have found support, growth, and healing through Sahara.
             </p>
             {!user ? (
