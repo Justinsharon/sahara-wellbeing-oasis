@@ -31,6 +31,11 @@ const App = () => (
             {/* Main app routes with layout */}
             <Route path="/" element={<Layout><Index /></Layout>} />
             
+            {/* Personal Growth routes */}
+            <Route path="/personal-growth" element={<Layout><PersonalGrowth /></Layout>} />
+            <Route path="/personal-growth/goals" element={<Layout><Goals /></Layout>} />
+            <Route path="/personal-growth/mood-journal" element={<Layout><MoodJournal /></Layout>} />
+            
             {/* Placeholder routes for future implementation */}
             <Route path="/about" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">About Us - Coming Soon</h1></div></Layout>} />
             <Route path="/solutions" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Solutions - Coming Soon</h1></div></Layout>} />
@@ -38,7 +43,6 @@ const App = () => (
             <Route path="/contact" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Contact Us - Coming Soon</h1></div></Layout>} />
             <Route path="/therapy" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Therapy - Coming Soon</h1></div></Layout>} />
             <Route path="/community" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Community - Coming Soon</h1></div></Layout>} />
-            <Route path="/personal-growth" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Personal Growth - Coming Soon</h1></div></Layout>} />
             <Route path="/explore-heal" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Explore & Heal - Coming Soon</h1></div></Layout>} />
             <Route path="/chat" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Chat with Nia - Coming Soon</h1></div></Layout>} />
             <Route path="/insights" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">My Insights - Coming Soon</h1></div></Layout>} />
