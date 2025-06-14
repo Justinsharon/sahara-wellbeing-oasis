@@ -20,6 +20,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
+				'abril': ['Abril Fatface', 'serif'],
+				'afacad': ['Afacad', 'sans-serif'],
 				'dancing': ['Dancing Script', 'cursive'],
 			},
 			colors: {

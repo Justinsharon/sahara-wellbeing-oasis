@@ -72,13 +72,14 @@
 
   html {
     font-size: 16px;
-    font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-family: 'Afacad', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-optical-sizing: auto;
   }
 
   body {
     @apply bg-background antialiased;
-    font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Afacad', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-optical-sizing: auto;
     background-color: #f3ece8; /* Off White background */
     color: #3c3c3c; /* Deep Charcoal typography */
     -webkit-font-smoothing: antialiased;
@@ -92,6 +93,41 @@
     min-height: 44px;
     min-width: 44px;
   }
+}
+
+/* Font Classes */
+.abril-fatface-regular {
+  font-family: "Abril Fatface", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.afacad-regular {
+  font-family: "Afacad", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.afacad-medium {
+  font-family: "Afacad", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.afacad-semibold {
+  font-family: "Afacad", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.afacad-bold {
+  font-family: "Afacad", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
 }
 
 @layer components {
@@ -175,18 +211,18 @@
     background-color: #501122; /* Crimson Wine */
   }
 
-  /* Typography with Dancing Script */
+  /* Typography with Abril Fatface for titles */
   .heading-xl {
     @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Abril Fatface', serif;
     color: #501122; /* Crimson Wine */
-    font-weight: 700;
+    font-weight: 400;
   }
 
   .heading-gradient {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Abril Fatface', serif;
     color: #501122; /* Crimson Wine */
-    font-weight: 600;
+    font-weight: 400;
   }
 
   /* Modern buttons */
@@ -404,7 +440,7 @@
 
   /* Header typography utilities */
   .header-font {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Abril Fatface', serif;
   }
 }
 
