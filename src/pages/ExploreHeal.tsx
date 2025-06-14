@@ -240,7 +240,13 @@ export default function ExploreHeal() {
             {meditationLibrary.map((meditation) => (
               <Card key={meditation.id} className="glass-card hover-scale soft-shadow">
                 <div className="relative">
-                  <div className="h-40 bg-gradient-to-br from-blue-400 to-purple-600 rounded-t-xl flex items-center justify-center relative overflow-hidden">
+                  <div className="h-40 rounded-t-xl flex items-center justify-center relative overflow-hidden" 
+                       style={{
+                         background: `linear-gradient(135deg, 
+                           hsl(var(--classic-red-500)) 0%, 
+                           hsl(var(--deep-burgundy-500)) 50%,
+                           hsl(var(--muted-purple-500)) 100%)`
+                       }}>
                     <div className="absolute inset-0 bg-black/20"></div>
                     <Button size="lg" className="bg-white/20 hover:bg-white/30 text-white border-white/30 rounded-full w-16 h-16 z-10">
                       <Play className="w-6 h-6 ml-1" />
@@ -252,8 +258,8 @@ export default function ExploreHeal() {
                 </div>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-bold text-lg">{meditation.title}</h3>
-                    <Badge variant="outline" className="text-xs">
+                    <h3 className="font-bold text-lg text-deep-navy-500">{meditation.title}</h3>
+                    <Badge variant="outline" className="text-xs border-deep-burgundy-500 text-deep-burgundy-500">
                       {meditation.difficulty}
                     </Badge>
                   </div>
@@ -272,7 +278,7 @@ export default function ExploreHeal() {
                       {meditation.duration}
                     </div>
                     <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <Star className="w-4 h-4 fill-bright-orange-500 text-bright-orange-500" />
                       {meditation.rating}
                     </div>
                     <div className="flex items-center gap-1">
@@ -298,27 +304,32 @@ export default function ExploreHeal() {
               <Card key={activity.id} className="glass-card hover-scale">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                         style={{
+                           background: `linear-gradient(135deg, 
+                             hsl(var(--bright-orange-500)) 0%, 
+                             hsl(var(--bright-orange-600)) 100%)`
+                         }}>
                       <Activity className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <Badge variant="outline" className="text-xs mb-1">
+                      <Badge variant="outline" className="text-xs mb-1 border-deep-burgundy-500 text-deep-burgundy-500">
                         {activity.type}
                       </Badge>
                       <p className="text-sm text-muted-foreground">{activity.difficulty}</p>
                     </div>
                   </div>
                   
-                  <h3 className="font-bold text-lg mb-2">{activity.title}</h3>
+                  <h3 className="font-bold text-lg mb-2 text-deep-navy-500">{activity.title}</h3>
                   <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                     {activity.description}
                   </p>
                   
                   <div className="mb-4">
-                    <h4 className="font-semibold text-sm mb-2">Benefits:</h4>
+                    <h4 className="font-semibold text-sm mb-2 text-deep-navy-500">Benefits:</h4>
                     <div className="flex flex-wrap gap-2">
                       {activity.benefits.map((benefit, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
+                        <Badge key={index} className="text-xs bg-soft-pink-100 text-deep-burgundy-600 border-soft-pink-500">
                           {benefit}
                         </Badge>
                       ))}
@@ -336,7 +347,7 @@ export default function ExploreHeal() {
                     </div>
                   </div>
 
-                  <Button className="btn-primary-modern w-full">
+                  <Button className="btn-accent-modern w-full">
                     <Sparkles className="w-4 h-4 mr-2" />
                     Start Activity
                   </Button>
@@ -353,24 +364,29 @@ export default function ExploreHeal() {
               <Card key={article.id} className="glass-card hover-scale">
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row gap-6">
-                    <div className="w-full md:w-32 h-32 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-xl flex items-center justify-center">
+                    <div className="w-full md:w-32 h-32 rounded-xl flex items-center justify-center"
+                         style={{
+                           background: `linear-gradient(135deg, 
+                             hsl(var(--muted-purple-500)) 0%, 
+                             hsl(var(--deep-burgundy-500)) 100%)`
+                         }}>
                       <BookOpen className="w-8 h-8 text-white" />
                     </div>
                     
                     <div className="flex-1">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <Badge variant="outline" className="text-xs mb-2">
+                          <Badge variant="outline" className="text-xs mb-2 border-muted-purple-500 text-muted-purple-600">
                             {article.category}
                           </Badge>
-                          <h3 className="font-bold text-xl mb-1 hover:text-primary cursor-pointer">
+                          <h3 className="font-bold text-xl mb-1 hover:text-primary cursor-pointer text-deep-navy-500">
                             {article.title}
                           </h3>
                           <p className="text-sm text-muted-foreground">
                             by {article.author} • {article.publishedDate}
                           </p>
                         </div>
-                        <Button variant="ghost" size="sm" className="hover:bg-white/60">
+                        <Button variant="ghost" size="sm" className="hover:bg-light-peach-100">
                           <Bookmark className="w-4 h-4" />
                         </Button>
                       </div>
@@ -386,7 +402,7 @@ export default function ExploreHeal() {
                             {article.readTime}
                           </div>
                           <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            <Star className="w-4 h-4 fill-bright-orange-500 text-bright-orange-500" />
                             {article.rating}
                           </div>
                           <div className="flex items-center gap-1">
@@ -413,18 +429,28 @@ export default function ExploreHeal() {
               <Card key={challenge.id} className="glass-card hover-scale">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-600 rounded-2xl flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                         style={{
+                           background: `linear-gradient(135deg, 
+                             hsl(var(--warm-brown-500)) 0%, 
+                             hsl(var(--deep-burgundy-500)) 100%)`
+                         }}>
                       <Award className="w-6 h-6 text-white" />
                     </div>
                     <Badge 
-                      variant={challenge.status === 'Completed' ? 'default' : challenge.status === 'In Progress' ? 'secondary' : 'outline'}
-                      className="text-xs"
+                      className={`text-xs ${
+                        challenge.status === 'Completed' 
+                          ? 'bg-classic-red-100 text-classic-red-600 border-classic-red-500' 
+                          : challenge.status === 'In Progress' 
+                          ? 'bg-bright-orange-100 text-bright-orange-600 border-bright-orange-500' 
+                          : 'bg-light-peach-100 text-deep-burgundy-600 border-light-peach-500'
+                      }`}
                     >
                       {challenge.status}
                     </Badge>
                   </div>
                   
-                  <h3 className="font-bold text-lg mb-2">{challenge.title}</h3>
+                  <h3 className="font-bold text-lg mb-2 text-deep-navy-500">{challenge.title}</h3>
                   <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                     {challenge.description}
                   </p>
@@ -432,10 +458,10 @@ export default function ExploreHeal() {
                   {challenge.status === 'In Progress' && (
                     <div className="mb-4">
                       <div className="flex justify-between text-sm mb-2">
-                        <span>Progress</span>
-                        <span>{challenge.progress}%</span>
+                        <span className="text-deep-navy-500">Progress</span>
+                        <span className="text-classic-red-600">{challenge.progress}%</span>
                       </div>
-                      <Progress value={challenge.progress} className="h-2" />
+                      <Progress value={challenge.progress} className="h-2 progress-modern" />
                     </div>
                   )}
                   
