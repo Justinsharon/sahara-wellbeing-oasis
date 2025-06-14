@@ -40,18 +40,20 @@ const Index = () => {
 
           {/* Hero Content with Enhanced Liquid Glass */}
           <div className="space-y-8 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-crimson-wine header-font">
-              Welcome to Sahara
-            </h1>
+            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black header-font">
+                Welcome to Sahara
+              </h1>
+            </div>
             
-            {/* Main Tagline Card - Enhanced Liquid Glass */}
+            {/* Main Tagline Card - Enhanced Liquid Glass with Better Text Visibility */}
             <LiquidGlass 
               variant="card" 
               interactive
               liquidBorder
-              className="p-8 rounded-3xl transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1"
+              className="p-8 rounded-3xl transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 bg-white/70 backdrop-blur-md"
             >
-              <p className="text-xl md:text-2xl text-deep-charcoal leading-relaxed font-semibold">
+              <p className="text-xl md:text-2xl text-black leading-relaxed font-semibold">
                 Your personal wellness companion is here to support your mental health journey
               </p>
             </LiquidGlass>
@@ -85,7 +87,7 @@ const Index = () => {
                       variant="outline" 
                       size="lg" 
                       asChild 
-                      className="w-full bg-white/80 backdrop-blur-sm hover:bg-white/90 text-deep-charcoal border-2 border-crimson-wine/30 text-lg py-6 rounded-2xl shadow-lg transition-all duration-300"
+                      className="w-full bg-white/90 backdrop-blur-sm hover:bg-white text-black border-2 border-crimson-wine/50 text-lg py-6 rounded-2xl shadow-lg transition-all duration-300 font-semibold"
                     >
                       <Link to="/auth">
                         Sign In
@@ -121,7 +123,7 @@ const Index = () => {
                       variant="outline" 
                       size="lg" 
                       asChild 
-                      className="w-full bg-white/80 backdrop-blur-sm hover:bg-white/90 text-deep-charcoal border-2 border-crimson-wine/30 text-lg py-6 rounded-2xl shadow-lg transition-all duration-300"
+                      className="w-full bg-white/90 backdrop-blur-sm hover:bg-white text-black border-2 border-crimson-wine/50 text-lg py-6 rounded-2xl shadow-lg transition-all duration-300 font-semibold"
                     >
                       <Link to="/personal-growth/unified-mood-journal">
                         Track Your Mood
@@ -133,25 +135,25 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Trust indicators with enhanced liquid glass */}
+          {/* Trust indicators with enhanced liquid glass and better text visibility */}
           <div className="mt-16 pt-12 border-t border-white/30">
             <LiquidGlass 
               variant="overlay" 
               bubbles
-              className="p-8 rounded-3xl transform transition-all duration-300 hover:scale-[1.01]"
+              className="p-8 rounded-3xl transform transition-all duration-300 hover:scale-[1.01] bg-white/60 backdrop-blur-md"
             >
               <div className="flex flex-wrap items-center justify-center gap-8">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse"></div>
-                  <span className="text-sm font-semibold text-deep-charcoal">Licensed Therapists</span>
+                  <span className="text-sm font-bold text-black">Licensed Therapists</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                  <span className="text-sm font-semibold text-deep-charcoal">24/7 Support</span>
+                  <span className="text-sm font-bold text-black">24/7 Support</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '1s' }}></div>
-                  <span className="text-sm font-semibold text-deep-charcoal">Privacy Protected</span>
+                  <span className="text-sm font-bold text-black">Privacy Protected</span>
                 </div>
               </div>
             </LiquidGlass>
