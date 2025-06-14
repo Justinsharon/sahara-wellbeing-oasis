@@ -36,16 +36,25 @@ function App() {
           <AuthProvider>
             <CharacterProvider>
               <Routes>
+                {/* Auth routes - outside of Layout */}
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/auth/forgot-password" element={<ForgotPassword />} />
                 <Route path="/auth/reset-password" element={<ResetPassword />} />
+                
+                {/* Onboarding routes - outside of Layout */}
                 <Route path="/character-creator" element={<CharacterCreator />} />
                 <Route path="/onboarding-assessment" element={<OnboardingAssessment />} />
+                
+                {/* Main app routes - inside Layout */}
                 <Route
                   path="/*"
                   element={
                     <Layout>
-                      <Suspense fallback={<div>Loading...</div>}>
+                      <Suspense fallback={
+                        <div className="flex items-center justify-center min-h-[400px]">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                        </div>
+                      }>
                         <Routes>
                           <Route path="/" element={<Index />} />
                           <Route path="/therapy/*" element={<Therapy />} />

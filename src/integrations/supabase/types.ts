@@ -147,31 +147,49 @@ export type Database = {
         Row: {
           assessment_session_id: string | null
           character_companion: string | null
+          country_code: string | null
           created_at: string
+          date_of_birth: string | null
           email: string | null
+          email_verified: boolean | null
           full_name: string | null
+          gender: string | null
           id: string
+          mobile_number: string | null
           onboarding_completed: boolean | null
+          otp_verified: boolean | null
           updated_at: string
         }
         Insert: {
           assessment_session_id?: string | null
           character_companion?: string | null
+          country_code?: string | null
           created_at?: string
+          date_of_birth?: string | null
           email?: string | null
+          email_verified?: boolean | null
           full_name?: string | null
+          gender?: string | null
           id: string
+          mobile_number?: string | null
           onboarding_completed?: boolean | null
+          otp_verified?: boolean | null
           updated_at?: string
         }
         Update: {
           assessment_session_id?: string | null
           character_companion?: string | null
+          country_code?: string | null
           created_at?: string
+          date_of_birth?: string | null
           email?: string | null
+          email_verified?: boolean | null
           full_name?: string | null
+          gender?: string | null
           id?: string
+          mobile_number?: string | null
           onboarding_completed?: boolean | null
+          otp_verified?: boolean | null
           updated_at?: string
         }
         Relationships: [
