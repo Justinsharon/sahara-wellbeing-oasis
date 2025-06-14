@@ -120,6 +120,8 @@ export default function CharacterCreator() {
                       outfit: outfit,
                     },
                     relationship: {
+                      bond_level: 1,
+                      milestones_achieved: [],
                       daily_interactions: 0,
                       total_interactions: 0,
                     }
@@ -142,7 +144,7 @@ export default function CharacterCreator() {
 
                 <div>
                   <Label htmlFor="skinTone">Skin Tone</Label>
-                  <Select value={skinTone} onValueChange={setSkinTone}>
+                  <Select value={skinTone} onValueChange={(value) => setSkinTone(value as CharacterAppearance['skin_tone'])}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select skin tone" />
                     </SelectTrigger>
@@ -157,7 +159,7 @@ export default function CharacterCreator() {
 
                 <div>
                   <Label htmlFor="hairColor">Hair Color</Label>
-                  <Select value={hairColor} onValueChange={setHairColor}>
+                  <Select value={hairColor} onValueChange={(value) => setHairColor(value as CharacterAppearance['hair_color'])}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select hair color" />
                     </SelectTrigger>
@@ -175,7 +177,7 @@ export default function CharacterCreator() {
 
                 <div>
                   <Label htmlFor="hairStyle">Hair Style</Label>
-                  <Select value={hairStyle} onValueChange={setHairStyle}>
+                  <Select value={hairStyle} onValueChange={(value) => setHairStyle(value as CharacterAppearance['hair_style'])}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select hair style" />
                     </SelectTrigger>
@@ -188,7 +190,7 @@ export default function CharacterCreator() {
 
                 <div>
                   <Label htmlFor="eyeColor">Eye Color</Label>
-                  <Select value={eyeColor} onValueChange={setEyeColor}>
+                  <Select value={eyeColor} onValueChange={(value) => setEyeColor(value as CharacterAppearance['eye_color'])}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select eye color" />
                     </SelectTrigger>
@@ -216,7 +218,7 @@ export default function CharacterCreator() {
 
                 <div>
                   <Label htmlFor="outfit">Outfit</Label>
-                  <Select value={outfit} onValueChange={setOutfit}>
+                  <Select value={outfit} onValueChange={(value) => setOutfit(value as CharacterAppearance['outfit'])}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select outfit" />
                     </SelectTrigger>
