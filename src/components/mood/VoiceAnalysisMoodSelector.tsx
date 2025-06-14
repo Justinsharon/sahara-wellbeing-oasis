@@ -1,8 +1,7 @@
-
 import { useState, useRef } from "react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff, Play, Square, Loader2, Pause, AlertCircle, Waves } from "lucide-react";
+import { Mic, MicOff, Play, Square, Loader2, Pause, AlertCircle, Waves, ExternalLink } from "lucide-react";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { useCharacter } from "@/hooks/useCharacter";
 import { supabase } from "@/lib/supabase";
@@ -24,11 +23,26 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
   const [confidence, setConfidence] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [analysisDetails, setAnalysisDetails] = useState<any>(null);
+  const [isSupabaseConfigured, setIsSupabaseConfigured] = useState(true);
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { character } = useCharacter();
+
+  // Check if Supabase is properly configured
+  const checkSupabaseConfig = () => {
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    
+    if (!supabaseUrl || !supabaseAnonKey || 
+        supabaseUrl.includes('placeholder') || 
+        supabaseAnonKey.includes('placeholder')) {
+      setIsSupabaseConfigured(false);
+      return false;
+    }
+    return true;
+  };
 
   const startRecording = async () => {
     try {
@@ -69,6 +83,12 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
         setHasRecorded(true);
+        
+        // Check Supabase config before analyzing
+        if (!checkSupabaseConfig()) {
+          setError("Supabase not configured. Please connect to Supabase to use voice analysis.");
+          return;
+        }
         
         // Convert to base64 and analyze
         const reader = new FileReader();
@@ -211,6 +231,7 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
     setConfidence(null);
     setRecordingTime(0);
     setIsPaused(false);
+    setError(null);
     if (audioUrl) {
       URL.revokeObjectURL(audioUrl);
     }
@@ -223,6 +244,51 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
         <Button onClick={onManualFallback} className="mt-4 liquid-glass-button">
           Use Manual Selection
         </Button>
+      </LiquidGlass>
+    );
+  }
+
+  // Show Supabase setup message if not configured
+  if (!isSupabaseConfigured) {
+    return (
+      <LiquidGlass variant="card" className="p-8">
+        <div className="text-center space-y-6">
+          <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto">
+            <AlertCircle className="w-8 h-8 text-yellow-600" />
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-bold text-yellow-700 mb-2">Supabase Integration Required</h3>
+            <p className="text-misty-rosewood-600 mb-4">
+              Voice analysis requires a backend connection. Please connect your project to Supabase to enable this feature.
+            </p>
+          </div>
+
+          <LiquidGlass variant="crystal" className="p-4 bg-blue-50 border border-blue-200">
+            <div className="flex items-start gap-3">
+              <ExternalLink className="w-5 h-5 text-blue-600 mt-0.5" />
+              <div className="text-left">
+                <p className="font-medium text-blue-700">How to connect Supabase:</p>
+                <ol className="text-sm text-blue-600 mt-1 space-y-1">
+                  <li>1. Click the green "Supabase" button in the top-right corner</li>
+                  <li>2. Follow the setup instructions</li>
+                  <li>3. Deploy the voice analysis function</li>
+                  <li>4. Come back and try voice analysis!</li>
+                </ol>
+              </div>
+            </div>
+          </LiquidGlass>
+
+          <div className="space-y-3">
+            <Button onClick={onManualFallback} className="liquid-glass-button w-full">
+              <MicOff className="w-4 h-4 mr-2" />
+              Use Manual Selection Instead
+            </Button>
+            <p className="text-xs text-misty-rosewood-400">
+              You can still track your mood manually while setting up voice analysis
+            </p>
+          </div>
+        </div>
       </LiquidGlass>
     );
   }
