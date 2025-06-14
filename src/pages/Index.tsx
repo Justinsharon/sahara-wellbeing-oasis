@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Heart, Users, TrendingUp, Search, MessageCircle, BarChart3, Shield, Clock, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ const featureCards = [
     description: "Connect with certified therapists for personalized support",
     icon: Heart,
     href: "/therapy",
-    bgColor: "#dfa9ae",
+    bgColor: "#a1a1a1",
   },
   {
     title: "Community Support",
