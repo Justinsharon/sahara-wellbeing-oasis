@@ -1,3 +1,4 @@
+
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -5,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
+import { CharacterProvider } from "@/hooks/useCharacter";
 import Layout from "@/components/layout/Layout";
 import Index from "@/pages/Index";
 import PersonalGrowthRoutes from "@/routes/personalGrowthRoutes";
@@ -29,30 +31,32 @@ function App() {
         <Sonner />
         <BrowserRouter>
           <AuthProvider>
-            <Routes>
-              <Route path="/auth" element={<AuthPage />} />
-              <Route
-                path="/*"
-                element={
-                  <Layout>
-                    <Suspense fallback={<div>Loading...</div>}>
-                      <Routes>
-                        <Route path="/" element={<Index />} />
-                        <Route path="/therapy/*" element={<Therapy />} />
-                        <Route path="/community/*" element={<Community />} />
-                        <Route path="/explore-heal/*" element={<ExploreHeal />} />
-                        <Route path="/insights/*" element={<Insights />} />
-                        <Route path="/emergency/*" element={<Emergency />} />
-                        <Route path="/chat/*" element={<Chat />} />
-                        <Route path="/character-creator/*" element={<CharacterCreator />} />
-                        <Route path="/personal-growth/*" element={<PersonalGrowthRoutes />} />
-                        <Route path="*" element={<NotFound />} />
-                      </Routes>
-                    </Suspense>
-                  </Layout>
-                }
-              />
-            </Routes>
+            <CharacterProvider>
+              <Routes>
+                <Route path="/auth" element={<AuthPage />} />
+                <Route
+                  path="/*"
+                  element={
+                    <Layout>
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <Routes>
+                          <Route path="/" element={<Index />} />
+                          <Route path="/therapy/*" element={<Therapy />} />
+                          <Route path="/community/*" element={<Community />} />
+                          <Route path="/explore-heal/*" element={<ExploreHeal />} />
+                          <Route path="/insights/*" element={<Insights />} />
+                          <Route path="/emergency/*" element={<Emergency />} />
+                          <Route path="/chat/*" element={<Chat />} />
+                          <Route path="/character-creator/*" element={<CharacterCreator />} />
+                          <Route path="/personal-growth/*" element={<PersonalGrowthRoutes />} />
+                          <Route path="*" element={<NotFound />} />
+                        </Routes>
+                      </Suspense>
+                    </Layout>
+                  }
+                />
+              </Routes>
+            </CharacterProvider>
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>

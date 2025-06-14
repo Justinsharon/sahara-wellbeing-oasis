@@ -1,17 +1,12 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useMockAuth } from "@/hooks/useMockAuth";
 import { toast } from "sonner";
-import { Heart, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft, User, Mail, Lock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const signUpSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
@@ -33,7 +28,7 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { signUp } = useMockAuth();
+  const { signUp } = useAuth();
   const navigate = useNavigate();
 
   const {

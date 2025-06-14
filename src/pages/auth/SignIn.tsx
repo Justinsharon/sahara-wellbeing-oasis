@@ -1,16 +1,12 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useMockAuth } from "@/hooks/useMockAuth";
 import { toast } from "sonner";
-import { Heart, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const signInSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -22,7 +18,7 @@ type SignInForm = z.infer<typeof signInSchema>;
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { signIn } = useMockAuth();
+  const { signIn } = useAuth();
   const navigate = useNavigate();
 
   const {
