@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { MessageCircle, Heart, X } from "lucide-react";
+import { MessageCircle, Heart, X, Compass } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -57,7 +57,7 @@ export function FloatingChatButton() {
               className="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 transition-all duration-200 hover:scale-105 active:scale-95"
             >
               <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
-                <compass className="w-4 h-4 text-blue-600" />
+                <Compass className="w-4 h-4 text-blue-600" />
               </div>
               <div>
                 <p className="font-medium text-gray-800">Explore & Heal</p>
