@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CircularMoodSelector } from "./CircularMoodSelector";
 import { StressLevelTracker } from "./StressLevelTracker";
 import { SleepQualityTracker } from "./SleepQualityTracker";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -69,9 +69,9 @@ export function DailyCheckIn({ onSave, initialData }: DailyCheckInProps) {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header with progress */}
-      <Card className="soft-shadow border-0">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-3">
+      <LiquidGlass variant="card" floating bubbles className="p-6 animate-scale-in">
+        <div className="mb-6">
+          <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 rounded-2xl bg-crimson-wine-500 flex items-center justify-center">
               <Heart className="w-6 h-6 text-white" />
             </div>
@@ -81,9 +81,9 @@ export function DailyCheckIn({ onSave, initialData }: DailyCheckInProps) {
                 Track your daily wellness journey
               </p>
             </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+          </div>
+        </div>
+        <div className="space-y-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-misty-rosewood-500" />
@@ -91,7 +91,7 @@ export function DailyCheckIn({ onSave, initialData }: DailyCheckInProps) {
                 type="date"
                 value={currentDate}
                 onChange={(e) => setCurrentDate(e.target.value)}
-                className="border border-soft-blush-200 rounded-lg px-3 py-1 text-sm"
+                className="liquid-glass-input px-3 py-1 text-sm"
               />
             </div>
             <div className="text-right">
@@ -105,64 +105,57 @@ export function DailyCheckIn({ onSave, initialData }: DailyCheckInProps) {
               style={{ width: `${completionPercentage}%` }}
             />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </LiquidGlass>
 
       {/* Mood Selection */}
-      <Card className="soft-shadow border-0">
-        <CardHeader>
-          <CardTitle>How are you feeling today?</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CircularMoodSelector selectedMood={mood} onMoodSelect={setMood} />
-        </CardContent>
-      </Card>
+      <LiquidGlass variant="card" floating bubbles className="p-6 animate-scale-in" style={{ animationDelay: "0.1s" }}>
+        <div className="mb-6">
+          <h3 className="text-xl font-bold heading-gradient mb-2">Express Your Current Mood</h3>
+          <p className="text-misty-rosewood-500">Choose the mood that best represents how you're feeling right now</p>
+        </div>
+        <CircularMoodSelector selectedMood={mood} onMoodSelect={setMood} />
+      </LiquidGlass>
 
       {/* Stress and Sleep in a grid */}
       <div className="grid md:grid-cols-2 gap-6">
-        <Card className="soft-shadow border-0">
-          <CardContent className="pt-6">
-            <StressLevelTracker selectedLevel={stressLevel} onLevelSelect={setStressLevel} />
-          </CardContent>
-        </Card>
+        <LiquidGlass variant="card" floating bubbles className="p-6 animate-scale-in" style={{ animationDelay: "0.2s" }}>
+          <StressLevelTracker selectedLevel={stressLevel} onLevelSelect={setStressLevel} />
+        </LiquidGlass>
 
-        <Card className="soft-shadow border-0">
-          <CardContent className="pt-6">
-            <SleepQualityTracker
-              selectedQuality={sleepQuality}
-              onQualitySelect={setSleepQuality}
-              hoursSlept={hoursSlept}
-              onHoursChange={setHoursSlept}
-            />
-          </CardContent>
-        </Card>
+        <LiquidGlass variant="card" floating bubbles className="p-6 animate-scale-in" style={{ animationDelay: "0.3s" }}>
+          <SleepQualityTracker
+            selectedQuality={sleepQuality}
+            onQualitySelect={setSleepQuality}
+            hoursSlept={hoursSlept}
+            onHoursChange={setHoursSlept}
+          />
+        </LiquidGlass>
       </div>
 
       {/* Notes */}
-      <Card className="soft-shadow border-0">
-        <CardContent className="pt-6">
-          <div className="space-y-4">
-            <Label htmlFor="notes" className="text-lg font-semibold text-crimson-wine-600">
-              Additional Notes (Optional)
-            </Label>
-            <Textarea
-              id="notes"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="How are you feeling today? Any thoughts, events, or reflections you'd like to remember..."
-              className="min-h-24"
-              rows={4}
-            />
-          </div>
-        </CardContent>
-      </Card>
+      <LiquidGlass variant="card" floating bubbles className="p-6 animate-scale-in" style={{ animationDelay: "0.4s" }}>
+        <div className="space-y-4">
+          <Label htmlFor="notes" className="text-lg font-semibold text-crimson-wine-600">
+            Reflect on Your Day (Optional)
+          </Label>
+          <Textarea
+            id="notes"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Reflect on your day - any insights, events, or feelings you'd like to capture and remember..."
+            className="liquid-glass-input min-h-24"
+            rows={4}
+          />
+        </div>
+      </LiquidGlass>
 
       {/* Save Button */}
       <div className="text-center">
         <Button
           onClick={handleSave}
           disabled={!isComplete}
-          className="btn-primary-modern px-8 py-3 text-lg"
+          className="liquid-glass-button px-8 py-3 text-lg"
         >
           <Save className="w-5 h-5 mr-2" />
           Save Daily Check-In

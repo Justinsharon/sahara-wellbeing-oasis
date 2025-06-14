@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Calendar, TrendingUp, Heart, BarChart3, BookOpen, Target } from "lucide-react";
@@ -317,7 +316,7 @@ export default function UnifiedMoodJournal() {
                     id="notes"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    placeholder="How are you feeling today? Any thoughts you'd like to remember..."
+                    placeholder="What's on your mind today? Share your thoughts and feelings..."
                     className="liquid-glass-input min-h-24"
                     rows={4}
                   />
