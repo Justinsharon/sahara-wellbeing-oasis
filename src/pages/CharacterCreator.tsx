@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
@@ -9,18 +10,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { CharacterAvatar } from '@/components/character/CharacterAvatar';
+import { CharacterAppearance } from '@/types/character';
 
 export default function CharacterCreator() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
-  const [skinTone, setSkinTone] = useState('light');
-  const [hairColor, setHairColor] = useState('black');
-  const [hairStyle, setHairStyle] = useState('short');
-  const [eyeColor, setEyeColor] = useState('brown');
+  const [skinTone, setSkinTone] = useState<CharacterAppearance['skin_tone']>('light');
+  const [hairColor, setHairColor] = useState<CharacterAppearance['hair_color']>('black');
+  const [hairStyle, setHairStyle] = useState<CharacterAppearance['hair_style']>('short');
+  const [eyeColor, setEyeColor] = useState<CharacterAppearance['eye_color']>('brown');
   const [accessories, setAccessories] = useState<string[]>([]);
-  const [outfit, setOutfit] = useState('casual');
+  const [outfit, setOutfit] = useState<CharacterAppearance['outfit']>('casual');
 
   const handleAccessoriesChange = (accessory: string) => {
     if (accessories.includes(accessory)) {
@@ -47,6 +49,8 @@ export default function CharacterCreator() {
         outfit: outfit,
       },
       relationship: {
+        bond_level: 1,
+        milestones_achieved: [],
         daily_interactions: 0,
         total_interactions: 0,
       },

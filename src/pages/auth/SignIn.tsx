@@ -1,11 +1,15 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, Heart } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const signInSchema = z.object({
