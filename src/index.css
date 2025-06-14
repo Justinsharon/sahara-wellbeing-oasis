@@ -7,15 +7,15 @@
 
 @layer base {
   :root {
-    /* New earthy 5-color palette */
-    --background: 0 0% 98%; /* Very light background */
-    --foreground: 350 65% 15%; /* Deep crimson for text */
+    /* New earthy 5-color palette with Crimson Wine background */
+    --background: 350 65% 15%; /* Deep Crimson Wine for background */
+    --foreground: 345 20% 85%; /* Light Soft Blush for text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 350 65% 15%;
+    --card: 350 60% 18%;
+    --card-foreground: 345 20% 85%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 350 65% 15%;
+    --popover: 350 60% 18%;
+    --popover-foreground: 345 20% 85%;
 
     /* Primary - Crimson Wine */
     --primary: 350 65% 22%; /* Crimson wine #501122 */
@@ -25,8 +25,8 @@
     --secondary: 15 15% 36%; /* Misty rosewood #574144 */
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 15 25% 88%; /* Light rosewood muted */
-    --muted-foreground: 15 15% 45%;
+    --muted: 350 50% 25%; /* Darker muted for crimson background */
+    --muted-foreground: 345 20% 70%;
 
     /* Accent - Soft Blush */
     --accent: 345 20% 70%; /* Soft blush #bfa5a8 */
@@ -35,8 +35,8 @@
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 15 25% 85%;
-    --input: 15 25% 88%;
+    --border: 350 40% 25%;
+    --input: 350 50% 22%;
     --ring: 350 65% 22%;
 
     --radius: 2rem;
@@ -115,98 +115,98 @@
 }
 
 @layer components {
-  /* Updated gradient system with earthy 5-color palette */
+  /* Updated gradient system with Crimson Wine background */
   .modern-gradient {
     background: linear-gradient(135deg, 
-      hsl(var(--crimson-wine-50)) 0%, 
-      hsl(var(--soft-blush-50)) 25%, 
-      hsl(var(--misty-rosewood-50)) 50%, 
-      hsl(var(--emerald-splash-50)) 75%,
-      hsl(var(--deep-teal-50)) 100%);
+      hsl(var(--crimson-wine-500)) 0%, 
+      hsl(var(--crimson-wine-600)) 25%, 
+      hsl(var(--misty-rosewood-600)) 50%, 
+      hsl(var(--emerald-splash-600)) 75%,
+      hsl(var(--deep-teal-600)) 100%);
   }
 
   .wellness-gradient {
     background: linear-gradient(135deg, 
-      hsl(var(--soft-blush-50)) 0%, 
-      hsl(var(--crimson-wine-50)) 25%, 
-      hsl(var(--emerald-splash-50)) 50%, 
-      hsl(var(--deep-teal-50)) 75%,
-      hsl(var(--misty-rosewood-50)) 100%);
+      hsl(var(--crimson-wine-500)) 0%, 
+      hsl(var(--crimson-wine-600)) 25%, 
+      hsl(var(--misty-rosewood-500)) 50%, 
+      hsl(var(--emerald-splash-600)) 75%,
+      hsl(var(--deep-teal-600)) 100%);
   }
 
-  /* Advanced glassmorphism with earthy palette */
+  /* Advanced glassmorphism with darker crimson palette */
   .glass-card {
     background: linear-gradient(135deg, 
-      rgba(191, 165, 168, 0.15) 0%, 
-      rgba(87, 65, 68, 0.1) 50%,
-      rgba(80, 17, 34, 0.05) 100%);
+      rgba(80, 17, 34, 0.4) 0%, 
+      rgba(87, 65, 68, 0.3) 50%,
+      rgba(80, 17, 34, 0.2) 100%);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(191, 165, 168, 0.2);
+    border: 1px solid rgba(191, 165, 168, 0.3);
     box-shadow: 
-      0 20px 40px rgba(80, 17, 34, 0.08),
-      0 8px 32px rgba(80, 17, 34, 0.05),
-      inset 0 1px 0 rgba(191, 165, 168, 0.3);
+      0 20px 40px rgba(80, 17, 34, 0.3),
+      0 8px 32px rgba(80, 17, 34, 0.2),
+      inset 0 1px 0 rgba(191, 165, 168, 0.4);
   }
 
   .glass-nav {
     background: linear-gradient(135deg, 
-      rgba(191, 165, 168, 0.2) 0%, 
-      rgba(87, 65, 68, 0.15) 50%,
-      rgba(80, 17, 34, 0.1) 100%);
+      rgba(80, 17, 34, 0.5) 0%, 
+      rgba(87, 65, 68, 0.4) 50%,
+      rgba(80, 17, 34, 0.3) 100%);
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(191, 165, 168, 0.25);
+    border: 1px solid rgba(191, 165, 168, 0.35);
     box-shadow: 
-      0 16px 32px rgba(80, 17, 34, 0.1),
-      0 4px 16px rgba(80, 17, 34, 0.06);
+      0 16px 32px rgba(80, 17, 34, 0.3),
+      0 4px 16px rgba(80, 17, 34, 0.2);
   }
 
-  /* Neomorphic elements with earthy colors */
+  /* Neomorphic elements with darker colors */
   .neo-card {
     background: linear-gradient(145deg, 
-      hsl(var(--soft-blush-50)), 
-      hsl(var(--soft-blush-100)));
+      hsl(var(--crimson-wine-500)), 
+      hsl(var(--crimson-wine-600)));
     box-shadow: 
-      20px 20px 40px rgba(80, 17, 34, 0.12),
-      -20px -20px 40px rgba(191, 165, 168, 0.8),
-      inset 0 1px 0 rgba(191, 165, 168, 0.9);
-    border: 1px solid rgba(191, 165, 168, 0.2);
+      20px 20px 40px rgba(80, 17, 34, 0.4),
+      -20px -20px 40px rgba(191, 165, 168, 0.1),
+      inset 0 1px 0 rgba(191, 165, 168, 0.2);
+    border: 1px solid rgba(191, 165, 168, 0.15);
   }
 
   .neo-button {
     background: linear-gradient(145deg, 
-      hsl(var(--soft-blush-50)), 
-      hsl(var(--soft-blush-100)));
+      hsl(var(--crimson-wine-500)), 
+      hsl(var(--crimson-wine-600)));
     box-shadow: 
-      8px 8px 16px rgba(80, 17, 34, 0.12),
-      -8px -8px 16px rgba(191, 165, 168, 0.8);
+      8px 8px 16px rgba(80, 17, 34, 0.3),
+      -8px -8px 16px rgba(191, 165, 168, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .neo-button:active {
     box-shadow: 
-      inset 8px 8px 16px rgba(80, 17, 34, 0.12),
-      inset -8px -8px 16px rgba(191, 165, 168, 0.8);
+      inset 8px 8px 16px rgba(80, 17, 34, 0.3),
+      inset -8px -8px 16px rgba(191, 165, 168, 0.1);
   }
 
-  /* Modern card designs with earthy palette */
+  /* Modern card designs with darker crimson palette */
   .insight-card {
     @apply glass-card rounded-3xl p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2;
     background: linear-gradient(135deg, 
-      rgba(191, 165, 168, 0.15) 0%, 
-      rgba(87, 65, 68, 0.1) 50%,
-      rgba(14, 124, 113, 0.05) 100%);
+      rgba(80, 17, 34, 0.4) 0%, 
+      rgba(87, 65, 68, 0.3) 50%,
+      rgba(14, 124, 113, 0.2) 100%);
   }
 
   .metric-card {
     @apply relative overflow-hidden rounded-3xl p-6 transition-all duration-500 hover:scale-105;
     background: linear-gradient(135deg, 
-      rgba(191, 165, 168, 0.2) 0%, 
-      rgba(87, 65, 68, 0.15) 50%,
-      rgba(14, 124, 113, 0.1) 100%);
+      rgba(80, 17, 34, 0.5) 0%, 
+      rgba(87, 65, 68, 0.4) 50%,
+      rgba(14, 124, 113, 0.3) 100%);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(191, 165, 168, 0.25);
+    border: 1px solid rgba(191, 165, 168, 0.35);
   }
 
   .metric-card::before {
@@ -217,19 +217,19 @@
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, 
-      hsl(var(--crimson-wine-500)) 0%, 
+      hsl(var(--soft-blush-500)) 0%, 
       hsl(var(--emerald-splash-500)) 33%,
       hsl(var(--deep-teal-500)) 66%,
-      hsl(var(--soft-blush-500)) 100%);
+      hsl(var(--soft-blush-600)) 100%);
   }
 
-  /* Advanced typography with earthy colors */
+  /* Advanced typography with Soft Blush for headers */
   .heading-xl {
     @apply text-4xl md:text-5xl font-bold tracking-tight;
     background: linear-gradient(135deg, 
-      hsl(var(--crimson-wine-600)) 0%, 
-      hsl(var(--misty-rosewood-600)) 50%,
-      hsl(var(--deep-teal-600)) 100%);
+      hsl(var(--soft-blush-500)) 0%, 
+      hsl(var(--soft-blush-600)) 50%,
+      hsl(var(--soft-blush-100)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -237,16 +237,16 @@
 
   .heading-gradient {
     background: linear-gradient(135deg, 
-      hsl(var(--crimson-wine-600)) 0%, 
-      hsl(var(--emerald-splash-500)) 33%,
-      hsl(var(--deep-teal-500)) 66%,
-      hsl(var(--misty-rosewood-600)) 100%);
+      hsl(var(--soft-blush-500)) 0%, 
+      hsl(var(--soft-blush-600)) 33%,
+      hsl(var(--soft-blush-100)) 66%,
+      hsl(var(--soft-blush-500)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Modern buttons with earthy palette */
+  /* Modern buttons with crimson palette */
   .btn-primary-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
     background: linear-gradient(135deg, 
@@ -269,15 +269,15 @@
 
   .btn-secondary-modern {
     @apply glass-card rounded-2xl px-8 py-4 font-semibold transition-all duration-300;
-    color: hsl(var(--crimson-wine-600));
-    border: 1px solid rgba(80, 17, 34, 0.2);
+    color: hsl(var(--soft-blush-100));
+    border: 1px solid rgba(191, 165, 168, 0.3);
   }
 
   .btn-secondary-modern:hover {
     @apply scale-105 -translate-y-0.5;
     background: linear-gradient(135deg, 
-      rgba(80, 17, 34, 0.1) 0%, 
-      rgba(14, 124, 113, 0.05) 100%);
+      rgba(80, 17, 34, 0.3) 0%, 
+      rgba(14, 124, 113, 0.2) 100%);
   }
 
   .btn-accent-modern {
@@ -290,20 +290,20 @@
       0 4px 12px rgba(14, 124, 113, 0.25);
   }
 
-  /* Enhanced Mobile Navigation with earthy palette */
+  /* Enhanced Mobile Navigation with darker crimson palette */
   .enhanced-mobile-nav {
     background: linear-gradient(135deg, 
-      rgba(191, 165, 168, 0.2) 0%, 
-      rgba(87, 65, 68, 0.15) 33%,
-      rgba(80, 17, 34, 0.1) 66%,
-      rgba(14, 124, 113, 0.05) 100%);
+      rgba(80, 17, 34, 0.6) 0%, 
+      rgba(87, 65, 68, 0.5) 33%,
+      rgba(80, 17, 34, 0.4) 66%,
+      rgba(14, 124, 113, 0.3) 100%);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-top: 1px solid rgba(191, 165, 168, 0.3);
+    border-top: 1px solid rgba(191, 165, 168, 0.4);
     box-shadow: 
-      0 -20px 40px rgba(80, 17, 34, 0.08),
-      0 -8px 32px rgba(80, 17, 34, 0.04),
-      inset 0 1px 0 rgba(191, 165, 168, 0.4);
+      0 -20px 40px rgba(80, 17, 34, 0.3),
+      0 -8px 32px rgba(80, 17, 34, 0.2),
+      inset 0 1px 0 rgba(191, 165, 168, 0.5);
     position: relative;
   }
 
@@ -315,33 +315,33 @@
     right: 0;
     height: 2px;
     background: linear-gradient(90deg, 
-      hsl(var(--crimson-wine-500)) 0%, 
+      hsl(var(--soft-blush-500)) 0%, 
       hsl(var(--emerald-splash-500)) 20%,
       hsl(var(--deep-teal-500)) 40%,
-      hsl(var(--soft-blush-500)) 60%,
+      hsl(var(--soft-blush-600)) 60%,
       hsl(var(--misty-rosewood-500)) 80%,
-      hsl(var(--crimson-wine-500)) 100%);
-    opacity: 0.8;
+      hsl(var(--soft-blush-500)) 100%);
+    opacity: 0.9;
   }
 
-  /* Updated progress indicators with earthy palette */
+  /* Updated progress indicators with crimson palette */
   .progress-modern {
     @apply relative h-3 overflow-hidden rounded-full;
     background: linear-gradient(90deg, 
-      rgba(80, 17, 34, 0.1) 0%, 
-      rgba(14, 124, 113, 0.05) 100%);
+      rgba(80, 17, 34, 0.3) 0%, 
+      rgba(14, 124, 113, 0.2) 100%);
   }
 
   .progress-modern .progress-fill {
     @apply h-full rounded-full transition-all duration-700 ease-out;
     background: linear-gradient(90deg, 
-      hsl(var(--crimson-wine-500)) 0%, 
+      hsl(var(--soft-blush-500)) 0%, 
       hsl(var(--emerald-splash-500)) 50%,
       hsl(var(--deep-teal-500)) 100%);
-    box-shadow: 0 4px 12px rgba(80, 17, 34, 0.3);
+    box-shadow: 0 4px 12px rgba(191, 165, 168, 0.4);
   }
 
-  /* Floating elements with earthy colors */
+  /* Floating elements with crimson colors */
   .floating-action {
     @apply fixed bottom-24 right-6 w-16 h-16 rounded-full shadow-2xl transition-all duration-300 z-50;
     background: linear-gradient(135deg, 
@@ -356,40 +356,69 @@
     @apply scale-110 -translate-y-1;
   }
 
-  /* Chart enhancements with earthy palette */
+  /* Chart enhancements with darker crimson palette */
   .chart-container {
     @apply glass-card rounded-3xl p-6;
     background: linear-gradient(135deg, 
-      rgba(191, 165, 168, 0.15) 0%, 
-      rgba(87, 65, 68, 0.1) 50%,
-      rgba(14, 124, 113, 0.05) 100%);
+      rgba(80, 17, 34, 0.4) 0%, 
+      rgba(87, 65, 68, 0.3) 50%,
+      rgba(14, 124, 113, 0.2) 100%);
   }
 
-  /* Loading animations with earthy colors */
+  /* Loading animations with darker colors */
   .skeleton-modern {
     @apply animate-pulse rounded-2xl;
     background: linear-gradient(90deg, 
-      rgba(191, 165, 168, 0.3) 0%, 
-      rgba(191, 165, 168, 0.5) 50%, 
-      rgba(191, 165, 168, 0.3) 100%);
+      rgba(80, 17, 34, 0.4) 0%, 
+      rgba(191, 165, 168, 0.3) 50%, 
+      rgba(80, 17, 34, 0.4) 100%);
     background-size: 200% 100%;
     animation: shimmer 2s infinite ease-in-out;
   }
 
-  /* Tab styles with earthy palette */
+  /* Tab styles with crimson palette */
   .tab-modern {
     @apply transition-all duration-300 rounded-xl px-4 py-2;
-    color: hsl(var(--misty-rosewood-600));
+    color: hsl(var(--soft-blush-100));
   }
 
   .tab-modern[data-state="active"] {
     background: linear-gradient(135deg, 
+      hsl(var(--soft-blush-500)) 0%, 
+      hsl(var(--soft-blush-600)) 100%);
+    color: hsl(var(--crimson-wine-600));
+    box-shadow: 
+      0 8px 20px rgba(191, 165, 168, 0.25),
+      0 4px 12px rgba(191, 165, 168, 0.15);
+  }
+
+  /* Tab trigger styles */
+  .tab-trigger-crimson[data-state="active"] {
+    background: linear-gradient(135deg, 
       hsl(var(--crimson-wine-500)) 0%, 
       hsl(var(--crimson-wine-600)) 100%);
     color: white;
-    box-shadow: 
-      0 8px 20px rgba(80, 17, 34, 0.25),
-      0 4px 12px rgba(80, 17, 34, 0.15);
+  }
+
+  .tab-trigger-emerald[data-state="active"] {
+    background: linear-gradient(135deg, 
+      hsl(var(--emerald-splash-500)) 0%, 
+      hsl(var(--emerald-splash-600)) 100%);
+    color: white;
+  }
+
+  .tab-trigger-teal[data-state="active"] {
+    background: linear-gradient(135deg, 
+      hsl(var(--deep-teal-500)) 0%, 
+      hsl(var(--deep-teal-600)) 100%);
+    color: white;
+  }
+
+  .tab-trigger-blush[data-state="active"] {
+    background: linear-gradient(135deg, 
+      hsl(var(--soft-blush-500)) 0%, 
+      hsl(var(--soft-blush-600)) 100%);
+    color: hsl(var(--crimson-wine-600));
   }
 
   /* Hover effects */
@@ -404,17 +433,18 @@
   /* Card with shadow */
   .soft-shadow {
     box-shadow: 
-      0 10px 25px rgba(80, 17, 34, 0.08),
-      0 4px 12px rgba(80, 17, 34, 0.04);
+      0 10px 25px rgba(80, 17, 34, 0.25),
+      0 4px 12px rgba(80, 17, 34, 0.15);
   }
 
   /* Glass input */
   .glass-input {
     background: linear-gradient(135deg, 
-      rgba(191, 165, 168, 0.2) 0%, 
-      rgba(87, 65, 68, 0.1) 100%);
+      rgba(80, 17, 34, 0.4) 0%, 
+      rgba(87, 65, 68, 0.3) 100%);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(191, 165, 168, 0.25);
+    border: 1px solid rgba(191, 165, 168, 0.35);
+    color: hsl(var(--soft-blush-100));
   }
 
   /* Animate utilities */
