@@ -1,74 +1,133 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
+import { Heart, Users, TrendingUp, Sparkles, AlertTriangle, MessageCircle } from "lucide-react";
 
 const Index = () => {
   const { user } = useAuth();
 
+  const features = [
+    {
+      icon: Heart,
+      title: "Therapy & Counseling",
+      description: "Connect with licensed therapists for personalized support and guidance on your mental health journey.",
+      link: "/therapy",
+      linkText: "Explore Therapy Options"
+    },
+    {
+      icon: Users,
+      title: "Community Support",
+      description: "Join supportive communities and connect with others on similar wellness and recovery journeys.",
+      link: "/community",
+      linkText: "Find Your Community"
+    },
+    {
+      icon: TrendingUp,
+      title: "Personal Growth",
+      description: "Track your progress with mood journaling, goal setting, and personal development tools.",
+      link: "/personal-growth",
+      linkText: "Start Growing"
+    },
+    {
+      icon: Sparkles,
+      title: "Insights & Education",
+      description: "Access articles, guides, and educational content on mental health and wellness topics.",
+      link: "/insights",
+      linkText: "Gain Valuable Insights"
+    },
+    {
+      icon: AlertTriangle,
+      title: "Emergency Support",
+      description: "Get immediate access to crisis hotlines and emergency mental health resources.",
+      link: "/emergency",
+      linkText: "Find Emergency Support"
+    },
+    {
+      icon: MessageCircle,
+      title: "AI Chatbot",
+      description: "Chat with our AI companion for instant support, guidance, and personalized wellness tips.",
+      link: "/chat",
+      linkText: "Start Chatting"
+    }
+  ];
+
   return (
-    <div className="min-h-screen wellness-gradient">
-      <div className="container mx-auto px-4 py-16">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <div className="container mx-auto px-6 py-12 max-w-7xl">
+        {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="heading-xl mb-4">Welcome to Sahara</h1>
-          <p className="text-xl text-misty-rosewood-500 mb-8">
-            Your personal wellness and mental health companion
+          <h1 className="text-5xl font-bold text-slate-800 mb-6 leading-tight">
+            Welcome to <span className="text-primary">Sahara</span>
+          </h1>
+          <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Your personal wellness and mental health companion - a safe oasis for healing, growth, and connection
           </p>
+          
           {!user ? (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="text-lg px-8 py-3">
                 <Link to="/auth">Get Started</Link>
               </Button>
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="outline" size="lg" asChild className="text-lg px-8 py-3">
                 <Link to="/personal-growth">Explore Features</Link>
               </Button>
             </div>
           ) : (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="text-lg px-8 py-3">
                 <Link to="/personal-growth">Continue Your Journey</Link>
               </Button>
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="outline" size="lg" asChild className="text-lg px-8 py-3">
                 <Link to="/personal-growth/unified-mood-journal">Track Your Mood</Link>
               </Button>
             </div>
           )}
         </div>
 
+        {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">Therapy & Counseling</h2>
-            <p className="text-gray-600">Connect with licensed therapists for personalized support.</p>
-            <Link to="/therapy" className="text-blue-500 hover:underline mt-4 block">Explore Therapy Options</Link>
-          </div>
+          {features.map((feature, index) => (
+            <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/70 backdrop-blur-sm hover:bg-white/90">
+              <CardHeader className="text-center pb-4">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                  <feature.icon className="w-8 h-8 text-primary" />
+                </div>
+                <CardTitle className="text-xl font-semibold text-slate-800 group-hover:text-primary transition-colors duration-300">
+                  {feature.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <CardDescription className="text-slate-600 mb-6 leading-relaxed">
+                  {feature.description}
+                </CardDescription>
+                <Link 
+                  to={feature.link} 
+                  className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors duration-300 group-hover:underline"
+                >
+                  {feature.linkText}
+                  <span className="ml-1 transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </Link>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">Community Support</h2>
-            <p className="text-gray-600">Join supportive communities and connect with others on similar journeys.</p>
-            <Link to="/community" className="text-blue-500 hover:underline mt-4 block">Find Your Community</Link>
-          </div>
-
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">Explore & Heal</h2>
-            <p className="text-gray-600">Discover resources and tools for self-care and personal growth.</p>
-            <Link to="/explore-heal" className="text-blue-500 hover:underline mt-4 block">Start Your Healing Journey</Link>
-          </div>
-
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">Insights & Education</h2>
-            <p className="text-gray-600">Access articles, guides, and educational content on mental health and wellness.</p>
-            <Link to="/insights" className="text-blue-500 hover:underline mt-4 block">Gain Valuable Insights</Link>
-          </div>
-
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">Emergency Support</h2>
-            <p className="text-gray-600">Get immediate access to crisis hotlines and emergency resources.</p>
-            <Link to="/emergency" className="text-blue-500 hover:underline mt-4 block">Find Emergency Support</Link>
-          </div>
-
-          <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">AI Chatbot</h2>
-            <p className="text-gray-600">Chat with our AI chatbot for instant support and guidance.</p>
-            <Link to="/chat" className="text-blue-500 hover:underline mt-4 block">Start Chatting</Link>
+        {/* Call to Action Section */}
+        <div className="mt-20 text-center">
+          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 max-w-3xl mx-auto border border-white/20">
+            <h2 className="text-3xl font-bold text-slate-800 mb-4">
+              Ready to begin your wellness journey?
+            </h2>
+            <p className="text-lg text-slate-600 mb-6">
+              Join thousands of others who have found support, healing, and growth with Sahara.
+            </p>
+            {!user && (
+              <Button asChild size="lg" className="text-lg px-8 py-3">
+                <Link to="/auth">Start Your Journey Today</Link>
+              </Button>
+            )}
           </div>
         </div>
       </div>
