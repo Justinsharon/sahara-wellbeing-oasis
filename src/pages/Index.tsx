@@ -11,7 +11,7 @@ const featureCards = [
     description: "Connect with certified therapists for personalized support",
     icon: Heart,
     href: "/therapy",
-    bgColor: "bg-box-feature",
+    bgColor: "#dfa9ae",
   },
   {
     title: "Community Support",
@@ -128,7 +128,10 @@ export default function Index() {
             <Link key={index} to={user ? card.href : "/auth/signup"} className="group">
               <Card className="card-hover soft-shadow border-0 h-full glass-card">
                 <CardHeader>
-                  <div className={`w-12 h-12 ${card.bgColor} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  <div 
+                    className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                    style={{ backgroundColor: card.bgColor.startsWith('#') ? card.bgColor : undefined }}
+                  >
                     <card.icon className="w-6 h-6 text-font-color" />
                   </div>
                   <CardTitle className="text-xl text-font-color">{card.title}</CardTitle>
