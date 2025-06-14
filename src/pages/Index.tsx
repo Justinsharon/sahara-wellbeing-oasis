@@ -65,10 +65,7 @@ export default function Index() {
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-crimson-wine">
             <span className="heading-gradient">
-              Welcome to Your
-            </span>{" "}
-            <span className="heading-gradient">
-              Wellness Oasis
+              Welcome to Your Wellness Oasis
             </span>
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-warm-gray">
