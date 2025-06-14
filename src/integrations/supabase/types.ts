@@ -9,6 +9,98 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      assessment_responses: {
+        Row: {
+          answer_data: Json | null
+          answer_value: string
+          created_at: string
+          emotional_score: number | null
+          id: string
+          lifestyle_score: number | null
+          physical_score: number | null
+          question_id: string
+          session_id: string
+          work_score: number | null
+        }
+        Insert: {
+          answer_data?: Json | null
+          answer_value: string
+          created_at?: string
+          emotional_score?: number | null
+          id?: string
+          lifestyle_score?: number | null
+          physical_score?: number | null
+          question_id: string
+          session_id: string
+          work_score?: number | null
+        }
+        Update: {
+          answer_data?: Json | null
+          answer_value?: string
+          created_at?: string
+          emotional_score?: number | null
+          id?: string
+          lifestyle_score?: number | null
+          physical_score?: number | null
+          question_id?: string
+          session_id?: string
+          work_score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_responses_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "assessment_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assessment_sessions: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          current_question_id: string | null
+          emotional_score: number | null
+          id: string
+          lifestyle_score: number | null
+          physical_score: number | null
+          started_at: string
+          status: string
+          updated_at: string
+          user_id: string
+          work_score: number | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          current_question_id?: string | null
+          emotional_score?: number | null
+          id?: string
+          lifestyle_score?: number | null
+          physical_score?: number | null
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+          work_score?: number | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          current_question_id?: string | null
+          emotional_score?: number | null
+          id?: string
+          lifestyle_score?: number | null
+          physical_score?: number | null
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+          work_score?: number | null
+        }
+        Relationships: []
+      }
       mood_entries: {
         Row: {
           created_at: string
@@ -53,30 +145,85 @@ export type Database = {
       }
       profiles: {
         Row: {
+          assessment_session_id: string | null
           character_companion: string | null
           created_at: string
           email: string | null
           full_name: string | null
           id: string
+          onboarding_completed: boolean | null
           updated_at: string
         }
         Insert: {
+          assessment_session_id?: string | null
           character_companion?: string | null
           created_at?: string
           email?: string | null
           full_name?: string | null
           id: string
+          onboarding_completed?: boolean | null
           updated_at?: string
         }
         Update: {
+          assessment_session_id?: string | null
           character_companion?: string | null
           created_at?: string
           email?: string | null
           full_name?: string | null
           id?: string
+          onboarding_completed?: boolean | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_assessment_session_id_fkey"
+            columns: ["assessment_session_id"]
+            isOneToOne: false
+            referencedRelation: "assessment_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      therapy_recommendations: {
+        Row: {
+          confidence_score: number
+          created_at: string
+          id: string
+          priority: number | null
+          reasoning: string | null
+          recommendation_type: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          confidence_score: number
+          created_at?: string
+          id?: string
+          priority?: number | null
+          reasoning?: string | null
+          recommendation_type: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          confidence_score?: number
+          created_at?: string
+          id?: string
+          priority?: number | null
+          reasoning?: string | null
+          recommendation_type?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "therapy_recommendations_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "assessment_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
