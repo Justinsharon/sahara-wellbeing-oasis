@@ -8,16 +8,9 @@ import { toast } from "sonner";
 import { DailyCheckIn } from "@/components/mood/DailyCheckIn";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { useCharacter } from "@/hooks/useCharacter";
-import { useMoodEntries } from "@/hooks/useMoodEntries";
+import { useMoodEntries, MoodEntry } from "@/hooks/useMoodEntries";
 import { useAuth } from "@/hooks/useAuth";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-
-interface ExtendedMoodEntry extends MoodEntry {
-  stress_level?: number;
-  sleep_quality?: string;
-  hours_slept?: number;
-  entry_type?: 'simple' | 'enhanced';
-}
 
 const moodOptions = [
   { value: "very_happy", label: "Very Happy", emoji: "😄", color: "text-emerald-splash-600" },
@@ -26,42 +19,6 @@ const moodOptions = [
   { value: "sad", label: "Sad", emoji: "😢", color: "text-crimson-wine-400" },
   { value: "very_sad", label: "Very Sad", emoji: "😭", color: "text-crimson-wine-500" },
 ] as const;
-
-const mockUnifiedEntries: ExtendedMoodEntry[] = [
-  {
-    id: "1",
-    user_id: "user1",
-    mood: "happy",
-    stress_level: 2,
-    sleep_quality: "good",
-    hours_slept: 8,
-    entry_type: "enhanced",
-    notes: "Great therapy session today. Feeling optimistic about the future.",
-    date: "2024-06-14",
-    created_at: "2024-06-14T10:00:00Z",
-  },
-  {
-    id: "2",
-    user_id: "user1",
-    mood: "neutral",
-    entry_type: "enhanced",
-    notes: "Quick check-in - feeling okay today.",
-    date: "2024-06-13",
-    created_at: "2024-06-13T20:00:00Z",
-  },
-  {
-    id: "3",
-    user_id: "user1",
-    mood: "very_happy",
-    stress_level: 1,
-    sleep_quality: "excellent",
-    hours_slept: 8.5,
-    entry_type: "enhanced",
-    notes: "Achieved my meditation goal! Feeling very proud and peaceful.",
-    date: "2024-06-12",
-    created_at: "2024-06-12T18:00:00Z",
-  },
-];
 
 export default function UnifiedMoodJournal() {
   const { user, signOut, loading: authLoading } = useAuth();

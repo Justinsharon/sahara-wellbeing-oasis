@@ -18,6 +18,28 @@ export interface MoodEntry {
   updated_at: string;
 }
 
+// Type guard to ensure mood values are valid
+const isValidMood = (mood: string): mood is MoodEntry['mood'] => {
+  return ['very_happy', 'happy', 'neutral', 'sad', 'very_sad'].includes(mood);
+};
+
+// Helper function to transform database response to MoodEntry
+const transformDatabaseEntry = (dbEntry: any): MoodEntry => {
+  return {
+    id: dbEntry.id,
+    user_id: dbEntry.user_id,
+    mood: isValidMood(dbEntry.mood) ? dbEntry.mood : 'neutral',
+    stress_level: dbEntry.stress_level,
+    sleep_quality: dbEntry.sleep_quality,
+    hours_slept: dbEntry.hours_slept,
+    notes: dbEntry.notes,
+    date: dbEntry.date,
+    entry_type: dbEntry.entry_type,
+    created_at: dbEntry.created_at,
+    updated_at: dbEntry.updated_at,
+  };
+};
+
 export function useMoodEntries() {
   const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -41,7 +63,10 @@ export function useMoodEntries() {
         .order('date', { ascending: false });
 
       if (error) throw error;
-      setMoodEntries(data || []);
+      
+      // Transform database entries to properly typed MoodEntry objects
+      const transformedEntries = (data || []).map(transformDatabaseEntry);
+      setMoodEntries(transformedEntries);
     } catch (error) {
       console.error('Error fetching mood entries:', error);
       toast.error('Failed to load mood entries');
@@ -68,9 +93,10 @@ export function useMoodEntries() {
 
       if (error) throw error;
 
-      setMoodEntries(prev => [data, ...prev.filter(entry => entry.date !== data.date)]);
+      const transformedEntry = transformDatabaseEntry(data);
+      setMoodEntries(prev => [transformedEntry, ...prev.filter(entry => entry.date !== transformedEntry.date)]);
       toast.success('Mood entry saved successfully!');
-      return data;
+      return transformedEntry;
     } catch (error) {
       console.error('Error creating mood entry:', error);
       toast.error('Failed to save mood entry');
@@ -88,9 +114,10 @@ export function useMoodEntries() {
 
       if (error) throw error;
 
-      setMoodEntries(prev => prev.map(entry => entry.id === id ? data : entry));
+      const transformedEntry = transformDatabaseEntry(data);
+      setMoodEntries(prev => prev.map(entry => entry.id === id ? transformedEntry : entry));
       toast.success('Mood entry updated successfully!');
-      return data;
+      return transformedEntry;
     } catch (error) {
       console.error('Error updating mood entry:', error);
       toast.error('Failed to update mood entry');

@@ -1,4 +1,3 @@
-
 import { useMockAuth } from "@/hooks/useMockAuth";
 import { useCharacter } from "@/hooks/useCharacter";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
@@ -238,3 +237,5 @@ export function Layout({ children }: LayoutProps) {
     </div>
   );
 }
+
+export default Layout;
