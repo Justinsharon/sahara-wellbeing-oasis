@@ -12,6 +12,7 @@ import SignIn from "./pages/auth/SignIn";
 import PersonalGrowth from "./pages/PersonalGrowth";
 import Goals from "./pages/personal-growth/Goals";
 import MoodJournal from "./pages/personal-growth/MoodJournal";
+import EnhancedMoodJournal from "./pages/personal-growth/EnhancedMoodJournal";
 import Emergency from "./pages/Emergency";
 import Chat from "./pages/Chat";
 import Therapy from "./pages/Therapy";
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/personal-growth" element={<Layout><PersonalGrowth /></Layout>} />
             <Route path="/personal-growth/goals" element={<Layout><Goals /></Layout>} />
             <Route path="/personal-growth/mood-journal" element={<Layout><MoodJournal /></Layout>} />
+            <Route path="/personal-growth/enhanced-mood-journal" element={<Layout><EnhancedMoodJournal /></Layout>} />
             
             {/* Feature routes */}
             <Route path="/chat" element={<Layout><Chat /></Layout>} />
