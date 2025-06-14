@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,7 +17,7 @@
     --popover-foreground: 0 0% 24%;
 
     /* Primary - Crimson Wine */
-    --primary: 355 30% 42%; /* Crimson Wine #8b4e4b */
+    --primary: 343 65% 22%; /* Crimson Wine #501122 */
     --primary-foreground: 28 25% 94%;
 
     /* Secondary - Warm Gray */
@@ -37,32 +36,32 @@
 
     --border: 25 15% 61%;
     --input: 14 20% 80%;
-    --ring: 355 30% 42%;
+    --ring: 343 65% 22%;
 
     --radius: 2rem;
 
     /* Custom colors for prototype */
     --font-color: #3c3c3c; /* Deep Charcoal for typography */
     --box-feature-color: #c5a398; /* Soft Taupe for rounded boxes */
-    --crimson-wine-color: #8b4e4b; /* Crimson Wine for accents */
+    --crimson-wine-color: #501122; /* Crimson Wine for accents */
   }
 
   .dark {
-    --background: 355 30% 8%;
+    --background: 343 65% 8%;
     --foreground: 28 25% 94%;
-    --card: 355 25% 15%;
+    --card: 343 25% 15%;
     --card-foreground: 28 25% 94%;
-    --primary: 355 25% 45%;
-    --primary-foreground: 355 30% 8%;
+    --primary: 343 25% 45%;
+    --primary-foreground: 343 65% 8%;
     --secondary: 25 15% 35%;
     --secondary-foreground: 28 25% 94%;
-    --muted: 355 20% 25%;
+    --muted: 343 20% 25%;
     --muted-foreground: 28 25% 65%;
-    --accent: 355 25% 40%;
+    --accent: 343 25% 40%;
     --accent-foreground: 28 25% 94%;
-    --border: 355 20% 30%;
-    --input: 355 20% 30%;
-    --ring: 355 25% 45%;
+    --border: 343 20% 30%;
+    --input: 343 20% 30%;
+    --ring: 343 25% 45%;
   }
 }
 
@@ -98,7 +97,7 @@
 @layer components {
   /* Solid background classes */
   .modern-gradient {
-    background-color: #8b4e4b; /* Crimson Wine */
+    background-color: #501122; /* Crimson Wine */
   }
 
   .wellness-gradient {
@@ -112,26 +111,26 @@
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid rgba(154, 131, 124, 0.2);
     box-shadow: 
-      0 20px 40px rgba(139, 78, 75, 0.15),
-      0 8px 32px rgba(139, 78, 75, 0.1),
+      0 20px 40px rgba(80, 17, 34, 0.15),
+      0 8px 32px rgba(80, 17, 34, 0.1),
       inset 0 1px 0 rgba(243, 236, 232, 0.4);
   }
 
   .glass-nav {
-    background-color: rgba(139, 78, 75, 0.9); /* Crimson Wine with opacity */
+    background-color: rgba(80, 17, 34, 0.9); /* Crimson Wine with opacity */
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
     border: 1px solid rgba(154, 131, 124, 0.2);
     box-shadow: 
-      0 16px 32px rgba(139, 78, 75, 0.15),
-      0 4px 16px rgba(139, 78, 75, 0.1);
+      0 16px 32px rgba(80, 17, 34, 0.15),
+      0 4px 16px rgba(80, 17, 34, 0.1);
   }
 
   /* Neomorphic elements */
   .neo-card {
     background-color: #c5a398; /* Soft Taupe */
     box-shadow: 
-      20px 20px 40px rgba(139, 78, 75, 0.2),
+      20px 20px 40px rgba(80, 17, 34, 0.2),
       -20px -20px 40px rgba(243, 236, 232, 0.1),
       inset 0 1px 0 rgba(243, 236, 232, 0.2);
     border: 1px solid rgba(154, 131, 124, 0.15);
@@ -140,14 +139,14 @@
   .neo-button {
     background-color: #c5a398; /* Soft Taupe */
     box-shadow: 
-      8px 8px 16px rgba(139, 78, 75, 0.15),
+      8px 8px 16px rgba(80, 17, 34, 0.15),
       -8px -8px 16px rgba(243, 236, 232, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .neo-button:active {
     box-shadow: 
-      inset 8px 8px 16px rgba(139, 78, 75, 0.15),
+      inset 8px 8px 16px rgba(80, 17, 34, 0.15),
       inset -8px -8px 16px rgba(243, 236, 232, 0.1);
   }
 
@@ -173,38 +172,38 @@
     left: 0;
     right: 0;
     height: 4px;
-    background-color: #8b4e4b; /* Crimson Wine */
+    background-color: #501122; /* Crimson Wine */
   }
 
   /* Typography with Dancing Script */
   .heading-xl {
     @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
     font-family: 'Dancing Script', cursive;
-    color: #8b4e4b; /* Crimson Wine */
+    color: #501122; /* Crimson Wine */
     font-weight: 700;
   }
 
   .heading-gradient {
     font-family: 'Dancing Script', cursive;
-    color: #8b4e4b; /* Crimson Wine */
+    color: #501122; /* Crimson Wine */
     font-weight: 600;
   }
 
   /* Modern buttons */
   .btn-primary-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
-    background-color: #8b4e4b; /* Crimson Wine */
+    background-color: #501122; /* Crimson Wine */
     box-shadow: 
-      0 10px 25px rgba(139, 78, 75, 0.25),
-      0 4px 12px rgba(139, 78, 75, 0.15);
+      0 10px 25px rgba(80, 17, 34, 0.25),
+      0 4px 12px rgba(80, 17, 34, 0.15);
   }
 
   .btn-primary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background-color: #734138; /* Darker Crimson Wine */
+    background-color: #3d0d1a; /* Darker Crimson Wine */
     box-shadow: 
-      0 15px 35px rgba(139, 78, 75, 0.35),
-      0 6px 18px rgba(139, 78, 75, 0.25);
+      0 15px 35px rgba(80, 17, 34, 0.35),
+      0 6px 18px rgba(80, 17, 34, 0.25);
   }
 
   .btn-secondary-modern {
@@ -234,8 +233,8 @@
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border-top: 1px solid rgba(154, 131, 124, 0.2);
     box-shadow: 
-      0 -20px 40px rgba(139, 78, 75, 0.15),
-      0 -8px 32px rgba(139, 78, 75, 0.1),
+      0 -20px 40px rgba(80, 17, 34, 0.15),
+      0 -8px 32px rgba(80, 17, 34, 0.1),
       inset 0 1px 0 rgba(243, 236, 232, 0.4);
     position: relative;
   }
@@ -247,7 +246,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: #8b4e4b; /* Crimson Wine */
+    background-color: #501122; /* Crimson Wine */
     opacity: 0.9;
   }
 
@@ -259,17 +258,17 @@
 
   .progress-modern .progress-fill {
     @apply h-full rounded-full transition-all duration-700 ease-out;
-    background-color: #8b4e4b; /* Crimson Wine */
-    box-shadow: 0 4px 12px rgba(139, 78, 75, 0.3);
+    background-color: #501122; /* Crimson Wine */
+    box-shadow: 0 4px 12px rgba(80, 17, 34, 0.3);
   }
 
   /* Floating elements */
   .floating-action {
     @apply fixed bottom-24 right-6 w-16 h-16 rounded-full shadow-2xl transition-all duration-300 z-50;
-    background-color: #8b4e4b; /* Crimson Wine */
+    background-color: #501122; /* Crimson Wine */
     box-shadow: 
-      0 15px 35px rgba(139, 78, 75, 0.35),
-      0 6px 18px rgba(139, 78, 75, 0.25);
+      0 15px 35px rgba(80, 17, 34, 0.35),
+      0 6px 18px rgba(80, 17, 34, 0.25);
   }
 
   .floating-action:hover {
@@ -297,16 +296,16 @@
   }
 
   .tab-modern[data-state="active"] {
-    background-color: #8b4e4b; /* Crimson Wine */
+    background-color: #501122; /* Crimson Wine */
     color: #f3ece8; /* Off White */
     box-shadow: 
-      0 8px 20px rgba(139, 78, 75, 0.25),
-      0 4px 12px rgba(139, 78, 75, 0.15);
+      0 8px 20px rgba(80, 17, 34, 0.25),
+      0 4px 12px rgba(80, 17, 34, 0.15);
   }
 
   /* Tab trigger styles */
   .tab-trigger-primary[data-state="active"] {
-    background-color: #8b4e4b; /* Crimson Wine */
+    background-color: #501122; /* Crimson Wine */
     color: white;
   }
 
@@ -332,8 +331,8 @@
   /* Card with shadow */
   .soft-shadow {
     box-shadow: 
-      0 10px 25px rgba(139, 78, 75, 0.15),
-      0 4px 12px rgba(139, 78, 75, 0.1);
+      0 10px 25px rgba(80, 17, 34, 0.15),
+      0 4px 12px rgba(80, 17, 34, 0.1);
   }
 
   /* Glass input */
@@ -370,14 +369,14 @@
   /* Color utilities for new color mapping palette */
   .text-off-white { color: #f3ece8; }
   .text-deep-charcoal { color: #3c3c3c; }
-  .text-crimson-wine { color: #8b4e4b; }
+  .text-crimson-wine { color: #501122; }
   .text-warm-gray { color: #9a837c; }
   .text-soft-taupe { color: #c5a398; }
   .text-muted-blush { color: #d8b8b1; }
   
   .bg-off-white { background-color: #f3ece8; }
   .bg-deep-charcoal { background-color: #3c3c3c; }
-  .bg-crimson-wine { background-color: #8b4e4b; }
+  .bg-crimson-wine { background-color: #501122; }
   .bg-warm-gray { background-color: #9a837c; }
   .bg-soft-taupe { background-color: #c5a398; }
   .bg-muted-blush { background-color: #d8b8b1; }
