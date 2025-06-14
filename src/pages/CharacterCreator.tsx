@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { CharacterAvatar } from '@/components/character/CharacterAvatar';
@@ -68,8 +69,7 @@ export default function CharacterCreator() {
 
       if (response.ok) {
         toast.success('Character created successfully!');
-        // Redirect to onboarding assessment
-        navigate('/onboarding-assessment');
+        navigate('/');
       } else {
         const errorData = await response.json();
         toast.error(`Failed to create character: ${errorData.message || 'Unknown error'}`);
@@ -102,10 +102,7 @@ export default function CharacterCreator() {
       <div className="max-w-4xl mx-auto">
         <Card className="soft-shadow border-0 mb-8">
           <CardHeader>
-            <CardTitle>Create Your Wellness Companion</CardTitle>
-            <p className="text-muted-foreground">
-              Your companion will guide you through a personalized wellness assessment next.
-            </p>
+            <CardTitle>Create Your Character</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -150,7 +147,6 @@ export default function CharacterCreator() {
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Give your companion a name"
                   />
                 </div>
 
@@ -220,7 +216,6 @@ export default function CharacterCreator() {
                   <Label>Accessories</Label>
                   <div className="flex items-center space-x-2">
                     <Button
-                      type="button"
                       variant={accessories.includes('glasses') ? 'default' : 'outline'}
                       onClick={() => handleAccessoriesChange('glasses')}
                     >
@@ -248,7 +243,7 @@ export default function CharacterCreator() {
             </div>
 
             <Button onClick={handleSubmit} className="w-full md:w-auto">
-              Create Companion & Start Assessment
+              Create Character
             </Button>
           </CardContent>
         </Card>

@@ -19,7 +19,6 @@ const Insights = lazy(() => import("@/pages/Insights"));
 const Emergency = lazy(() => import("@/pages/Emergency"));
 const Chat = lazy(() => import("@/pages/Chat"));
 const CharacterCreator = lazy(() => import("@/pages/CharacterCreator"));
-const OnboardingAssessment = lazy(() => import("@/pages/OnboardingAssessment"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -35,7 +34,6 @@ function App() {
             <CharacterProvider>
               <Routes>
                 <Route path="/auth" element={<AuthPage />} />
-                <Route path="/onboarding-assessment" element={<OnboardingAssessment />} />
                 <Route
                   path="/*"
                   element={
