@@ -1,9 +1,8 @@
-
 import { useMockAuth } from "@/hooks/useMockAuth";
 import { MobileNav } from "./MobileNav";
 import { FloatingChatButton } from "./FloatingChatButton";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Menu, Heart, Home, User, Settings, HelpCircle, LogOut, Sparkles } from "lucide-react";
+import { AlertTriangle, Menu, Heart, Home, User, Settings, HelpCircle, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import {
@@ -20,7 +19,6 @@ interface LayoutProps {
 
 const sideMenuItems = [
   { title: "Home", url: "/", icon: Home },
-  { title: "Explore & Heal", url: "/explore-heal", icon: Sparkles },
   { title: "Profile", url: "/profile", icon: User },
   { title: "Settings", url: "/settings", icon: Settings },
   { title: "Help & Support", url: "/help", icon: HelpCircle },
