@@ -1,4 +1,5 @@
 
+
 import { Link } from "react-router-dom";
 import { Heart, Users, TrendingUp, Search, MessageCircle, BarChart3, Shield, Clock, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -64,13 +65,13 @@ export default function Index() {
       {/* Hero Section */}
       <section className="mb-12">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ color: 'hsl(345, 20%, 85%)' }}>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ color: 'hsl(350, 65%, 15%)' }}>
             Welcome to Your{" "}
             <span className="heading-gradient">
               Wellness Oasis
             </span>
           </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto" style={{ color: 'hsl(345, 20%, 85%)' }}>
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto" style={{ color: 'hsl(350, 65%, 15%)' }}>
             Sahara provides a safe, supportive space for your mental health journey. 
             Connect with licensed therapists, build healthy habits, and find your path to wellbeing.
           </p>
@@ -117,8 +118,8 @@ export default function Index() {
       {/* Feature Cards */}
       <section className="mb-12">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-4" style={{ color: 'hsl(345, 20%, 85%)' }}>Comprehensive Wellness Support</h2>
-          <p className="max-w-2xl mx-auto" style={{ color: 'hsl(345, 20%, 85%)' }}>
+          <h2 className="text-3xl font-bold mb-4" style={{ color: 'hsl(350, 65%, 15%)' }}>Comprehensive Wellness Support</h2>
+          <p className="max-w-2xl mx-auto" style={{ color: 'hsl(350, 65%, 15%)' }}>
             Every tool you need for your mental health journey, all in one place
           </p>
         </div>
@@ -170,3 +171,4 @@ export default function Index() {
     </div>
   );
 }
+
