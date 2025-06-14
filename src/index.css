@@ -3,88 +3,94 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Modern Design System for Sahara Mobile App */
+/* Modern Design System for Sahara Mobile App - Enhanced */
 
 @layer base {
   :root {
-    /* Modern warm color palette */
-    --background: 32 30% 96%; /* Softer warm white */
-    --foreground: 220 25% 12%; /* Rich dark text */
+    /* Modern emerald/teal wellness palette */
+    --background: 32 30% 97%; /* Softer warm white */
+    --foreground: 215 25% 12%; /* Rich dark text */
 
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 12%;
+    --card-foreground: 215 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 12%;
+    --popover-foreground: 215 25% 12%;
 
-    /* Vibrant but calming primary */
-    --primary: 262 83% 58%; /* Modern purple */
+    /* Modern emerald primary */
+    --primary: 158 64% 52%; /* Emerald */
     --primary-foreground: 0 0% 98%;
 
     /* Soft secondary colors */
-    --secondary: 32 30% 92%; 
-    --secondary-foreground: 220 25% 12%;
+    --secondary: 32 30% 94%; 
+    --secondary-foreground: 215 25% 12%;
 
-    --muted: 32 20% 90%;
-    --muted-foreground: 220 15% 65%;
+    --muted: 32 20% 92%;
+    --muted-foreground: 215 15% 65%;
 
-    --accent: 284 100% 95%; /* Light purple accent */
-    --accent-foreground: 262 83% 58%;
+    --accent: 158 100% 95%; /* Light emerald accent */
+    --accent-foreground: 158 64% 52%;
 
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 32 20% 88%;
-    --input: 32 20% 88%;
-    --ring: 262 83% 58%;
+    --border: 32 20% 90%;
+    --input: 32 20% 90%;
+    --ring: 158 64% 52%;
 
-    --radius: 1rem; /* More modern radius */
+    --radius: 1.5rem; /* More modern radius */
 
     /* Chat specific colors */
-    --chat-user-bg: 262 83% 58%;
+    --chat-user-bg: 158 64% 52%;
     --chat-user-text: 0 0% 98%;
-    --chat-ai-bg: 32 20% 94%;
-    --chat-ai-text: 220 25% 12%;
+    --chat-ai-bg: 32 20% 96%;
+    --chat-ai-text: 215 25% 12%;
     
     /* Success and info colors */
     --success: 142 76% 36%;
     --info: 217 91% 60%;
     --warning: 38 92% 50%;
+    
+    /* Modern accent colors */
+    --emerald: 158 64% 52%;
+    --teal: 172 66% 50%;
+    --coral: 16 90% 66%;
+    --sage: 79 20% 55%;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
+    --background: 215 28% 5%;
+    --foreground: 210 20% 92%;
 
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
+    --card: 215 28% 5%;
+    --card-foreground: 210 20% 92%;
 
-    --popover: 224 71% 4%;
-    --popover-foreground: 213 31% 91%;
+    --popover: 215 28% 5%;
+    --popover-foreground: 210 20% 92%;
 
-    --primary: 263 70% 50%;
-    --primary-foreground: 213 31% 91%;
+    --primary: 158 64% 52%;
+    --primary-foreground: 210 20% 92%;
 
-    --secondary: 215 25% 27%;
-    --secondary-foreground: 213 31% 91%;
+    --secondary: 215 25% 15%;
+    --secondary-foreground: 210 20% 92%;
 
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
+    --muted: 215 47% 8%;
+    --muted-foreground: 215 16% 57%;
 
-    --accent: 216 34% 17%;
+    --accent: 215 34% 12%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-    --ring: 263 70% 50%;
+    --border: 215 34% 12%;
+    --input: 215 34% 12%;
+    --ring: 158 64% 52%;
 
-    --chat-user-bg: 263 70% 50%;
-    --chat-user-text: 213 31% 91%;
-    --chat-ai-bg: 223 47% 11%;
-    --chat-ai-text: 213 31% 91%;
+    --chat-user-bg: 158 64% 52%;
+    --chat-user-text: 210 20% 92%;
+    --chat-ai-bg: 215 47% 8%;
+    --chat-ai-text: 210 20% 92%;
   }
 }
 
@@ -94,8 +100,8 @@
   }
 
   html {
-    /* Mobile-first responsive text */
     font-size: 16px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 
   body {
@@ -103,13 +109,10 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Prevent horizontal scroll on mobile */
     overflow-x: hidden;
-    /* Better mobile scrolling */
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Improved mobile touch targets */
   button, a, [role="button"] {
     min-height: 44px;
     min-width: 44px;
@@ -118,85 +121,113 @@
 
 @layer components {
   /* Modern Sahara gradient */
-  .sahara-gradient {
-    @apply bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50;
+  .modern-gradient {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 25%, #f0fdfa 50%, #f7fee7 100%);
   }
 
-  /* Modern glass effect */
-  .glass-effect {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-  }
-
-  /* Enhanced card hover effects */
-  .card-hover {
-    @apply transition-all duration-300 ease-out hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1;
+  /* Enhanced glass effect */
+  .modern-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   /* Modern shadows */
-  .soft-shadow {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  .modern-shadow {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
   }
 
-  .strong-shadow {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  .modern-shadow-active {
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.25), 0 6px 20px rgba(16, 185, 129, 0.15);
+  }
+
+  /* Modern text gradient */
+  .modern-text-gradient {
+    background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Enhanced card hover effects */
+  .modern-card {
+    @apply bg-white/80 backdrop-blur-sm border border-white/30 rounded-3xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1;
   }
 
   /* Chat message styles */
   .chat-message-user {
-    @apply bg-primary text-primary-foreground rounded-2xl rounded-br-md px-4 py-3 max-w-[85%] ml-auto shadow-lg;
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)) 100%);
+    @apply rounded-3xl rounded-br-xl px-6 py-4 max-w-[85%] ml-auto shadow-lg;
+    background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+    color: white;
   }
 
   .chat-message-ai {
-    @apply bg-secondary text-secondary-foreground rounded-2xl rounded-bl-md px-4 py-3 max-w-[85%] mr-auto shadow-md;
-    background: linear-gradient(135deg, hsl(var(--chat-ai-bg)) 0%, rgba(255, 255, 255, 0.8) 100%);
+    @apply bg-white/90 backdrop-blur-sm text-gray-800 rounded-3xl rounded-bl-xl px-6 py-4 max-w-[85%] mr-auto border border-white/30;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   }
 
   /* Modern avatar styles */
   .avatar-user {
-    @apply w-10 h-10 rounded-full flex items-center justify-center shadow-md;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    @apply w-12 h-12 rounded-full flex items-center justify-center shadow-lg;
+    background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
   }
 
   .avatar-ai {
-    @apply w-10 h-10 rounded-full flex items-center justify-center shadow-md;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    @apply w-12 h-12 rounded-full flex items-center justify-center shadow-lg;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border: 2px solid #059669;
   }
 
   /* Modern input styling */
-  .chat-input {
-    @apply rounded-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-purple-100 focus:border-primary focus:ring-0 shadow-lg transition-all duration-200;
-  }
-
-  /* Quick start question cards */
-  .quick-start-card {
-    @apply bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-100 rounded-2xl p-4 transition-all duration-200 hover:shadow-lg hover:scale-105 active:scale-95;
+  .modern-chat-input {
+    @apply rounded-full px-6 py-4 bg-white/90 backdrop-blur-sm border-2 border-emerald-100 focus:border-emerald-500 focus:ring-0 shadow-lg transition-all duration-200;
   }
 
   /* Modern button styles */
-  .btn-primary {
-    @apply bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full px-6 py-3 font-medium shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 active:scale-95;
+  .modern-btn-primary {
+    @apply bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-full px-8 py-4 font-semibold shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95;
   }
 
-  .btn-secondary {
-    @apply bg-white/80 backdrop-blur-sm border border-purple-200 text-purple-700 rounded-full px-6 py-3 font-medium shadow-md transition-all duration-200 hover:shadow-lg hover:scale-105 active:scale-95;
+  .modern-btn-secondary {
+    @apply bg-white/90 backdrop-blur-sm border-2 border-emerald-200 text-emerald-700 rounded-full px-8 py-4 font-semibold shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95;
+  }
+
+  .modern-button-ghost {
+    @apply hover:bg-white/50 rounded-2xl transition-all duration-200 hover:scale-105;
   }
 
   /* Enhanced mobile navigation */
-  .mobile-nav-item {
-    @apply flex flex-col items-center justify-center py-2 px-1 rounded-xl transition-all duration-200 min-h-[60px];
+  .modern-nav-item {
+    @apply flex flex-col items-center justify-center py-2 px-1 rounded-2xl transition-all duration-300 min-h-[70px];
   }
 
-  .mobile-nav-item.active {
-    @apply bg-gradient-to-t from-purple-100 to-pink-100 text-primary shadow-md;
+  .modern-nav-item.active {
+    @apply text-emerald-600 shadow-lg;
   }
 
-  /* Modern typing indicator */
+  .modern-nav-item:hover {
+    @apply bg-white/50 backdrop-blur-sm;
+  }
+
+  /* Logo hover effect */
+  .modern-logo-hover {
+    @apply transition-all duration-200 hover:scale-105 active:scale-95;
+  }
+
+  /* Side menu navigation */
+  .modern-nav-item {
+    @apply transition-all duration-200 hover:bg-white/50 hover:scale-105 active:scale-95;
+  }
+
+  /* Modern emergency button */
+  .modern-emergency-btn {
+    @apply bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-full px-6 py-3 font-semibold shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95;
+  }
+
+  /* Enhanced typing indicator */
   .typing-dot {
-    @apply w-2 h-2 bg-purple-400 rounded-full animate-pulse;
+    @apply w-2 h-2 bg-emerald-400 rounded-full;
     animation: typing 1.4s infinite ease-in-out;
   }
 
@@ -204,23 +235,13 @@
   .typing-dot:nth-child(2) { animation-delay: -0.16s; }
   .typing-dot:nth-child(3) { animation-delay: 0s; }
 
-  /* Smooth page transitions */
-  .page-enter {
-    @apply opacity-0 translate-y-4;
-  }
-
-  .page-enter-active {
-    @apply opacity-100 translate-y-0 transition-all duration-300 ease-out;
-  }
-
-  /* Emergency button styling */
-  .emergency-btn {
-    @apply bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-full px-4 py-2 font-semibold shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 active:scale-95;
+  /* Quick start cards */
+  .modern-quick-card {
+    @apply bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-100 rounded-3xl p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95 hover:border-emerald-200;
   }
 }
 
 @layer utilities {
-  /* Mobile-specific utilities */
   .touch-manipulation {
     touch-action: manipulation;
   }
@@ -233,7 +254,6 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* Animation utilities */
   .animate-slide-in-right {
     animation: slideInRight 0.3s ease-out;
   }
@@ -296,7 +316,6 @@
     @apply px-4;
   }
   
-  /* Optimize text sizes for mobile */
   h1 { @apply text-2xl; }
   h2 { @apply text-xl; }
   h3 { @apply text-lg; }
