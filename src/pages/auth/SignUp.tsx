@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from "@/hooks/useAuth";
+import { useMockAuth } from "@/hooks/useMockAuth";
 import { toast } from "sonner";
 import { Heart, Eye, EyeOff } from "lucide-react";
 
@@ -33,7 +33,7 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { signUp } = useAuth();
+  const { signUp } = useMockAuth();
   const navigate = useNavigate();
 
   const {
@@ -60,8 +60,8 @@ export default function SignUp() {
         otp_verified: false,
       });
       
-      toast.success("Account created successfully! Please check your email for verification.");
-      navigate("/auth/verify-email");
+      toast.success("Account created successfully!");
+      navigate("/");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to create account");
     } finally {
