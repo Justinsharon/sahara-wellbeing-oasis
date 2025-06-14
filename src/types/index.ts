@@ -86,3 +86,103 @@ export interface ChatMessage {
   timestamp: string;
   type: 'text' | 'audio' | 'crisis_response';
 }
+
+export interface SupportGroup {
+  id: string;
+  name: string;
+  description: string;
+  members: number;
+  category: string;
+  isJoined: boolean;
+  lastActivity: string;
+  image?: string;
+  created_at: string;
+}
+
+export interface DiscussionTopic {
+  id: string;
+  title: string;
+  author: string;
+  category: string;
+  replies: number;
+  likes: number;
+  timeAgo: string;
+  isHot: boolean;
+  content?: string;
+  created_at: string;
+}
+
+export interface SuccessStory {
+  id: string;
+  title: string;
+  author: string;
+  content: string;
+  likes: number;
+  comments: number;
+  timeAgo: string;
+  badge: string;
+  created_at: string;
+}
+
+export interface CommunityEvent {
+  id: string;
+  title: string;
+  date: string;
+  attendees: number;
+  type: string;
+  description?: string;
+  created_at: string;
+}
+
+export interface MeditationSession {
+  id: string;
+  title: string;
+  duration: string;
+  category: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels';
+  rating: number;
+  plays: number;
+  description: string;
+  instructor: string;
+  image?: string;
+  audio_url?: string;
+}
+
+export interface HealingActivity {
+  id: string;
+  title: string;
+  type: string;
+  duration: string;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  description: string;
+  benefits: string[];
+  completions: number;
+  instructions?: string[];
+}
+
+export interface WellnessArticle {
+  id: string;
+  title: string;
+  author: string;
+  readTime: string;
+  category: string;
+  publishedDate: string;
+  excerpt: string;
+  views: number;
+  rating: number;
+  content?: string;
+  image?: string;
+}
+
+export interface WellnessChallenge {
+  id: string;
+  title: string;
+  duration: string;
+  participants: number;
+  description: string;
+  progress: number;
+  status: 'Available' | 'In Progress' | 'Completed';
+  dailyTime: string;
+  activities: string[];
+  created_at: string;
+}

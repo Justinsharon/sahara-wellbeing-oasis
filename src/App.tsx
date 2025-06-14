@@ -16,6 +16,8 @@ import Emergency from "./pages/Emergency";
 import Chat from "./pages/Chat";
 import Therapy from "./pages/Therapy";
 import Insights from "./pages/Insights";
+import Community from "./pages/Community";
+import ExploreHeal from "./pages/ExploreHeal";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,18 +45,18 @@ const App = () => (
             <Route path="/personal-growth/goals" element={<Layout><Goals /></Layout>} />
             <Route path="/personal-growth/mood-journal" element={<Layout><MoodJournal /></Layout>} />
             
-            {/* New feature routes */}
+            {/* Feature routes */}
             <Route path="/chat" element={<Layout><Chat /></Layout>} />
             <Route path="/therapy" element={<Layout><Therapy /></Layout>} />
             <Route path="/insights" element={<Layout><Insights /></Layout>} />
+            <Route path="/community" element={<Layout><Community /></Layout>} />
+            <Route path="/explore-heal" element={<Layout><ExploreHeal /></Layout>} />
             
             {/* Placeholder routes for future implementation */}
             <Route path="/about" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">About Us - Coming Soon</h1></div></Layout>} />
             <Route path="/solutions" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Solutions - Coming Soon</h1></div></Layout>} />
             <Route path="/subscriptions" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Subscriptions - Coming Soon</h1></div></Layout>} />
             <Route path="/contact" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Contact Us - Coming Soon</h1></div></Layout>} />
-            <Route path="/community" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Community - Coming Soon</h1></div></Layout>} />
-            <Route path="/explore-heal" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Explore & Heal - Coming Soon</h1></div></Layout>} />
             <Route path="/terms" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Terms & Conditions - Coming Soon</h1></div></Layout>} />
             <Route path="/privacy" element={<Layout><div className="p-8"><h1 className="text-2xl font-bold">Privacy Policy - Coming Soon</h1></div></Layout>} />
             
