@@ -64,8 +64,8 @@ const mockTherapists: Therapist[] = [
 
 export default function Therapy() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSpecialization, setSelectedSpecialization] = useState("");
-  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedSpecialization, setSelectedSpecialization] = useState("all");
+  const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [filteredTherapists, setFilteredTherapists] = useState(mockTherapists);
 
   const specializations = Array.from(
@@ -88,13 +88,13 @@ export default function Therapy() {
       );
     }
 
-    if (selectedSpecialization) {
+    if (selectedSpecialization && selectedSpecialization !== "all") {
       filtered = filtered.filter(therapist =>
         therapist.specializations.includes(selectedSpecialization)
       );
     }
 
-    if (selectedLanguage) {
+    if (selectedLanguage && selectedLanguage !== "all") {
       filtered = filtered.filter(therapist =>
         therapist.languages.includes(selectedLanguage)
       );
@@ -149,7 +149,7 @@ export default function Therapy() {
                   <SelectValue placeholder="Specialization" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Specializations</SelectItem>
+                  <SelectItem value="all">All Specializations</SelectItem>
                   {specializations.map(spec => (
                     <SelectItem key={spec} value={spec}>{spec}</SelectItem>
                   ))}
@@ -160,7 +160,7 @@ export default function Therapy() {
                   <SelectValue placeholder="Language" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Languages</SelectItem>
+                  <SelectItem value="all">All Languages</SelectItem>
                   {languages.map(lang => (
                     <SelectItem key={lang} value={lang}>{lang}</SelectItem>
                   ))}
