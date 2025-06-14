@@ -11,7 +11,7 @@ const featureCards = [
     description: "Connect with certified therapists for personalized support",
     icon: Heart,
     href: "/therapy",
-    bgColor: "#a1a1a1",
+    bgColor: "bg-box-feature",
   },
   {
     title: "Community Support",
@@ -64,13 +64,13 @@ export default function Index() {
       {/* Hero Section */}
       <section className="mb-12">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-french-blue">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-deep-burgundy">
             Welcome to Your{" "}
             <span className="heading-gradient">
               Wellness Oasis
             </span>
           </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-french-blue">
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-burgundy">
             Sahara provides a safe, supportive space for your mental health journey. 
             Connect with licensed therapists, build healthy habits, and find your path to wellbeing.
           </p>
@@ -104,10 +104,10 @@ export default function Index() {
             <Card key={index} className="text-center soft-shadow border-0 glass-card">
               <CardContent className="pt-6">
                 <div className="w-12 h-12 rounded-lg bg-box-feature flex items-center justify-center mx-auto mb-4">
-                  <stat.icon className="w-6 h-6 text-font-color" />
+                  <stat.icon className="w-6 h-6 text-ivory" />
                 </div>
-                <div className="text-3xl font-bold mb-2 text-font-color">{stat.value}</div>
-                <div className="text-font-color">{stat.label}</div>
+                <div className="text-3xl font-bold mb-2 text-ivory">{stat.value}</div>
+                <div className="text-ivory">{stat.label}</div>
               </CardContent>
             </Card>
           ))}
@@ -117,8 +117,8 @@ export default function Index() {
       {/* Feature Cards */}
       <section className="mb-12">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-4 text-french-blue">Comprehensive Wellness Support</h2>
-          <p className="max-w-2xl mx-auto text-french-blue">
+          <h2 className="text-3xl font-bold mb-4 text-deep-burgundy">Comprehensive Wellness Support</h2>
+          <p className="max-w-2xl mx-auto text-burgundy">
             Every tool you need for your mental health journey, all in one place
           </p>
         </div>
@@ -128,14 +128,11 @@ export default function Index() {
             <Link key={index} to={user ? card.href : "/auth/signup"} className="group">
               <Card className="card-hover soft-shadow border-0 h-full glass-card">
                 <CardHeader>
-                  <div 
-                    className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
-                    style={{ backgroundColor: card.bgColor.startsWith('#') ? card.bgColor : undefined }}
-                  >
-                    <card.icon className="w-6 h-6 text-font-color" />
+                  <div className="w-12 h-12 rounded-lg bg-deep-burgundy flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <card.icon className="w-6 h-6 text-ivory" />
                   </div>
-                  <CardTitle className="text-xl text-font-color">{card.title}</CardTitle>
-                  <CardDescription className="text-font-color">
+                  <CardTitle className="text-xl text-ivory">{card.title}</CardTitle>
+                  <CardDescription className="text-ivory">
                     {card.description}
                   </CardDescription>
                 </CardHeader>
@@ -149,10 +146,10 @@ export default function Index() {
       <section className="text-center py-12">
         <Card className="max-w-2xl mx-auto soft-shadow border-0 bg-box-feature">
           <CardContent className="pt-8">
-            <h3 className="text-2xl font-bold mb-4 text-font-color">
+            <h3 className="text-2xl font-bold mb-4 text-ivory">
               Ready to Begin Your Healing Journey?
             </h3>
-            <p className="text-font-color mb-6">
+            <p className="text-ivory mb-6">
               Join thousands who have found support, growth, and healing through Sahara.
             </p>
             {!user ? (

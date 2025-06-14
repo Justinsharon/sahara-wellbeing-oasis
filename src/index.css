@@ -1,67 +1,68 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Modern Design System for Sahara - 2025 Enhanced with New 4-Color Palette */
+/* Modern Design System for Sahara - 2025 Enhanced with Burgundy & Ivory Palette */
 
 @layer base {
   :root {
-    /* New 4-color palette with Ivory background */
-    --background: 35 36% 95%; /* Ivory #F4F0ED for background */
-    --foreground: 210 20% 64%; /* French Blue #88A5BC for text */
+    /* New burgundy & ivory palette */
+    --background: 32 25% 94%; /* Ivory #F2F0EC for background */
+    --foreground: 343 28% 35%; /* Burgundy #6B3E47 for text */
 
-    --card: 80 5% 64%; /* Sage #A1A79E */
-    --card-foreground: 210 20% 64%;
+    --card: 343 20% 45%; /* Medium burgundy #7A4A56 */
+    --card-foreground: 32 25% 94%;
 
-    --popover: 80 5% 64%; /* Sage #A1A79E */
-    --popover-foreground: 210 20% 64%;
+    --popover: 343 20% 45%; /* Medium burgundy #7A4A56 */
+    --popover-foreground: 32 25% 94%;
 
-    /* Primary - French Blue */
-    --primary: 210 20% 64%; /* French Blue #88A5BC */
-    --primary-foreground: 35 36% 95%;
+    /* Primary - Deep Burgundy */
+    --primary: 343 35% 25%; /* Deep burgundy #4D2831 */
+    --primary-foreground: 32 25% 94%;
 
-    /* Secondary - Sage */
-    --secondary: 80 5% 64%; /* Sage #A1A79E */
-    --secondary-foreground: 35 36% 95%;
+    /* Secondary - Medium Burgundy */
+    --secondary: 343 28% 35%; /* Medium burgundy #6B3E47 */
+    --secondary-foreground: 32 25% 94%;
 
-    --muted: 80 5% 70%; /* Lighter version of Sage */
-    --muted-foreground: 210 20% 50%;
+    --muted: 343 15% 55%; /* Lighter burgundy */
+    --muted-foreground: 343 28% 25%;
 
-    /* Accent - Sage */
-    --accent: 80 5% 64%; /* Sage #A1A79E */
-    --accent-foreground: 35 36% 95%;
+    /* Accent - Wine Red */
+    --accent: 343 40% 30%; /* Wine red #5C2C37 */
+    --accent-foreground: 32 25% 94%;
 
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 80 5% 60%;
-    --input: 80 5% 70%;
-    --ring: 210 20% 64%;
+    --border: 343 15% 50%;
+    --input: 343 10% 60%;
+    --ring: 343 35% 25%;
 
     --radius: 2rem;
 
     /* Custom colors for prototype */
-    --font-color: #88A5BC; /* French Blue for typography */
-    --box-feature-color: #A1A79E; /* Sage for rounded boxes */
-    --sage-color: #A1A79E; /* Sage for soft accents */
+    --font-color: #6B3E47; /* Burgundy for typography */
+    --box-feature-color: #7A4A56; /* Medium burgundy for rounded boxes */
+    --burgundy-color: #4D2831; /* Deep burgundy for accents */
   }
 
   .dark {
-    --background: 210 20% 8%;
-    --foreground: 35 36% 95%;
-    --card: 80 5% 20%;
-    --card-foreground: 35 36% 95%;
-    --primary: 210 20% 50%;
-    --primary-foreground: 210 20% 8%;
-    --secondary: 80 5% 40%;
-    --secondary-foreground: 35 36% 95%;
-    --muted: 80 5% 25%;
-    --muted-foreground: 35 36% 65%;
-    --accent: 80 5% 50%;
-    --accent-foreground: 35 36% 95%;
-    --border: 80 5% 30%;
-    --input: 80 5% 30%;
-    --ring: 210 20% 50%;
+    --background: 343 35% 8%;
+    --foreground: 32 25% 94%;
+    --card: 343 30% 15%;
+    --card-foreground: 32 25% 94%;
+    --primary: 343 25% 45%;
+    --primary-foreground: 343 35% 8%;
+    --secondary: 343 20% 35%;
+    --secondary-foreground: 32 25% 94%;
+    --muted: 343 15% 25%;
+    --muted-foreground: 32 25% 65%;
+    --accent: 343 30% 40%;
+    --accent-foreground: 32 25% 94%;
+    --border: 343 20% 30%;
+    --input: 343 20% 30%;
+    --ring: 343 25% 45%;
   }
 }
 
@@ -79,8 +80,8 @@
   body {
     @apply bg-background antialiased;
     font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background-color: #F4F0ED; /* Ivory background */
-    color: #88A5BC; /* French Blue typography */
+    background-color: #F2F0EC; /* Ivory background */
+    color: #6B3E47; /* Burgundy typography */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -97,72 +98,72 @@
 @layer components {
   /* Solid background classes */
   .modern-gradient {
-    background-color: #88A5BC; /* French Blue */
+    background-color: #4D2831; /* Deep burgundy */
   }
 
   .wellness-gradient {
-    background-color: #F4F0ED; /* Ivory */
+    background-color: #F2F0EC; /* Ivory */
   }
 
-  /* Glass morphism with Sage */
+  /* Glass morphism with medium burgundy */
   .glass-card {
-    background-color: #A1A79E; /* Sage */
+    background-color: rgba(122, 74, 86, 0.8); /* Medium burgundy with opacity */
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(136, 165, 188, 0.2);
+    border: 1px solid rgba(107, 62, 71, 0.2);
     box-shadow: 
-      0 20px 40px rgba(136, 165, 188, 0.15),
-      0 8px 32px rgba(136, 165, 188, 0.1),
-      inset 0 1px 0 rgba(244, 240, 237, 0.4);
+      0 20px 40px rgba(77, 40, 49, 0.15),
+      0 8px 32px rgba(77, 40, 49, 0.1),
+      inset 0 1px 0 rgba(242, 240, 236, 0.4);
   }
 
   .glass-nav {
-    background-color: #A1A79E; /* Sage */
+    background-color: rgba(122, 74, 86, 0.8); /* Medium burgundy with opacity */
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(136, 165, 188, 0.2);
+    border: 1px solid rgba(107, 62, 71, 0.2);
     box-shadow: 
-      0 16px 32px rgba(136, 165, 188, 0.15),
-      0 4px 16px rgba(136, 165, 188, 0.1);
+      0 16px 32px rgba(77, 40, 49, 0.15),
+      0 4px 16px rgba(77, 40, 49, 0.1);
   }
 
   /* Neomorphic elements */
   .neo-card {
-    background-color: #A1A79E; /* Sage */
+    background-color: #7A4A56; /* Medium burgundy */
     box-shadow: 
-      20px 20px 40px rgba(136, 165, 188, 0.2),
-      -20px -20px 40px rgba(244, 240, 237, 0.1),
-      inset 0 1px 0 rgba(244, 240, 237, 0.2);
-    border: 1px solid rgba(136, 165, 188, 0.15);
+      20px 20px 40px rgba(77, 40, 49, 0.2),
+      -20px -20px 40px rgba(242, 240, 236, 0.1),
+      inset 0 1px 0 rgba(242, 240, 236, 0.2);
+    border: 1px solid rgba(107, 62, 71, 0.15);
   }
 
   .neo-button {
-    background-color: #A1A79E; /* Sage */
+    background-color: #7A4A56; /* Medium burgundy */
     box-shadow: 
-      8px 8px 16px rgba(136, 165, 188, 0.15),
-      -8px -8px 16px rgba(244, 240, 237, 0.1);
+      8px 8px 16px rgba(77, 40, 49, 0.15),
+      -8px -8px 16px rgba(242, 240, 236, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .neo-button:active {
     box-shadow: 
-      inset 8px 8px 16px rgba(136, 165, 188, 0.15),
-      inset -8px -8px 16px rgba(244, 240, 237, 0.1);
+      inset 8px 8px 16px rgba(77, 40, 49, 0.15),
+      inset -8px -8px 16px rgba(242, 240, 236, 0.1);
   }
 
   /* Modern card designs */
   .insight-card {
     @apply rounded-3xl p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2;
-    background-color: #A1A79E; /* Sage */
+    background-color: #7A4A56; /* Medium burgundy */
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(136, 165, 188, 0.2);
+    border: 1px solid rgba(107, 62, 71, 0.2);
   }
 
   .metric-card {
     @apply relative overflow-hidden rounded-3xl p-6 transition-all duration-500 hover:scale-105;
-    background-color: #A1A79E; /* Sage */
+    background-color: #7A4A56; /* Medium burgundy */
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(136, 165, 188, 0.2);
+    border: 1px solid rgba(107, 62, 71, 0.2);
   }
 
   .metric-card::before {
@@ -172,70 +173,70 @@
     left: 0;
     right: 0;
     height: 4px;
-    background-color: #88A5BC; /* French Blue */
+    background-color: #4D2831; /* Deep burgundy */
   }
 
   /* Typography with Dancing Script */
   .heading-xl {
     @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
     font-family: 'Dancing Script', cursive;
-    color: #88A5BC; /* French Blue */
+    color: #4D2831; /* Deep burgundy */
     font-weight: 700;
   }
 
   .heading-gradient {
     font-family: 'Dancing Script', cursive;
-    color: #88A5BC; /* French Blue */
+    color: #4D2831; /* Deep burgundy */
     font-weight: 600;
   }
 
   /* Modern buttons */
   .btn-primary-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
-    background-color: #88A5BC; /* French Blue */
+    background-color: #4D2831; /* Deep burgundy */
     box-shadow: 
-      0 10px 25px rgba(136, 165, 188, 0.25),
-      0 4px 12px rgba(136, 165, 188, 0.15);
+      0 10px 25px rgba(77, 40, 49, 0.25),
+      0 4px 12px rgba(77, 40, 49, 0.15);
   }
 
   .btn-primary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background-color: #7A9BB5; /* Darker French Blue */
+    background-color: #3D1F26; /* Darker burgundy */
     box-shadow: 
-      0 15px 35px rgba(136, 165, 188, 0.35),
-      0 6px 18px rgba(136, 165, 188, 0.25);
+      0 15px 35px rgba(77, 40, 49, 0.35),
+      0 6px 18px rgba(77, 40, 49, 0.25);
   }
 
   .btn-secondary-modern {
     @apply rounded-2xl px-8 py-4 font-semibold transition-all duration-300;
-    background-color: #A1A79E; /* Sage */
-    color: #88A5BC; /* French Blue */
-    border: 1px solid rgba(136, 165, 188, 0.2);
+    background-color: #7A4A56; /* Medium burgundy */
+    color: #F2F0EC; /* Ivory text */
+    border: 1px solid rgba(107, 62, 71, 0.2);
   }
 
   .btn-secondary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background-color: rgba(161, 167, 158, 0.8);
+    background-color: rgba(122, 74, 86, 0.8);
   }
 
   .btn-accent-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
-    background-color: #A1A79E; /* Sage */
+    background-color: #6B3E47; /* Burgundy */
     box-shadow: 
-      0 10px 25px rgba(161, 167, 158, 0.25),
-      0 4px 12px rgba(161, 167, 158, 0.15);
+      0 10px 25px rgba(107, 62, 71, 0.25),
+      0 4px 12px rgba(107, 62, 71, 0.15);
   }
 
   /* Enhanced Mobile Navigation */
   .enhanced-mobile-nav {
-    background-color: #A1A79E; /* Sage */
+    background-color: rgba(122, 74, 86, 0.8); /* Medium burgundy with opacity */
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-top: 1px solid rgba(136, 165, 188, 0.2);
+    border-top: 1px solid rgba(107, 62, 71, 0.2);
     box-shadow: 
-      0 -20px 40px rgba(136, 165, 188, 0.15),
-      0 -8px 32px rgba(136, 165, 188, 0.1),
-      inset 0 1px 0 rgba(244, 240, 237, 0.4);
+      0 -20px 40px rgba(77, 40, 49, 0.15),
+      0 -8px 32px rgba(77, 40, 49, 0.1),
+      inset 0 1px 0 rgba(242, 240, 236, 0.4);
     position: relative;
   }
 
@@ -246,29 +247,29 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: #88A5BC; /* French Blue */
+    background-color: #4D2831; /* Deep burgundy */
     opacity: 0.9;
   }
 
   /* Progress indicators */
   .progress-modern {
     @apply relative h-3 overflow-hidden rounded-full;
-    background-color: rgba(136, 165, 188, 0.2);
+    background-color: rgba(107, 62, 71, 0.2);
   }
 
   .progress-modern .progress-fill {
     @apply h-full rounded-full transition-all duration-700 ease-out;
-    background-color: #A1A79E; /* Sage */
-    box-shadow: 0 4px 12px rgba(161, 167, 158, 0.3);
+    background-color: #4D2831; /* Deep burgundy */
+    box-shadow: 0 4px 12px rgba(77, 40, 49, 0.3);
   }
 
   /* Floating elements */
   .floating-action {
     @apply fixed bottom-24 right-6 w-16 h-16 rounded-full shadow-2xl transition-all duration-300 z-50;
-    background-color: #88A5BC; /* French Blue */
+    background-color: #4D2831; /* Deep burgundy */
     box-shadow: 
-      0 15px 35px rgba(136, 165, 188, 0.35),
-      0 6px 18px rgba(136, 165, 188, 0.25);
+      0 15px 35px rgba(77, 40, 49, 0.35),
+      0 6px 18px rgba(77, 40, 49, 0.25);
   }
 
   .floating-action:hover {
@@ -278,45 +279,45 @@
   /* Chart enhancements */
   .chart-container {
     @apply rounded-3xl p-6;
-    background-color: #A1A79E; /* Sage */
-    border: 1px solid rgba(136, 165, 188, 0.2);
+    background-color: #7A4A56; /* Medium burgundy */
+    border: 1px solid rgba(107, 62, 71, 0.2);
   }
 
   /* Loading animations */
   .skeleton-modern {
     @apply animate-pulse rounded-2xl;
-    background-color: #A1A79E; /* Sage */
+    background-color: #7A4A56; /* Medium burgundy */
     animation: shimmer 2s infinite ease-in-out;
   }
 
   /* Tab styles */
   .tab-modern {
     @apply transition-all duration-300 rounded-xl px-4 py-2;
-    color: #88A5BC; /* French Blue */
+    color: #6B3E47; /* Burgundy */
   }
 
   .tab-modern[data-state="active"] {
-    background-color: #88A5BC; /* French Blue */
-    color: #F4F0ED; /* Ivory */
+    background-color: #4D2831; /* Deep burgundy */
+    color: #F2F0EC; /* Ivory */
     box-shadow: 
-      0 8px 20px rgba(136, 165, 188, 0.25),
-      0 4px 12px rgba(136, 165, 188, 0.15);
+      0 8px 20px rgba(77, 40, 49, 0.25),
+      0 4px 12px rgba(77, 40, 49, 0.15);
   }
 
   /* Tab trigger styles */
   .tab-trigger-primary[data-state="active"] {
-    background-color: #88A5BC; /* French Blue */
+    background-color: #4D2831; /* Deep burgundy */
     color: white;
   }
 
-  .tab-trigger-sage[data-state="active"] {
-    background-color: #A1A79E; /* Sage */
+  .tab-trigger-burgundy[data-state="active"] {
+    background-color: #6B3E47; /* Burgundy */
     color: white;
   }
 
-  .tab-trigger-blush[data-state="active"] {
-    background-color: #E1C8BC; /* Blush */
-    color: #88A5BC; /* French Blue */
+  .tab-trigger-wine[data-state="active"] {
+    background-color: #5C2C37; /* Wine red */
+    color: white;
   }
 
   /* Hover effects */
@@ -331,16 +332,16 @@
   /* Card with shadow */
   .soft-shadow {
     box-shadow: 
-      0 10px 25px rgba(136, 165, 188, 0.15),
-      0 4px 12px rgba(136, 165, 188, 0.1);
+      0 10px 25px rgba(77, 40, 49, 0.15),
+      0 4px 12px rgba(77, 40, 49, 0.1);
   }
 
   /* Glass input */
   .glass-input {
-    background-color: #A1A79E; /* Sage */
+    background-color: rgba(122, 74, 86, 0.8); /* Medium burgundy with opacity */
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(136, 165, 188, 0.2);
-    color: #88A5BC; /* French Blue */
+    border: 1px solid rgba(107, 62, 71, 0.2);
+    color: #F2F0EC; /* Ivory text */
   }
 
   /* Animate utilities */
@@ -366,20 +367,20 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* Color utilities for new 4-color palette */
-  .text-ivory { color: #F4F0ED; }
-  .text-french-blue { color: #88A5BC; }
-  .text-blush { color: #E1C8BC; }
-  .text-sage { color: #A1A79E; }
+  /* Color utilities for new burgundy & ivory palette */
+  .text-ivory { color: #F2F0EC; }
+  .text-burgundy { color: #6B3E47; }
+  .text-deep-burgundy { color: #4D2831; }
+  .text-wine { color: #5C2C37; }
   
-  .bg-ivory { background-color: #F4F0ED; }
-  .bg-french-blue { background-color: #88A5BC; }
-  .bg-blush { background-color: #E1C8BC; }
-  .bg-sage { background-color: #A1A79E; }
+  .bg-ivory { background-color: #F2F0EC; }
+  .bg-burgundy { background-color: #6B3E47; }
+  .bg-deep-burgundy { background-color: #4D2831; }
+  .bg-wine { background-color: #5C2C37; }
 
   /* Custom prototype colors */
-  .text-font-color { color: #88A5BC; }
-  .bg-box-feature { background-color: #A1A79E; } /* Changed from Blush to Sage */
+  .text-font-color { color: #6B3E47; }
+  .bg-box-feature { background-color: #7A4A56; }
 
   /* Modern animations */
   .animate-float {
