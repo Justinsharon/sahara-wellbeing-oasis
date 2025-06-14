@@ -3,66 +3,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Modern Design System for Sahara - 2025 Enhanced with Burgundy & Ivory Palette */
+/* Modern Design System for Sahara - 2025 Enhanced with Color Mapping Palette */
 
 @layer base {
   :root {
-    /* New burgundy & ivory palette */
-    --background: 32 25% 94%; /* Ivory #F2F0EC for background */
-    --foreground: 343 28% 35%; /* Burgundy #6B3E47 for text */
+    /* Color Mapping Implementation */
+    --background: 28 25% 94%; /* Off White #f3ece8 for background */
+    --foreground: 0 0% 24%; /* Deep Charcoal #3c3c3c for text */
 
-    --card: 343 20% 45%; /* Medium burgundy #7A4A56 */
-    --card-foreground: 32 25% 94%;
+    --card: 14 15% 76%; /* Soft Taupe #c5a398 */
+    --card-foreground: 0 0% 24%;
 
-    --popover: 343 20% 45%; /* Medium burgundy #7A4A56 */
-    --popover-foreground: 32 25% 94%;
+    --popover: 14 15% 76%; /* Soft Taupe #c5a398 */
+    --popover-foreground: 0 0% 24%;
 
-    /* Primary - Deep Burgundy */
-    --primary: 343 35% 25%; /* Deep burgundy #4D2831 */
-    --primary-foreground: 32 25% 94%;
+    /* Primary - Crimson Wine */
+    --primary: 355 30% 42%; /* Crimson Wine #8b4e4b */
+    --primary-foreground: 28 25% 94%;
 
-    /* Secondary - Medium Burgundy */
-    --secondary: 343 28% 35%; /* Medium burgundy #6B3E47 */
-    --secondary-foreground: 32 25% 94%;
+    /* Secondary - Warm Gray */
+    --secondary: 25 15% 61%; /* Warm Gray #9a837c */
+    --secondary-foreground: 0 0% 24%;
 
-    --muted: 343 15% 55%; /* Lighter burgundy */
-    --muted-foreground: 343 28% 25%;
+    --muted: 14 20% 80%; /* Muted Blush #d8b8b1 */
+    --muted-foreground: 0 0% 24%;
 
-    /* Accent - Wine Red */
-    --accent: 343 40% 30%; /* Wine red #5C2C37 */
-    --accent-foreground: 32 25% 94%;
+    /* Accent - Soft Taupe */
+    --accent: 14 15% 76%; /* Soft Taupe #c5a398 */
+    --accent-foreground: 0 0% 24%;
 
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 343 15% 50%;
-    --input: 343 10% 60%;
-    --ring: 343 35% 25%;
+    --border: 25 15% 61%;
+    --input: 14 20% 80%;
+    --ring: 355 30% 42%;
 
     --radius: 2rem;
 
     /* Custom colors for prototype */
-    --font-color: #6B3E47; /* Burgundy for typography */
-    --box-feature-color: #7A4A56; /* Medium burgundy for rounded boxes */
-    --burgundy-color: #4D2831; /* Deep burgundy for accents */
+    --font-color: #3c3c3c; /* Deep Charcoal for typography */
+    --box-feature-color: #c5a398; /* Soft Taupe for rounded boxes */
+    --crimson-wine-color: #8b4e4b; /* Crimson Wine for accents */
   }
 
   .dark {
-    --background: 343 35% 8%;
-    --foreground: 32 25% 94%;
-    --card: 343 30% 15%;
-    --card-foreground: 32 25% 94%;
-    --primary: 343 25% 45%;
-    --primary-foreground: 343 35% 8%;
-    --secondary: 343 20% 35%;
-    --secondary-foreground: 32 25% 94%;
-    --muted: 343 15% 25%;
-    --muted-foreground: 32 25% 65%;
-    --accent: 343 30% 40%;
-    --accent-foreground: 32 25% 94%;
-    --border: 343 20% 30%;
-    --input: 343 20% 30%;
-    --ring: 343 25% 45%;
+    --background: 355 30% 8%;
+    --foreground: 28 25% 94%;
+    --card: 355 25% 15%;
+    --card-foreground: 28 25% 94%;
+    --primary: 355 25% 45%;
+    --primary-foreground: 355 30% 8%;
+    --secondary: 25 15% 35%;
+    --secondary-foreground: 28 25% 94%;
+    --muted: 355 20% 25%;
+    --muted-foreground: 28 25% 65%;
+    --accent: 355 25% 40%;
+    --accent-foreground: 28 25% 94%;
+    --border: 355 20% 30%;
+    --input: 355 20% 30%;
+    --ring: 355 25% 45%;
   }
 }
 
@@ -80,8 +80,8 @@
   body {
     @apply bg-background antialiased;
     font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background-color: #F2F0EC; /* Ivory background */
-    color: #6B3E47; /* Burgundy typography */
+    background-color: #f3ece8; /* Off White background */
+    color: #3c3c3c; /* Deep Charcoal typography */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -98,72 +98,72 @@
 @layer components {
   /* Solid background classes */
   .modern-gradient {
-    background-color: #4D2831; /* Deep burgundy */
+    background-color: #8b4e4b; /* Crimson Wine */
   }
 
   .wellness-gradient {
-    background-color: #F2F0EC; /* Ivory */
+    background-color: #f3ece8; /* Off White */
   }
 
-  /* Glass morphism with medium burgundy */
+  /* Glass morphism with Soft Taupe */
   .glass-card {
-    background-color: rgba(122, 74, 86, 0.8); /* Medium burgundy with opacity */
+    background-color: rgba(197, 163, 152, 0.8); /* Soft Taupe with opacity */
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(107, 62, 71, 0.2);
+    border: 1px solid rgba(154, 131, 124, 0.2);
     box-shadow: 
-      0 20px 40px rgba(77, 40, 49, 0.15),
-      0 8px 32px rgba(77, 40, 49, 0.1),
-      inset 0 1px 0 rgba(242, 240, 236, 0.4);
+      0 20px 40px rgba(139, 78, 75, 0.15),
+      0 8px 32px rgba(139, 78, 75, 0.1),
+      inset 0 1px 0 rgba(243, 236, 232, 0.4);
   }
 
   .glass-nav {
-    background-color: rgba(122, 74, 86, 0.8); /* Medium burgundy with opacity */
+    background-color: rgba(139, 78, 75, 0.9); /* Crimson Wine with opacity */
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(107, 62, 71, 0.2);
+    border: 1px solid rgba(154, 131, 124, 0.2);
     box-shadow: 
-      0 16px 32px rgba(77, 40, 49, 0.15),
-      0 4px 16px rgba(77, 40, 49, 0.1);
+      0 16px 32px rgba(139, 78, 75, 0.15),
+      0 4px 16px rgba(139, 78, 75, 0.1);
   }
 
   /* Neomorphic elements */
   .neo-card {
-    background-color: #7A4A56; /* Medium burgundy */
+    background-color: #c5a398; /* Soft Taupe */
     box-shadow: 
-      20px 20px 40px rgba(77, 40, 49, 0.2),
-      -20px -20px 40px rgba(242, 240, 236, 0.1),
-      inset 0 1px 0 rgba(242, 240, 236, 0.2);
-    border: 1px solid rgba(107, 62, 71, 0.15);
+      20px 20px 40px rgba(139, 78, 75, 0.2),
+      -20px -20px 40px rgba(243, 236, 232, 0.1),
+      inset 0 1px 0 rgba(243, 236, 232, 0.2);
+    border: 1px solid rgba(154, 131, 124, 0.15);
   }
 
   .neo-button {
-    background-color: #7A4A56; /* Medium burgundy */
+    background-color: #c5a398; /* Soft Taupe */
     box-shadow: 
-      8px 8px 16px rgba(77, 40, 49, 0.15),
-      -8px -8px 16px rgba(242, 240, 236, 0.1);
+      8px 8px 16px rgba(139, 78, 75, 0.15),
+      -8px -8px 16px rgba(243, 236, 232, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .neo-button:active {
     box-shadow: 
-      inset 8px 8px 16px rgba(77, 40, 49, 0.15),
-      inset -8px -8px 16px rgba(242, 240, 236, 0.1);
+      inset 8px 8px 16px rgba(139, 78, 75, 0.15),
+      inset -8px -8px 16px rgba(243, 236, 232, 0.1);
   }
 
   /* Modern card designs */
   .insight-card {
     @apply rounded-3xl p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2;
-    background-color: #7A4A56; /* Medium burgundy */
+    background-color: #c5a398; /* Soft Taupe */
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(107, 62, 71, 0.2);
+    border: 1px solid rgba(154, 131, 124, 0.2);
   }
 
   .metric-card {
     @apply relative overflow-hidden rounded-3xl p-6 transition-all duration-500 hover:scale-105;
-    background-color: #7A4A56; /* Medium burgundy */
+    background-color: #c5a398; /* Soft Taupe */
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(107, 62, 71, 0.2);
+    border: 1px solid rgba(154, 131, 124, 0.2);
   }
 
   .metric-card::before {
@@ -173,70 +173,70 @@
     left: 0;
     right: 0;
     height: 4px;
-    background-color: #4D2831; /* Deep burgundy */
+    background-color: #8b4e4b; /* Crimson Wine */
   }
 
   /* Typography with Dancing Script */
   .heading-xl {
     @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
     font-family: 'Dancing Script', cursive;
-    color: #4D2831; /* Deep burgundy */
+    color: #8b4e4b; /* Crimson Wine */
     font-weight: 700;
   }
 
   .heading-gradient {
     font-family: 'Dancing Script', cursive;
-    color: #4D2831; /* Deep burgundy */
+    color: #8b4e4b; /* Crimson Wine */
     font-weight: 600;
   }
 
   /* Modern buttons */
   .btn-primary-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
-    background-color: #4D2831; /* Deep burgundy */
+    background-color: #8b4e4b; /* Crimson Wine */
     box-shadow: 
-      0 10px 25px rgba(77, 40, 49, 0.25),
-      0 4px 12px rgba(77, 40, 49, 0.15);
+      0 10px 25px rgba(139, 78, 75, 0.25),
+      0 4px 12px rgba(139, 78, 75, 0.15);
   }
 
   .btn-primary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background-color: #3D1F26; /* Darker burgundy */
+    background-color: #734138; /* Darker Crimson Wine */
     box-shadow: 
-      0 15px 35px rgba(77, 40, 49, 0.35),
-      0 6px 18px rgba(77, 40, 49, 0.25);
+      0 15px 35px rgba(139, 78, 75, 0.35),
+      0 6px 18px rgba(139, 78, 75, 0.25);
   }
 
   .btn-secondary-modern {
     @apply rounded-2xl px-8 py-4 font-semibold transition-all duration-300;
-    background-color: #7A4A56; /* Medium burgundy */
-    color: #F2F0EC; /* Ivory text */
-    border: 1px solid rgba(107, 62, 71, 0.2);
+    background-color: #c5a398; /* Soft Taupe */
+    color: #3c3c3c; /* Deep Charcoal text */
+    border: 1px solid rgba(154, 131, 124, 0.2);
   }
 
   .btn-secondary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background-color: rgba(122, 74, 86, 0.8);
+    background-color: rgba(197, 163, 152, 0.8);
   }
 
   .btn-accent-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300;
-    background-color: #6B3E47; /* Burgundy */
+    background-color: #9a837c; /* Warm Gray */
     box-shadow: 
-      0 10px 25px rgba(107, 62, 71, 0.25),
-      0 4px 12px rgba(107, 62, 71, 0.15);
+      0 10px 25px rgba(154, 131, 124, 0.25),
+      0 4px 12px rgba(154, 131, 124, 0.15);
   }
 
   /* Enhanced Mobile Navigation */
   .enhanced-mobile-nav {
-    background-color: rgba(122, 74, 86, 0.8); /* Medium burgundy with opacity */
+    background-color: rgba(197, 163, 152, 0.9); /* Soft Taupe with opacity */
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-top: 1px solid rgba(107, 62, 71, 0.2);
+    border-top: 1px solid rgba(154, 131, 124, 0.2);
     box-shadow: 
-      0 -20px 40px rgba(77, 40, 49, 0.15),
-      0 -8px 32px rgba(77, 40, 49, 0.1),
-      inset 0 1px 0 rgba(242, 240, 236, 0.4);
+      0 -20px 40px rgba(139, 78, 75, 0.15),
+      0 -8px 32px rgba(139, 78, 75, 0.1),
+      inset 0 1px 0 rgba(243, 236, 232, 0.4);
     position: relative;
   }
 
@@ -247,29 +247,29 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: #4D2831; /* Deep burgundy */
+    background-color: #8b4e4b; /* Crimson Wine */
     opacity: 0.9;
   }
 
   /* Progress indicators */
   .progress-modern {
     @apply relative h-3 overflow-hidden rounded-full;
-    background-color: rgba(107, 62, 71, 0.2);
+    background-color: rgba(154, 131, 124, 0.2);
   }
 
   .progress-modern .progress-fill {
     @apply h-full rounded-full transition-all duration-700 ease-out;
-    background-color: #4D2831; /* Deep burgundy */
-    box-shadow: 0 4px 12px rgba(77, 40, 49, 0.3);
+    background-color: #8b4e4b; /* Crimson Wine */
+    box-shadow: 0 4px 12px rgba(139, 78, 75, 0.3);
   }
 
   /* Floating elements */
   .floating-action {
     @apply fixed bottom-24 right-6 w-16 h-16 rounded-full shadow-2xl transition-all duration-300 z-50;
-    background-color: #4D2831; /* Deep burgundy */
+    background-color: #8b4e4b; /* Crimson Wine */
     box-shadow: 
-      0 15px 35px rgba(77, 40, 49, 0.35),
-      0 6px 18px rgba(77, 40, 49, 0.25);
+      0 15px 35px rgba(139, 78, 75, 0.35),
+      0 6px 18px rgba(139, 78, 75, 0.25);
   }
 
   .floating-action:hover {
@@ -279,45 +279,45 @@
   /* Chart enhancements */
   .chart-container {
     @apply rounded-3xl p-6;
-    background-color: #7A4A56; /* Medium burgundy */
-    border: 1px solid rgba(107, 62, 71, 0.2);
+    background-color: #c5a398; /* Soft Taupe */
+    border: 1px solid rgba(154, 131, 124, 0.2);
   }
 
   /* Loading animations */
   .skeleton-modern {
     @apply animate-pulse rounded-2xl;
-    background-color: #7A4A56; /* Medium burgundy */
+    background-color: #c5a398; /* Soft Taupe */
     animation: shimmer 2s infinite ease-in-out;
   }
 
   /* Tab styles */
   .tab-modern {
     @apply transition-all duration-300 rounded-xl px-4 py-2;
-    color: #6B3E47; /* Burgundy */
+    color: #3c3c3c; /* Deep Charcoal */
   }
 
   .tab-modern[data-state="active"] {
-    background-color: #4D2831; /* Deep burgundy */
-    color: #F2F0EC; /* Ivory */
+    background-color: #8b4e4b; /* Crimson Wine */
+    color: #f3ece8; /* Off White */
     box-shadow: 
-      0 8px 20px rgba(77, 40, 49, 0.25),
-      0 4px 12px rgba(77, 40, 49, 0.15);
+      0 8px 20px rgba(139, 78, 75, 0.25),
+      0 4px 12px rgba(139, 78, 75, 0.15);
   }
 
   /* Tab trigger styles */
   .tab-trigger-primary[data-state="active"] {
-    background-color: #4D2831; /* Deep burgundy */
+    background-color: #8b4e4b; /* Crimson Wine */
     color: white;
   }
 
-  .tab-trigger-burgundy[data-state="active"] {
-    background-color: #6B3E47; /* Burgundy */
+  .tab-trigger-warm[data-state="active"] {
+    background-color: #9a837c; /* Warm Gray */
     color: white;
   }
 
-  .tab-trigger-wine[data-state="active"] {
-    background-color: #5C2C37; /* Wine red */
-    color: white;
+  .tab-trigger-taupe[data-state="active"] {
+    background-color: #c5a398; /* Soft Taupe */
+    color: #3c3c3c;
   }
 
   /* Hover effects */
@@ -332,16 +332,16 @@
   /* Card with shadow */
   .soft-shadow {
     box-shadow: 
-      0 10px 25px rgba(77, 40, 49, 0.15),
-      0 4px 12px rgba(77, 40, 49, 0.1);
+      0 10px 25px rgba(139, 78, 75, 0.15),
+      0 4px 12px rgba(139, 78, 75, 0.1);
   }
 
   /* Glass input */
   .glass-input {
-    background-color: rgba(122, 74, 86, 0.8); /* Medium burgundy with opacity */
+    background-color: rgba(197, 163, 152, 0.8); /* Soft Taupe with opacity */
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(107, 62, 71, 0.2);
-    color: #F2F0EC; /* Ivory text */
+    border: 1px solid rgba(154, 131, 124, 0.2);
+    color: #3c3c3c; /* Deep Charcoal text */
   }
 
   /* Animate utilities */
@@ -367,20 +367,24 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* Color utilities for new burgundy & ivory palette */
-  .text-ivory { color: #F2F0EC; }
-  .text-burgundy { color: #6B3E47; }
-  .text-deep-burgundy { color: #4D2831; }
-  .text-wine { color: #5C2C37; }
+  /* Color utilities for new color mapping palette */
+  .text-off-white { color: #f3ece8; }
+  .text-deep-charcoal { color: #3c3c3c; }
+  .text-crimson-wine { color: #8b4e4b; }
+  .text-warm-gray { color: #9a837c; }
+  .text-soft-taupe { color: #c5a398; }
+  .text-muted-blush { color: #d8b8b1; }
   
-  .bg-ivory { background-color: #F2F0EC; }
-  .bg-burgundy { background-color: #6B3E47; }
-  .bg-deep-burgundy { background-color: #4D2831; }
-  .bg-wine { background-color: #5C2C37; }
+  .bg-off-white { background-color: #f3ece8; }
+  .bg-deep-charcoal { background-color: #3c3c3c; }
+  .bg-crimson-wine { background-color: #8b4e4b; }
+  .bg-warm-gray { background-color: #9a837c; }
+  .bg-soft-taupe { background-color: #c5a398; }
+  .bg-muted-blush { background-color: #d8b8b1; }
 
   /* Custom prototype colors */
-  .text-font-color { color: #6B3E47; }
-  .bg-box-feature { background-color: #7A4A56; }
+  .text-font-color { color: #3c3c3c; }
+  .bg-box-feature { background-color: #c5a398; }
 
   /* Modern animations */
   .animate-float {

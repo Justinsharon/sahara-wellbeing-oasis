@@ -34,13 +34,8 @@ export function Layout({ children }: LayoutProps) {
     return (
       <div className="min-h-screen flex items-center justify-center wellness-gradient">
         <div className="text-center animate-slide-up">
-          <div className="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl animate-float"
-               style={{
-                 background: `linear-gradient(135deg, 
-                   hsl(var(--classic-red-500)) 0%, 
-                   hsl(var(--classic-red-600)) 100%)`
-               }}>
-            <Heart className="w-10 h-10 text-white animate-pulse-slow" />
+          <div className="w-20 h-20 rounded-3xl bg-crimson-wine flex items-center justify-center mx-auto mb-8 shadow-2xl animate-float">
+            <Heart className="w-10 h-10 text-off-white animate-pulse-slow" />
           </div>
           <div className="space-y-4">
             <div className="flex justify-center space-x-2">
@@ -48,7 +43,7 @@ export function Layout({ children }: LayoutProps) {
               <div className="skeleton-modern w-3 h-3 rounded-full"></div>
               <div className="skeleton-modern w-3 h-3 rounded-full"></div>
             </div>
-            <p className="text-lg text-muted-foreground font-semibold">Loading your wellness space...</p>
+            <p className="text-lg text-warm-gray font-semibold">Loading your wellness space...</p>
           </div>
         </div>
       </div>
@@ -57,7 +52,7 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen flex flex-col wellness-gradient">
-      {/* Enhanced Mobile-First Header with new 8-color palette */}
+      {/* Enhanced Mobile-First Header with color mapping */}
       <header className="sticky top-0 z-50 safe-area-top">
         <div className="glass-nav border-b border-white/20">
           <div className="flex h-16 items-center justify-between px-4">
@@ -67,24 +62,19 @@ export function Layout({ children }: LayoutProps) {
               <Sheet open={sideMenuOpen} onOpenChange={setSideMenuOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon" className="neo-button rounded-2xl">
-                    <Menu className="w-5 h-5" />
+                    <Menu className="w-5 h-5 text-off-white" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-80 glass-nav border-r border-white/20">
                   <SheetHeader className="pb-6">
                     <SheetTitle className="text-left">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-xl"
-                             style={{
-                               background: `linear-gradient(135deg, 
-                                 hsl(var(--classic-red-500)) 0%, 
-                                 hsl(var(--classic-red-600)) 100%)`
-                             }}>
-                          <Heart className="w-6 h-6 text-white" />
+                        <div className="w-12 h-12 rounded-2xl bg-crimson-wine flex items-center justify-center shadow-xl">
+                          <Heart className="w-6 h-6 text-off-white" />
                         </div>
                         <div>
                           <h1 className="font-bold text-xl heading-gradient">Sahara</h1>
-                          <p className="text-sm text-muted-foreground -mt-1">Wellness Companion</p>
+                          <p className="text-sm text-warm-gray -mt-1">Wellness Companion</p>
                         </div>
                       </div>
                     </SheetTitle>
@@ -96,44 +86,17 @@ export function Layout({ children }: LayoutProps) {
                         key={item.title}
                         to={item.url}
                         onClick={() => setSideMenuOpen(false)}
-                        className="flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95"
-                        style={{
-                          background: 'transparent'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = `linear-gradient(135deg, 
-                            rgba(245, 213, 174, 0.8) 0%, 
-                            rgba(248, 225, 225, 0.6) 100%)`;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'transparent';
-                        }}
+                        className="flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 hover:bg-muted-blush"
                       >
-                        <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
-                             style={{
-                               background: `linear-gradient(135deg, 
-                                 hsl(var(--light-peach-100)) 0%, 
-                                 hsl(var(--soft-pink-100)) 100%)`
-                             }}>
-                          <item.icon className="w-5 h-5 text-classic-red-600" />
+                        <div className="w-10 h-10 rounded-2xl bg-soft-taupe flex items-center justify-center">
+                          <item.icon className="w-5 h-5 text-crimson-wine" />
                         </div>
-                        <span className="font-semibold text-deep-navy-500">{item.title}</span>
+                        <span className="font-semibold text-deep-charcoal">{item.title}</span>
                       </Link>
                     ))}
                     
                     <div className="pt-4 border-t border-white/30">
-                      <button className="flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 w-full text-left text-red-600"
-                              style={{
-                                background: 'transparent'
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.background = `linear-gradient(135deg, 
-                                  rgba(248, 215, 218, 0.8) 0%, 
-                                  rgba(252, 228, 236, 0.6) 100%)`;
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.background = 'transparent';
-                              }}>
+                      <button className="flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 w-full text-left text-red-600 hover:bg-red-50">
                         <div className="w-10 h-10 rounded-2xl bg-red-100 flex items-center justify-center">
                           <LogOut className="w-5 h-5" />
                         </div>
@@ -144,19 +107,14 @@ export function Layout({ children }: LayoutProps) {
                 </SheetContent>
               </Sheet>
 
-              {/* Enhanced Clickable Logo with new colors */}
+              {/* Enhanced Clickable Logo */}
               <Link to="/" className="flex items-center gap-3 transition-all duration-300 hover:scale-105 active:scale-95">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg"
-                     style={{
-                       background: `linear-gradient(135deg, 
-                         hsl(var(--classic-red-500)) 0%, 
-                         hsl(var(--classic-red-600)) 100%)`
-                     }}>
-                  <Heart className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 rounded-2xl bg-crimson-wine flex items-center justify-center shadow-lg">
+                  <Heart className="w-6 h-6 text-off-white" />
                 </div>
                 <div>
                   <h1 className="font-bold text-xl heading-gradient">Sahara</h1>
-                  <p className="text-xs text-muted-foreground -mt-1">Wellness Companion</p>
+                  <p className="text-xs text-warm-gray -mt-1">Wellness Companion</p>
                 </div>
               </Link>
             </div>
@@ -165,13 +123,7 @@ export function Layout({ children }: LayoutProps) {
             <Button
               asChild
               size="sm"
-              className="rounded-2xl px-6 py-3 font-bold shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95"
-              style={{
-                background: `linear-gradient(135deg, 
-                  hsl(var(--classic-red-500)) 0%, 
-                  hsl(var(--classic-red-600)) 100%)`,
-                color: 'white'
-              }}
+              className="rounded-2xl px-6 py-3 font-bold shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95 bg-red-600 hover:bg-red-700 text-white"
             >
               <Link to="/emergency">
                 <AlertTriangle className="w-4 h-4 mr-2" />
@@ -195,22 +147,17 @@ export function Layout({ children }: LayoutProps) {
       {/* Floating Nia Chat Button */}
       {user && <FloatingChatButton />}
 
-      {/* Enhanced Auth Overlay with new colors */}
+      {/* Enhanced Auth Overlay */}
       {!user && (
         <div className="fixed inset-0 z-40 glass-nav flex items-center justify-center p-6">
           <div className="glass-card rounded-3xl p-8 text-center shadow-2xl max-w-sm w-full animate-scale-in">
-            <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl"
-                 style={{
-                   background: `linear-gradient(135deg, 
-                     hsl(var(--classic-red-500)) 0%, 
-                     hsl(var(--classic-red-600)) 100%)`
-                 }}>
-              <Heart className="w-12 h-12 text-white" />
+            <div className="w-24 h-24 rounded-3xl bg-crimson-wine flex items-center justify-center mx-auto mb-8 shadow-xl">
+              <Heart className="w-12 h-12 text-off-white" />
             </div>
             <h2 className="text-3xl font-bold mb-4 heading-gradient">
               Welcome to Sahara
             </h2>
-            <p className="text-muted-foreground mb-8 text-lg">
+            <p className="text-warm-gray mb-8 text-lg">
               Your personal wellness companion is here to support your mental health journey.
             </p>
             <div className="space-y-4">
