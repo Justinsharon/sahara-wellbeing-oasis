@@ -131,12 +131,8 @@ export default function Index() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {featureCards.map((card, index) => (
-            <Card 
-              key={index} 
-              className="card-hover soft-shadow border-0 group"
-              asChild
-            >
-              <Link to={user ? card.href : "/auth/signup"}>
+            <Link key={index} to={user ? card.href : "/auth/signup"} className="group">
+              <Card className="card-hover soft-shadow border-0 h-full">
                 <CardHeader>
                   <div className={`w-12 h-12 ${card.bgColor} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                     <card.icon className={`w-6 h-6 ${card.color}`} />
@@ -146,8 +142,8 @@ export default function Index() {
                     {card.description}
                   </CardDescription>
                 </CardHeader>
-              </Link>
-            </Card>
+              </Card>
+            </Link>
           ))}
         </div>
       </section>
