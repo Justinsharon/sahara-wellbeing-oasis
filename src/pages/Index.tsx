@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Heart, Users, TrendingUp, Search, MessageCircle, BarChart3, Shield, Clock, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -64,7 +63,7 @@ export default function Index() {
       {/* Hero Section */}
       <section className="mb-12">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-crimson-wine">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-crimson-wine">
             <span className="heading-gradient">
               Welcome to Your Wellness Oasis
             </span>
