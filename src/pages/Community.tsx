@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Users, MessageCircle, Calendar, Heart, Plus, Search, Filter, Sparkles, MapPin } from "lucide-react";
+import { Users, MessageCircle, Calendar, Heart, Plus, Search, Filter, Sparkles, MapPin, ThumbsUp, Share2 } from "lucide-react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -67,6 +66,36 @@ const discussions = [
   }
 ];
 
+const posts = [
+  {
+    id: 1,
+    author: "Alex Kumar",
+    content: "Just completed my first week of meditation practice! Feeling more centered and peaceful. The 10-minute morning sessions are really making a difference. 🧘‍♂️ #mindfulness #progress",
+    timeAgo: "1 hour ago",
+    likes: 24,
+    comments: 8,
+    category: "Achievement"
+  },
+  {
+    id: 2,
+    author: "Priya Sharma",
+    content: "Had a challenging day today but remembered to use the breathing techniques we learned. It's amazing how much they help in stressful moments. Grateful for this community! 💚",
+    timeAgo: "3 hours ago",
+    likes: 18,
+    comments: 5,
+    category: "Reflection"
+  },
+  {
+    id: 3,
+    author: "Raj Patel",
+    content: "Sharing a quote that helped me today: 'You are braver than you believe, stronger than you seem, and smarter than you think.' - A.A. Milne ✨",
+    timeAgo: "5 hours ago",
+    likes: 31,
+    comments: 12,
+    category: "Inspiration"
+  }
+];
+
 const upcomingEvents = [
   {
     id: 1,
@@ -98,6 +127,30 @@ export default function Community() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  const handleJoinGroup = (groupId: number) => {
+    console.log("Joining group:", groupId);
+  };
+
+  const handleCreateGroup = () => {
+    console.log("Creating new group");
+  };
+
+  const handleJoinEvent = (eventId: number) => {
+    console.log("Joining event:", eventId);
+  };
+
+  const handleLikePost = (postId: number) => {
+    console.log("Liking post:", postId);
+  };
+
+  const handleCommentPost = (postId: number) => {
+    console.log("Commenting on post:", postId);
+  };
+
+  const handleCreatePost = () => {
+    console.log("Creating new post");
+  };
+
   return (
     <div className="min-h-screen wellness-gradient">
       <div className="container mx-auto px-4 py-8 space-y-8">
@@ -128,7 +181,7 @@ export default function Community() {
               <Filter className="w-4 h-4 mr-2" />
               Filters
             </Button>
-            <Button className="btn-primary-modern">
+            <Button className="btn-primary-modern" onClick={handleCreateGroup}>
               <Plus className="w-4 h-4 mr-2" />
               Create Group
             </Button>
@@ -136,10 +189,11 @@ export default function Community() {
         </LiquidGlass>
 
         <Tabs defaultValue="groups" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 bg-muted-blush">
+          <TabsList className="grid w-full grid-cols-4 bg-muted-blush">
             <TabsTrigger value="groups" className="tab-trigger-primary">Support Groups</TabsTrigger>
-            <TabsTrigger value="discussions" className="tab-trigger-warm">Discussions</TabsTrigger>
-            <TabsTrigger value="events" className="tab-trigger-taupe">Events</TabsTrigger>
+            <TabsTrigger value="posts" className="tab-trigger-warm">Posts</TabsTrigger>
+            <TabsTrigger value="discussions" className="tab-trigger-taupe">Discussions</TabsTrigger>
+            <TabsTrigger value="events" className="tab-trigger-primary">Events</TabsTrigger>
           </TabsList>
 
           <TabsContent value="groups" className="space-y-6">
@@ -151,7 +205,8 @@ export default function Community() {
                   interactive 
                   floating 
                   liquidBorder 
-                  className="p-6 hover-scale"
+                  className="p-6 hover-scale cursor-pointer"
+                  onClick={() => console.log("Viewing group:", group.id)}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -174,9 +229,80 @@ export default function Community() {
                       </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                      <Button className="btn-primary-modern">Join Group</Button>
+                      <Button 
+                        className="btn-primary-modern"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleJoinGroup(group.id);
+                        }}
+                      >
+                        Join Group
+                      </Button>
                       <Button variant="outline" size="sm" className="btn-secondary-modern">
                         <MessageCircle className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </LiquidGlass>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="posts" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-bold text-crimson-wine">Community Posts</h2>
+              <Button className="btn-primary-modern" onClick={handleCreatePost}>
+                <Plus className="w-4 h-4 mr-2" />
+                Create Post
+              </Button>
+            </div>
+            <div className="grid gap-4">
+              {posts.map((post) => (
+                <LiquidGlass 
+                  key={post.id} 
+                  variant="card" 
+                  interactive 
+                  floating 
+                  className="p-6"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-soft-taupe rounded-full flex items-center justify-center">
+                          <Users className="w-5 h-5 text-crimson-wine" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-deep-charcoal">{post.author}</h4>
+                          <p className="text-sm text-warm-gray">{post.timeAgo}</p>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="bg-muted-blush text-deep-charcoal">
+                        {post.category}
+                      </Badge>
+                    </div>
+                    <p className="text-deep-charcoal">{post.content}</p>
+                    <div className="flex items-center gap-6 pt-2 border-t border-white/20">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-warm-gray hover:text-crimson-wine"
+                        onClick={() => handleLikePost(post.id)}
+                      >
+                        <ThumbsUp className="w-4 h-4 mr-2" />
+                        {post.likes}
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-warm-gray hover:text-crimson-wine"
+                        onClick={() => handleCommentPost(post.id)}
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        {post.comments}
+                      </Button>
+                      <Button variant="ghost" size="sm" className="text-warm-gray hover:text-crimson-wine">
+                        <Share2 className="w-4 h-4 mr-2" />
+                        Share
                       </Button>
                     </div>
                   </div>
@@ -192,7 +318,8 @@ export default function Community() {
                   key={discussion.id} 
                   variant="crystal" 
                   interactive 
-                  className="p-6"
+                  className="p-6 cursor-pointer"
+                  onClick={() => console.log("Viewing discussion:", discussion.id)}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -248,7 +375,12 @@ export default function Community() {
                   <Badge variant="secondary" className="bg-muted-blush text-deep-charcoal mb-4">
                     {event.type}
                   </Badge>
-                  <Button className="w-full btn-primary-modern">Join Event</Button>
+                  <Button 
+                    className="w-full btn-primary-modern"
+                    onClick={() => handleJoinEvent(event.id)}
+                  >
+                    Join Event
+                  </Button>
                 </LiquidGlass>
               ))}
             </div>

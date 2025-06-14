@@ -1,460 +1,274 @@
+
 import { useState } from "react";
-import { Calendar, TrendingUp, BarChart3, Brain, Target, Clock, Award, Heart, Sparkles, Zap, Star } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
+import { TrendingUp, Calendar, Activity, Heart, Brain, Moon, Zap, Target, Award, BarChart3 } from "lucide-react";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Area, AreaChart } from "recharts";
-import { CharacterAvatar } from "@/components/character/CharacterAvatar";
-import { useCharacter } from "@/hooks/useCharacter";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 
 const moodData = [
-  { date: "Mon", mood: 4, energy: 3.5 },
-  { date: "Tue", mood: 3, energy: 2.8 },
-  { date: "Wed", mood: 5, energy: 4.2 },
-  { date: "Thu", mood: 4, energy: 3.8 },
-  { date: "Fri", mood: 3, energy: 3.2 },
-  { date: "Sat", mood: 4, energy: 4.0 },
-  { date: "Sun", mood: 5, energy: 4.5 },
+  { date: "Mon", mood: 7, energy: 6, sleep: 8 },
+  { date: "Tue", mood: 8, energy: 7, sleep: 7 },
+  { date: "Wed", mood: 6, energy: 5, sleep: 6 },
+  { date: "Thu", mood: 9, energy: 8, sleep: 9 },
+  { date: "Fri", mood: 7, energy: 7, sleep: 8 },
+  { date: "Sat", mood: 8, energy: 6, sleep: 7 },
+  { date: "Sun", mood: 9, energy: 8, sleep: 9 }
 ];
 
-const weeklyProgress = [
-  { week: "Week 1", mood: 3.5, goals: 60, assessments: 2, wellness: 65 },
-  { week: "Week 2", mood: 4.0, goals: 75, assessments: 1, wellness: 72 },
-  { week: "Week 3", mood: 3.8, goals: 80, assessments: 3, wellness: 78 },
-  { week: "Week 4", mood: 4.2, goals: 85, assessments: 2, wellness: 85 },
+const insights = [
+  {
+    id: 1,
+    title: "Mood Improvement Trend",
+    description: "Your mood has improved by 15% this week compared to last week",
+    type: "positive",
+    icon: TrendingUp,
+    value: "+15%"
+  },
+  {
+    id: 2,
+    title: "Sleep Quality",
+    description: "You're averaging 7.8 hours of quality sleep, which is excellent",
+    type: "good",
+    icon: Moon,
+    value: "7.8hrs"
+  },
+  {
+    id: 3,
+    title: "Energy Levels",
+    description: "Your energy levels are most consistent in the mornings",
+    type: "info",
+    icon: Zap,
+    value: "Morning"
+  },
+  {
+    id: 4,
+    title: "Meditation Streak",
+    description: "You've maintained a 12-day meditation streak!",
+    type: "achievement",
+    icon: Brain,
+    value: "12 days"
+  }
 ];
 
-const assessmentHistory = [
-  { id: "1", type: "Anxiety", score: 12, date: "2024-01-15", level: "Mild", improvement: "+15%" },
-  { id: "2", type: "Depression", score: 8, date: "2024-01-10", level: "Minimal", improvement: "+22%" },
-  { id: "3", type: "Stress", score: 18, date: "2024-01-05", level: "Moderate", improvement: "+8%" },
+const goals = [
+  {
+    id: 1,
+    title: "Daily Meditation",
+    progress: 85,
+    target: "20 minutes daily",
+    streak: 12
+  },
+  {
+    id: 2,
+    title: "Exercise Routine",
+    progress: 60,
+    target: "4 times weekly",
+    streak: 5
+  },
+  {
+    id: 3,
+    title: "Sleep Schedule",
+    progress: 90,
+    target: "8 hours nightly",
+    streak: 18
+  }
 ];
 
 export default function Insights() {
-  const [currentStreak, setCurrentStreak] = useState(12);
-  const [totalGoals, setTotalGoals] = useState(8);
-  const [completedGoals, setCompletedGoals] = useState(5);
-  const [averageMood, setAverageMood] = useState(4.1);
-  const [wellnessScore, setWellnessScore] = useState(85);
-  const { character } = useCharacter();
+  const [selectedTimeframe, setSelectedTimeframe] = useState("week");
 
-  const getMoodExpression = (mood: number) => {
-    if (mood >= 4.5) return { type: 'excited' as const, intensity: 'high' as const };
-    if (mood >= 3.5) return { type: 'happy' as const, intensity: 'medium' as const };
-    if (mood >= 2.5) return { type: 'neutral' as const, intensity: 'medium' as const };
-    if (mood >= 1.5) return { type: 'concerned' as const, intensity: 'medium' as const };
-    return { type: 'sad' as const, intensity: 'high' as const };
+  const handleGoalClick = (goalId: number) => {
+    console.log("Viewing goal details:", goalId);
   };
 
-  const getMoodColor = (mood: number) => {
-    if (mood >= 4.5) return "text-emerald-600";
-    if (mood >= 3.5) return "text-blue-600";
-    if (mood >= 2.5) return "text-yellow-600";
-    if (mood >= 1.5) return "text-orange-600";
-    return "text-red-600";
+  const handleInsightClick = (insightId: number) => {
+    console.log("Viewing insight details:", insightId);
   };
 
-  const getLevelColor = (level: string) => {
-    switch (level) {
-      case "Minimal": return "bg-emerald-100 text-emerald-800 border border-emerald-200";
-      case "Mild": return "bg-yellow-100 text-yellow-800 border border-yellow-200";
-      case "Moderate": return "bg-orange-100 text-orange-800 border border-orange-200";
-      case "Severe": return "bg-red-100 text-red-800 border border-red-200";
-      default: return "bg-gray-100 text-gray-800 border border-gray-200";
-    }
+  const handleExportData = () => {
+    console.log("Exporting insights data");
   };
 
   return (
-    <div className="min-h-screen wellness-gradient p-4 md:p-6 lg:p-8 pb-24 md:pb-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Enhanced Header */}
-        <div className="mb-8 animate-slide-up">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg"
-                 style={{
-                   background: `linear-gradient(135deg, 
-                     hsl(var(--emerald-splash-500)) 0%, 
-                     hsl(var(--emerald-splash-600)) 100%)`
-                 }}>
-              <Sparkles className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="heading-xl">
-                Personal Insights
-              </h1>
-              <p className="text-lg text-misty-rosewood-500 font-medium">
-                Your wellness journey at a glance
-              </p>
-            </div>
+    <div className="min-h-screen wellness-gradient">
+      <div className="container mx-auto px-4 py-8 space-y-8">
+        {/* Header */}
+        <LiquidGlass variant="card" floating bubbles className="text-center p-8">
+          <div className="w-16 h-16 bg-crimson-wine rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+            <BarChart3 className="w-8 h-8 text-off-white" />
           </div>
-          
-          {/* Wellness Score Banner */}
-          <div className="glass-card rounded-3xl p-6 mb-8">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                     style={{
-                       background: `linear-gradient(135deg, 
-                         hsl(var(--emerald-splash-500)) 0%, 
-                         hsl(var(--deep-teal-500)) 100%)`
-                     }}>
-                  <Heart className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold heading-gradient">Wellness Score</h2>
-                  <p className="text-misty-rosewood-500">Your overall mental health progress</p>
-                </div>
+          <h1 className="text-4xl font-bold heading-gradient mb-4">Personal Insights</h1>
+          <p className="text-lg text-warm-gray max-w-2xl mx-auto">
+            Track your progress, understand patterns, and celebrate your wellness journey.
+          </p>
+        </LiquidGlass>
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {insights.map((insight) => (
+            <LiquidGlass 
+              key={insight.id} 
+              variant="crystal" 
+              interactive 
+              floating 
+              className="p-4 text-center cursor-pointer"
+              onClick={() => handleInsightClick(insight.id)}
+            >
+              <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+                <insight.icon className="w-6 h-6 text-crimson-wine" />
               </div>
-              <div className="text-right">
-                <div className="text-4xl font-bold text-emerald-splash-600">{wellnessScore}</div>
-                <div className="text-sm text-emerald-splash-600 font-medium">+12% this week</div>
-              </div>
-            </div>
-            <div className="mt-4">
-              <div className="progress-modern">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${wellnessScore}%` }}
-                />
-              </div>
-            </div>
-          </div>
+              <p className="text-2xl font-bold text-deep-charcoal mb-1">{insight.value}</p>
+              <p className="text-sm text-warm-gray">{insight.title}</p>
+            </LiquidGlass>
+          ))}
         </div>
 
-        {/* Enhanced Key Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-          <div className="metric-card animate-scale-in" style={{ animationDelay: "0.1s" }}>
-            <div className="flex items-center justify-between mb-3">
-              <Calendar className="w-8 h-8 text-soft-blush-600" />
-              <Star className="w-5 h-5 text-crimson-wine-500" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-misty-rosewood-500">Streak</p>
-              <p className="text-2xl font-bold text-crimson-wine-600">{currentStreak}</p>
-              <p className="text-xs text-soft-blush-600 font-medium">days</p>
-            </div>
-          </div>
-
-          <div className="metric-card animate-scale-in" style={{ animationDelay: "0.2s" }}>
-            <div className="flex items-center justify-between mb-3">
-              <Target className="w-8 h-8 text-emerald-splash-500" />
-              <Zap className="w-5 h-5 text-deep-teal-500" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-misty-rosewood-500">Goals</p>
-              <p className="text-2xl font-bold text-crimson-wine-600">{completedGoals}/{totalGoals}</p>
-              <p className="text-xs text-emerald-splash-600 font-medium">completed</p>
-            </div>
-          </div>
-
-          <div className="metric-card animate-scale-in" style={{ animationDelay: "0.3s" }}>
-            <div className="flex items-center justify-between mb-3">
-              <Heart className="w-8 h-8 text-crimson-wine-500" />
-              {character ? (
-                <CharacterAvatar
-                  character={character}
-                  expression={getMoodExpression(averageMood)}
-                  size="sm"
-                  animated={false}
-                />
-              ) : (
-                <span className="text-2xl">🙂</span>
-              )}
-            </div>
-            <div>
-              <p className="text-sm font-medium text-misty-rosewood-500">Avg Mood</p>
-              <p className="text-2xl font-bold text-crimson-wine-600">{averageMood}</p>
-              <p className="text-xs text-soft-blush-600 font-medium">this week</p>
-            </div>
-          </div>
-
-          <div className="metric-card animate-scale-in" style={{ animationDelay: "0.4s" }}>
-            <div className="flex items-center justify-between mb-3">
-              <Brain className="w-8 h-8 text-misty-rosewood-500" />
-              <Award className="w-5 h-5 text-crimson-wine-500" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-misty-rosewood-500">Check-ins</p>
-              <p className="text-2xl font-bold text-crimson-wine-600">{assessmentHistory.length}</p>
-              <p className="text-xs text-misty-rosewood-600 font-medium">completed</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Enhanced Tabs */}
-        <Tabs defaultValue="mood" className="space-y-8">
-          <TabsList className="glass-nav grid w-full grid-cols-4 h-16 p-2 rounded-2xl">
-            <TabsTrigger value="mood" className="tab-trigger-crimson rounded-xl font-medium">
-              <Heart className="w-4 h-4 mr-2" />
-              Mood
-            </TabsTrigger>
-            <TabsTrigger value="goals" className="tab-trigger-emerald rounded-xl font-medium">
-              <Target className="w-4 h-4 mr-2" />
-              Goals
-            </TabsTrigger>
-            <TabsTrigger value="assessments" className="tab-trigger-teal rounded-xl font-medium">
-              <Brain className="w-4 h-4 mr-2" />
-              Health
-            </TabsTrigger>
-            <TabsTrigger value="weekly" className="tab-trigger-blush rounded-xl font-medium">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Trends
-            </TabsTrigger>
+        <Tabs defaultValue="trends" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3 bg-muted-blush">
+            <TabsTrigger value="trends" className="tab-trigger-primary">Mood Trends</TabsTrigger>
+            <TabsTrigger value="goals" className="tab-trigger-warm">Goal Progress</TabsTrigger>
+            <TabsTrigger value="insights" className="tab-trigger-taupe">AI Insights</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="mood" className="space-y-6">
-            <div className="chart-container">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-xl font-bold heading-gradient">Mood & Energy Patterns</CardTitle>
-                <CardDescription className="text-base text-misty-rosewood-500">
-                  Track your emotional wellbeing and energy levels
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={350}>
-                  <AreaChart data={moodData}>
-                    <defs>
-                      <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--emerald-splash-500))" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="hsl(var(--emerald-splash-500))" stopOpacity={0.05}/>
-                      </linearGradient>
-                      <linearGradient id="energyGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--soft-blush-500))" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="hsl(var(--soft-blush-500))" stopOpacity={0.05}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--misty-rosewood-100))" />
-                    <XAxis dataKey="date" stroke="hsl(var(--misty-rosewood-500))" fontSize={12} />
-                    <YAxis domain={[1, 5]} stroke="hsl(var(--misty-rosewood-500))" fontSize={12} />
+          <TabsContent value="trends" className="space-y-6">
+            <LiquidGlass variant="card" liquidBorder className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-crimson-wine">Weekly Mood Trends</h2>
+                <div className="flex gap-2">
+                  <Button 
+                    variant={selectedTimeframe === "week" ? "default" : "outline"} 
+                    size="sm"
+                    onClick={() => setSelectedTimeframe("week")}
+                  >
+                    Week
+                  </Button>
+                  <Button 
+                    variant={selectedTimeframe === "month" ? "default" : "outline"} 
+                    size="sm"
+                    onClick={() => setSelectedTimeframe("month")}
+                  >
+                    Month
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={handleExportData}>
+                    Export
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={moodData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(154, 131, 124, 0.3)" />
+                    <XAxis dataKey="date" stroke="#3c3c3c" />
+                    <YAxis stroke="#3c3c3c" />
                     <Tooltip 
                       contentStyle={{ 
-                        backgroundColor: 'rgba(255, 255, 255, 0.95)', 
-                        border: 'none', 
-                        borderRadius: '16px',
-                        boxShadow: '0 8px 32px rgba(80, 17, 34, 0.1)'
+                        backgroundColor: 'rgba(243, 236, 232, 0.9)', 
+                        border: '1px solid rgba(154, 131, 124, 0.3)',
+                        borderRadius: '12px'
                       }} 
                     />
-                    <Area type="monotone" dataKey="mood" stroke="hsl(var(--emerald-splash-500))" strokeWidth={3} fill="url(#moodGradient)" name="Mood" />
-                    <Area type="monotone" dataKey="energy" stroke="hsl(var(--soft-blush-500))" strokeWidth={3} fill="url(#energyGradient)" name="Energy" />
-                  </AreaChart>
+                    <Line type="monotone" dataKey="mood" stroke="#501122" strokeWidth={3} dot={{ fill: '#501122' }} />
+                    <Line type="monotone" dataKey="energy" stroke="#c5a398" strokeWidth={3} dot={{ fill: '#c5a398' }} />
+                    <Line type="monotone" dataKey="sleep" stroke="#9a837c" strokeWidth={3} dot={{ fill: '#9a837c' }} />
+                  </LineChart>
                 </ResponsiveContainer>
-                
-                <div className="grid grid-cols-7 gap-2 mt-8">
-                  {moodData.map((day, index) => (
-                    <div key={index} className="text-center glass-card p-3 rounded-2xl">
-                      <p className="text-sm font-semibold text-misty-rosewood-600">{day.date}</p>
-                      <div className="my-2 flex justify-center">
-                        {character ? (
-                          <CharacterAvatar
-                            character={character}
-                            expression={getMoodExpression(day.mood)}
-                            size="md"
-                            animated={false}
-                          />
-                        ) : (
-                          <p className={`text-3xl ${getMoodColor(day.mood)}`}>
-                            🙂
-                          </p>
-                        )}
-                      </div>
-                      <p className="text-xs font-medium text-emerald-splash-600">{day.mood}/5</p>
-                    </div>
-                  ))}
+              </div>
+              
+              <div className="flex justify-center gap-6 mt-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-crimson-wine rounded-full"></div>
+                  <span className="text-sm text-warm-gray">Mood</span>
                 </div>
-              </CardContent>
-            </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-soft-taupe rounded-full"></div>
+                  <span className="text-sm text-warm-gray">Energy</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-warm-gray rounded-full"></div>
+                  <span className="text-sm text-warm-gray">Sleep</span>
+                </div>
+              </div>
+            </LiquidGlass>
           </TabsContent>
 
-          {/* Goals Tab */}
           <TabsContent value="goals" className="space-y-6">
-            <div className="chart-container">
-              <CardHeader>
-                <CardTitle className="heading-gradient">Goal Achievement Dashboard</CardTitle>
-                <CardDescription className="text-misty-rosewood-500">
-                  Your progress towards wellness milestones
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-semibold text-misty-rosewood-600">Overall Progress</span>
-                    <span className="text-lg font-bold text-emerald-splash-600">{Math.round((completedGoals / totalGoals) * 100)}%</span>
+            <div className="grid gap-6">
+              {goals.map((goal) => (
+                <LiquidGlass 
+                  key={goal.id} 
+                  variant="crystal" 
+                  interactive 
+                  floating 
+                  liquidBorder 
+                  className="p-6 cursor-pointer"
+                  onClick={() => handleGoalClick(goal.id)}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center shadow-lg">
+                        <Target className="w-6 h-6 text-crimson-wine" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-deep-charcoal">{goal.title}</h3>
+                        <p className="text-sm text-warm-gray">{goal.target}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-2xl font-bold text-crimson-wine">{goal.progress}%</p>
+                      <div className="flex items-center gap-1 text-sm text-warm-gray">
+                        <Award className="w-4 h-4" />
+                        <span>{goal.streak} day streak</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="progress-modern">
+                  
+                  <div className="w-full bg-muted-blush rounded-full h-3">
                     <div 
-                      className="progress-fill" 
-                      style={{ width: `${(completedGoals / totalGoals) * 100}%` }}
-                    />
+                      className="bg-crimson-wine h-3 rounded-full transition-all duration-300"
+                      style={{ width: `${goal.progress}%` }}
+                    ></div>
                   </div>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h4 className="font-bold text-emerald-splash-600 flex items-center gap-2">
-                      <Award className="w-5 h-5" />
-                      Completed Goals
-                    </h4>
-                    <div className="space-y-3">
-                      {[
-                        { name: "Daily Meditation", days: 21, color: "emerald-splash" },
-                        { name: "Exercise 3x/week", days: 14, color: "deep-teal" },
-                        { name: "Gratitude Journal", days: 30, color: "crimson-wine" }
-                      ].map((goal, index) => (
-                        <div key={index} className="glass-card p-4 rounded-2xl">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="font-semibold text-crimson-wine-600">{goal.name}</p>
-                              <p className="text-sm text-misty-rosewood-500">Completed {goal.days} days ago</p>
-                            </div>
-                            <div className="w-8 h-8 rounded-full bg-emerald-splash-100 flex items-center justify-center">
-                              <Award className="w-4 h-4 text-emerald-splash-600" />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <h4 className="font-bold text-deep-teal-600 flex items-center gap-2">
-                      <Target className="w-5 h-5" />
-                      Active Goals
-                    </h4>
-                    <div className="space-y-3">
-                      {[
-                        { name: "Read 15 min daily", progress: 80 },
-                        { name: "Journal weekly", progress: 60 },
-                        { name: "Sleep 8+ hours", progress: 75 }
-                      ].map((goal, index) => (
-                        <div key={index} className="glass-card p-4 rounded-2xl">
-                          <div className="mb-2">
-                            <p className="font-semibold text-crimson-wine-600">{goal.name}</p>
-                          </div>
-                          <div className="progress-modern">
-                            <div 
-                              className="progress-fill" 
-                              style={{ width: `${goal.progress}%` }}
-                            />
-                          </div>
-                          <p className="text-xs text-deep-teal-600 font-medium mt-1">{goal.progress}% complete</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
+                </LiquidGlass>
+              ))}
             </div>
           </TabsContent>
 
-          {/* Assessments Tab */}
-          <TabsContent value="assessments" className="space-y-6">
-            <div className="chart-container">
-              <CardHeader>
-                <CardTitle className="heading-gradient">Mental Health Assessments</CardTitle>
-                <CardDescription className="text-misty-rosewood-500">
-                  Track your progress with professional assessment tools
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {assessmentHistory.map((assessment) => (
-                    <div key={assessment.id} className="glass-card p-6 rounded-2xl border border-soft-blush-100">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-misty-rosewood-100 flex items-center justify-center">
-                            <Brain className="w-5 h-5 text-misty-rosewood-600" />
-                          </div>
-                          <div>
-                            <h4 className="font-bold text-crimson-wine-600">{assessment.type} Assessment</h4>
-                            <p className="text-sm text-misty-rosewood-500">{new Date(assessment.date).toLocaleDateString()}</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <Badge className={`${getLevelColor(assessment.level)} px-3 py-1 rounded-full font-medium`}>
-                            {assessment.level}
-                          </Badge>
-                          <p className="text-sm text-emerald-splash-600 font-medium mt-1">{assessment.improvement}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-misty-rosewood-600">Score: {assessment.score}</span>
-                        <TrendingUp className="w-4 h-4 text-emerald-splash-500" />
-                      </div>
+          <TabsContent value="insights" className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              {insights.map((insight) => (
+                <LiquidGlass 
+                  key={insight.id} 
+                  variant="card" 
+                  floating 
+                  bubbles 
+                  className="p-6 cursor-pointer"
+                  onClick={() => handleInsightClick(insight.id)}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center shadow-lg">
+                      <insight.icon className="w-6 h-6 text-crimson-wine" />
                     </div>
-                  ))}
-                </div>
-                
-                <Button className="btn-primary-modern w-full mt-6">
-                  <Brain className="w-4 h-4 mr-2" />
-                  Take New Assessment
-                </Button>
-              </CardContent>
-            </div>
-          </TabsContent>
-
-          {/* Weekly Trends Tab */}
-          <TabsContent value="weekly" className="space-y-6">
-            <div className="chart-container">
-              <CardHeader>
-                <CardTitle className="heading-gradient">4-Week Wellness Trends</CardTitle>
-                <CardDescription className="text-misty-rosewood-500">
-                  Comprehensive view of your mental health journey
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={350}>
-                  <BarChart data={weeklyProgress}>
-                    <defs>
-                      <linearGradient id="colorMood" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--emerald-splash-500))" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="hsl(var(--emerald-splash-500))" stopOpacity={0.3}/>
-                      </linearGradient>
-                      <linearGradient id="colorGoals" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--deep-teal-500))" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="hsl(var(--deep-teal-500))" stopOpacity={0.3}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--misty-rosewood-100))" />
-                    <XAxis dataKey="week" stroke="hsl(var(--misty-rosewood-500))" fontSize={12} />
-                    <YAxis stroke="hsl(var(--misty-rosewood-500))" fontSize={12} />
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'rgba(255, 255, 255, 0.95)', 
-                        border: 'none', 
-                        borderRadius: '16px',
-                        boxShadow: '0 8px 32px rgba(80, 17, 34, 0.1)'
-                      }} 
-                    />
-                    <Bar dataKey="mood" fill="url(#colorMood)" name="Average Mood" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="goals" fill="url(#colorGoals)" name="Goal Progress %" radius={[8, 8, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                  <div className="metric-card text-center">
-                    <TrendingUp className="w-10 h-10 text-emerald-splash-500 mx-auto mb-3" />
-                    <p className="text-sm font-medium text-misty-rosewood-500">Mood Trend</p>
-                    <p className="text-xl font-bold text-emerald-splash-600">↗ Improving</p>
-                    <p className="text-xs text-emerald-splash-500 mt-1">+18% this month</p>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-deep-charcoal mb-2">{insight.title}</h3>
+                      <p className="text-warm-gray mb-3">{insight.description}</p>
+                      <Badge 
+                        variant="secondary" 
+                        className={`${
+                          insight.type === 'positive' ? 'bg-emerald-splash-100 text-emerald-splash-700' :
+                          insight.type === 'good' ? 'bg-soft-taupe text-deep-charcoal' :
+                          insight.type === 'achievement' ? 'bg-crimson-wine text-off-white' :
+                          'bg-muted-blush text-deep-charcoal'
+                        }`}
+                      >
+                        {insight.type}
+                      </Badge>
+                    </div>
                   </div>
-                  
-                  <div className="metric-card text-center">
-                    <Target className="w-10 h-10 text-deep-teal-500 mx-auto mb-3" />
-                    <p className="text-sm font-medium text-misty-rosewood-500">Goal Achievement</p>
-                    <p className="text-xl font-bold text-deep-teal-600">85% This Week</p>
-                    <p className="text-xs text-deep-teal-500 mt-1">Personal best!</p>
-                  </div>
-                  
-                  <div className="metric-card text-center">
-                    <Award className="w-10 h-10 text-crimson-wine-500 mx-auto mb-3" />
-                    <p className="text-sm font-medium text-misty-rosewood-500">Streak Record</p>
-                    <p className="text-xl font-bold text-crimson-wine-600">{currentStreak} Days</p>
-                    <p className="text-xs text-crimson-wine-500 mt-1">Keep it up!</p>
-                  </div>
-                </div>
-              </CardContent>
+                </LiquidGlass>
+              ))}
             </div>
           </TabsContent>
         </Tabs>

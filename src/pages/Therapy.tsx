@@ -15,7 +15,7 @@ const therapists = [
     experience: "8 years",
     image: "/placeholder.svg",
     nextAvailable: "Today 2:00 PM",
-    price: "$120/session"
+    price: "₹9,600/session"
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const therapists = [
     experience: "12 years",
     image: "/placeholder.svg",
     nextAvailable: "Tomorrow 10:00 AM",
-    price: "$150/session"
+    price: "₹12,000/session"
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const therapists = [
     experience: "15 years",
     image: "/placeholder.svg",
     nextAvailable: "Today 4:30 PM",
-    price: "$180/session"
+    price: "₹14,400/session"
   }
 ];
 
@@ -45,26 +45,46 @@ const sessionTypes = [
     description: "One-on-one sessions with a licensed therapist",
     duration: "50 minutes",
     icon: User,
-    price: "From $120"
+    price: "From ₹9,600"
   },
   {
     type: "Couples Therapy",
     description: "Relationship counseling for couples",
     duration: "60 minutes",
     icon: Heart,
-    price: "From $180"
+    price: "From ₹14,400"
   },
   {
     type: "Group Therapy",
     description: "Supportive group sessions with peers",
     duration: "90 minutes",
     icon: MessageCircle,
-    price: "From $60"
+    price: "From ₹4,800"
   }
 ];
 
 export default function Therapy() {
   const [selectedTherapist, setSelectedTherapist] = useState<number | null>(null);
+
+  const handleTherapistSelect = (therapistId: number) => {
+    setSelectedTherapist(therapistId);
+    console.log("Selected therapist:", therapistId);
+  };
+
+  const handleBookSession = (therapistId: number) => {
+    console.log("Booking session with therapist:", therapistId);
+    // Add booking logic here
+  };
+
+  const handleEmergencySupport = () => {
+    console.log("Accessing emergency support");
+    // Navigate to emergency page
+  };
+
+  const handleSelfHelpResources = () => {
+    console.log("Accessing self-help resources");
+    // Navigate to resources page
+  };
 
   return (
     <div className="min-h-screen wellness-gradient">
@@ -90,7 +110,8 @@ export default function Therapy() {
                 variant="card" 
                 interactive 
                 floating 
-                className="p-6 hover-scale transition-all duration-300"
+                className="p-6 hover-scale transition-all duration-300 cursor-pointer"
+                onClick={() => console.log("Selected session type:", session.type)}
               >
                 <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
                   <session.icon className="w-6 h-6 text-crimson-wine" />
@@ -112,7 +133,7 @@ export default function Therapy() {
         <LiquidGlass variant="card" bubbles className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-crimson-wine">Available Therapists</h2>
-            <Button className="btn-secondary-modern">
+            <Button className="btn-secondary-modern" onClick={() => console.log("Viewing schedule")}>
               <Calendar className="w-4 h-4 mr-2" />
               View Schedule
             </Button>
@@ -129,7 +150,7 @@ export default function Therapy() {
                 className={`p-6 cursor-pointer transition-all duration-300 ${
                   selectedTherapist === therapist.id ? 'ring-2 ring-crimson-wine' : ''
                 }`}
-                onClick={() => setSelectedTherapist(therapist.id)}
+                onClick={() => handleTherapistSelect(therapist.id)}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
@@ -158,7 +179,14 @@ export default function Therapy() {
                       <Button size="sm" variant="outline" className="btn-secondary-modern">
                         <Phone className="w-4 h-4" />
                       </Button>
-                      <Button size="sm" className="btn-primary-modern">
+                      <Button 
+                        size="sm" 
+                        className="btn-primary-modern"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleBookSession(therapist.id);
+                        }}
+                      >
                         Book
                       </Button>
                     </div>
@@ -173,7 +201,12 @@ export default function Therapy() {
         <LiquidGlass variant="overlay" floating className="p-6">
           <h2 className="text-2xl font-bold text-crimson-wine mb-6">Quick Actions</h2>
           <div className="grid md:grid-cols-2 gap-4">
-            <LiquidGlass variant="card" interactive className="p-4">
+            <LiquidGlass 
+              variant="card" 
+              interactive 
+              className="p-4 cursor-pointer"
+              onClick={handleEmergencySupport}
+            >
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-bold text-deep-charcoal">Emergency Support</h3>
@@ -182,7 +215,12 @@ export default function Therapy() {
                 <ChevronRight className="w-5 h-5 text-crimson-wine" />
               </div>
             </LiquidGlass>
-            <LiquidGlass variant="card" interactive className="p-4">
+            <LiquidGlass 
+              variant="card" 
+              interactive 
+              className="p-4 cursor-pointer"
+              onClick={handleSelfHelpResources}
+            >
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-bold text-deep-charcoal">Self-Help Resources</h3>

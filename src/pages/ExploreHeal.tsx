@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Search, Filter, Play, BookOpen, Headphones, Heart, Star, Clock, Users, Compass, Sparkles } from "lucide-react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
@@ -131,6 +130,26 @@ export default function ExploreHeal() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  const handleStartMeditation = (meditationId: number) => {
+    console.log("Starting meditation:", meditationId);
+  };
+
+  const handleStartActivity = (activityId: number) => {
+    console.log("Starting activity:", activityId);
+  };
+
+  const handleReadArticle = (articleId: number) => {
+    console.log("Reading article:", articleId);
+  };
+
+  const handleJoinChallenge = (challengeId: number) => {
+    console.log("Joining challenge:", challengeId);
+  };
+
+  const handleFilter = () => {
+    console.log("Opening filter options");
+  };
+
   return (
     <div className="min-h-screen wellness-gradient">
       <div className="container mx-auto px-4 py-8 space-y-8">
@@ -157,7 +176,7 @@ export default function ExploreHeal() {
                 className="pl-10 glass-input"
               />
             </div>
-            <Button variant="outline" className="btn-secondary-modern">
+            <Button variant="outline" className="btn-secondary-modern" onClick={handleFilter}>
               <Filter className="w-4 h-4 mr-2" />
               Filters
             </Button>
@@ -180,7 +199,8 @@ export default function ExploreHeal() {
                   variant="card" 
                   interactive 
                   floating 
-                  className="p-6 hover-scale"
+                  className="p-6 hover-scale cursor-pointer"
+                  onClick={() => console.log("Viewing meditation:", meditation.id)}
                 >
                   <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
                     <Headphones className="w-6 h-6 text-crimson-wine" />
@@ -212,7 +232,13 @@ export default function ExploreHeal() {
                     </div>
                   </div>
 
-                  <Button className="w-full btn-primary-modern">
+                  <Button 
+                    className="w-full btn-primary-modern"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleStartMeditation(meditation.id);
+                    }}
+                  >
                     <Play className="w-4 h-4 mr-2" />
                     Start Meditation
                   </Button>
@@ -229,7 +255,8 @@ export default function ExploreHeal() {
                   variant="crystal" 
                   interactive 
                   liquidBorder 
-                  className="p-6"
+                  className="p-6 cursor-pointer"
+                  onClick={() => console.log("Viewing activity:", activity.id)}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -260,7 +287,15 @@ export default function ExploreHeal() {
                         </div>
                       </div>
                     </div>
-                    <Button className="btn-primary-modern ml-4">Start Activity</Button>
+                    <Button 
+                      className="btn-primary-modern ml-4"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleStartActivity(activity.id);
+                      }}
+                    >
+                      Start Activity
+                    </Button>
                   </div>
                 </LiquidGlass>
               ))}
@@ -275,7 +310,8 @@ export default function ExploreHeal() {
                   variant="card" 
                   floating 
                   bubbles 
-                  className="p-6 hover-scale"
+                  className="p-6 hover-scale cursor-pointer"
+                  onClick={() => console.log("Viewing article:", article.id)}
                 >
                   <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
                     <BookOpen className="w-6 h-6 text-crimson-wine" />
@@ -290,7 +326,14 @@ export default function ExploreHeal() {
                     <span>{article.readTime}</span>
                     <span>{article.publishDate}</span>
                   </div>
-                  <Button variant="outline" className="w-full btn-secondary-modern">
+                  <Button 
+                    variant="outline" 
+                    className="w-full btn-secondary-modern"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleReadArticle(article.id);
+                    }}
+                  >
                     Read Article
                   </Button>
                 </LiquidGlass>
@@ -307,7 +350,8 @@ export default function ExploreHeal() {
                   interactive 
                   floating 
                   liquidBorder 
-                  className="p-6"
+                  className="p-6 cursor-pointer"
+                  onClick={() => console.log("Viewing challenge:", challenge.id)}
                 >
                   <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
                     <Sparkles className="w-6 h-6 text-crimson-wine" />
@@ -339,7 +383,15 @@ export default function ExploreHeal() {
                     </div>
                   </div>
 
-                  <Button className="w-full btn-primary-modern">Join Challenge</Button>
+                  <Button 
+                    className="w-full btn-primary-modern"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleJoinChallenge(challenge.id);
+                    }}
+                  >
+                    Join Challenge
+                  </Button>
                 </LiquidGlass>
               ))}
             </div>
