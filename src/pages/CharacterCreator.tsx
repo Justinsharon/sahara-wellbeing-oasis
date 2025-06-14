@@ -22,6 +22,7 @@ export default function CharacterCreator() {
   const [eyeColor, setEyeColor] = useState<CharacterAppearance['eye_color']>('brown');
   const [accessories, setAccessories] = useState<string[]>([]);
   const [outfit, setOutfit] = useState<CharacterAppearance['outfit']>('casual');
+  const [loading, setLoading] = useState(false);
 
   const handleAccessoriesChange = (accessory: string) => {
     if (accessories.includes(accessory)) {
@@ -41,6 +42,9 @@ export default function CharacterCreator() {
       toast.error('Please sign in to create your character.');
       return;
     }
+
+    setLoading(true);
+    console.log('Starting character creation...', { userId: user.id, name });
 
     const characterData = {
       name: name.trim(),
@@ -68,17 +72,23 @@ export default function CharacterCreator() {
     };
 
     try {
+      console.log('Updating profile with character data...', characterData);
+      
       // Store character data as JSON string in the database
       await updateProfile({
         character_companion: JSON.stringify(characterData)
       });
 
+      console.log('Character created successfully, navigating to assessment...');
       toast.success('Character created successfully!');
+      
       // Navigate to onboarding assessment
       navigate('/onboarding-assessment');
     } catch (error: any) {
       console.error('Error creating character:', error);
       toast.error(`Failed to create character: ${error.message || 'Unknown error'}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -150,12 +160,13 @@ export default function CharacterCreator() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter companion name"
+                    disabled={loading}
                   />
                 </div>
 
                 <div>
                   <Label htmlFor="skinTone">Skin Tone</Label>
-                  <Select value={skinTone} onValueChange={(value) => setSkinTone(value as CharacterAppearance['skin_tone'])}>
+                  <Select value={skinTone} onValueChange={(value) => setSkinTone(value as CharacterAppearance['skin_tone'])} disabled={loading}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select skin tone" />
                     </SelectTrigger>
@@ -170,7 +181,7 @@ export default function CharacterCreator() {
 
                 <div>
                   <Label htmlFor="hairColor">Hair Color</Label>
-                  <Select value={hairColor} onValueChange={(value) => setHairColor(value as CharacterAppearance['hair_color'])}>
+                  <Select value={hairColor} onValueChange={(value) => setHairColor(value as CharacterAppearance['hair_color'])} disabled={loading}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select hair color" />
                     </SelectTrigger>
@@ -188,7 +199,7 @@ export default function CharacterCreator() {
 
                 <div>
                   <Label htmlFor="hairStyle">Hair Style</Label>
-                  <Select value={hairStyle} onValueChange={(value) => setHairStyle(value as CharacterAppearance['hair_style'])}>
+                  <Select value={hairStyle} onValueChange={(value) => setHairStyle(value as CharacterAppearance['hair_style'])} disabled={loading}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select hair style" />
                     </SelectTrigger>
@@ -201,7 +212,7 @@ export default function CharacterCreator() {
 
                 <div>
                   <Label htmlFor="eyeColor">Eye Color</Label>
-                  <Select value={eyeColor} onValueChange={(value) => setEyeColor(value as CharacterAppearance['eye_color'])}>
+                  <Select value={eyeColor} onValueChange={(value) => setEyeColor(value as CharacterAppearance['eye_color'])} disabled={loading}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select eye color" />
                     </SelectTrigger>
@@ -221,6 +232,7 @@ export default function CharacterCreator() {
                     <Button
                       variant={accessories.includes('glasses') ? 'default' : 'outline'}
                       onClick={() => handleAccessoriesChange('glasses')}
+                      disabled={loading}
                     >
                       Glasses
                     </Button>
@@ -229,7 +241,7 @@ export default function CharacterCreator() {
 
                 <div>
                   <Label htmlFor="outfit">Outfit</Label>
-                  <Select value={outfit} onValueChange={(value) => setOutfit(value as CharacterAppearance['outfit'])}>
+                  <Select value={outfit} onValueChange={(value) => setOutfit(value as CharacterAppearance['outfit'])} disabled={loading}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select outfit" />
                     </SelectTrigger>
@@ -245,8 +257,12 @@ export default function CharacterCreator() {
               </div>
             </div>
 
-            <Button onClick={handleSubmit} className="w-full md:w-auto">
-              Create Companion & Start Assessment
+            <Button 
+              onClick={handleSubmit} 
+              className="w-full md:w-auto" 
+              disabled={loading || !name.trim()}
+            >
+              {loading ? 'Creating Companion...' : 'Create Companion & Start Assessment'}
             </Button>
           </CardContent>
         </Card>

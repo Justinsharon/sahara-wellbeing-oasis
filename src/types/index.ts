@@ -1,3 +1,4 @@
+
 export interface User {
   id: string;
   email: string;
@@ -5,6 +6,7 @@ export interface User {
   mobile_number?: string;
   country_code?: string;
   date_of_birth?: string;
+  gender?: string; // Added gender field
   created_at: string;
   updated_at: string;
   email_verified?: boolean;

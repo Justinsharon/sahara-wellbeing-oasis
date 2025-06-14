@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Eye, EyeOff, Heart } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -19,6 +20,7 @@ const signUpSchema = z.object({
   countryCode: z.string().min(1, "Please select a country code"),
   mobileNumber: z.string().min(10, "Mobile number must be at least 10 digits"),
   dateOfBirth: z.string().min(1, "Date of birth is required"),
+  gender: z.string().min(1, "Please select your gender"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string(),
   acceptTerms: z.boolean().refine(val => val, "You must accept the terms and conditions"),
@@ -56,6 +58,7 @@ export default function SignUp() {
         mobile_number: data.mobileNumber,
         country_code: data.countryCode,
         date_of_birth: data.dateOfBirth,
+        gender: data.gender,
         email_verified: false,
         otp_verified: false,
       });
@@ -148,6 +151,24 @@ export default function SignUp() {
               />
               {errors.dateOfBirth && (
                 <p className="text-sm text-destructive">{errors.dateOfBirth.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="gender">Gender</Label>
+              <Select onValueChange={(value) => setValue("gender", value)}>
+                <SelectTrigger className="rounded-xl">
+                  <SelectValue placeholder="Select your gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="male">Male</SelectItem>
+                  <SelectItem value="female">Female</SelectItem>
+                  <SelectItem value="non-binary">Non-binary</SelectItem>
+                  <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.gender && (
+                <p className="text-sm text-destructive">{errors.gender.message}</p>
               )}
             </div>
 
