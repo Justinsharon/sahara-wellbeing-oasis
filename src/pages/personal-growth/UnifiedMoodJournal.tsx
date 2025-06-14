@@ -1,7 +1,6 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft, Calendar, TrendingUp, Heart, BarChart3, BookOpen, Target } from "lucide-react";
+import { Link, Navigate } from "react-router-dom";
+import { ArrowLeft, Calendar, TrendingUp, Heart, LogOut } from "lucide-react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,7 +8,8 @@ import { toast } from "sonner";
 import { DailyCheckIn } from "@/components/mood/DailyCheckIn";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { useCharacter } from "@/hooks/useCharacter";
-import { MoodEntry } from "@/types";
+import { useMoodEntries } from "@/hooks/useMoodEntries";
+import { useAuth } from "@/hooks/useAuth";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 interface ExtendedMoodEntry extends MoodEntry {
@@ -64,25 +64,36 @@ const mockUnifiedEntries: ExtendedMoodEntry[] = [
 ];
 
 export default function UnifiedMoodJournal() {
-  const [moodEntries, setMoodEntries] = useState<ExtendedMoodEntry[]>(mockUnifiedEntries);
+  const { user, signOut, loading: authLoading } = useAuth();
+  const { moodEntries, loading, createMoodEntry } = useMoodEntries();
   const { character } = useCharacter();
 
-  const handleSaveEnhancedCheckIn = (data: any) => {
-    const newEntry: ExtendedMoodEntry = {
-      id: Date.now().toString(),
-      user_id: "user1",
-      mood: data.mood as ExtendedMoodEntry['mood'],
+  // Redirect to auth if not logged in
+  if (!authLoading && !user) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  if (authLoading || loading) {
+    return (
+      <div className="min-h-screen wellness-gradient flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-crimson-wine-500 mx-auto mb-4"></div>
+          <p className="text-misty-rosewood-600">Loading your wellness data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const handleSaveEnhancedCheckIn = async (data: any) => {
+    await createMoodEntry({
+      mood: data.mood,
       stress_level: data.stressLevel,
       sleep_quality: data.sleepQuality,
       hours_slept: data.hoursSlept,
       entry_type: "enhanced",
       notes: data.notes,
       date: data.date,
-      created_at: new Date().toISOString(),
-    };
-
-    const updatedEntries = moodEntries.filter(entry => entry.date !== data.date);
-    setMoodEntries([newEntry, ...updatedEntries]);
+    });
   };
 
   const getMoodOption = (mood: string) => {
@@ -143,13 +154,23 @@ export default function UnifiedMoodJournal() {
   return (
     <div className="min-h-screen wellness-gradient p-4 md:p-6 lg:p-8 pb-20 md:pb-8">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center justify-between gap-4 mb-6">
         <Button variant="ghost" size="sm" asChild>
           <Link to="/personal-growth">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Personal Growth
           </Link>
         </Button>
+        
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-misty-rosewood-600">
+            Welcome, {user?.full_name || user?.email}
+          </span>
+          <Button variant="ghost" size="sm" onClick={signOut}>
+            <LogOut className="w-4 h-4 mr-2" />
+            Sign Out
+          </Button>
+        </div>
       </div>
 
       <div className="max-w-6xl mx-auto">
@@ -282,60 +303,70 @@ export default function UnifiedMoodJournal() {
                 <p className="text-misty-rosewood-500">Your recent mood tracking entries</p>
               </div>
               <div className="space-y-4">
-                {moodEntries.map((entry) => {
-                  const moodOption = getMoodOption(entry.mood);
-                  return (
-                    <LiquidGlass key={entry.id} variant="crystal" interactive className="p-6">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-4 mb-3">
-                            {character && entry.entry_type === 'enhanced' && (
-                              <CharacterAvatar
-                                character={character}
-                                expression={getMoodExpression(entry.mood)}
-                                size="md"
-                                animated={false}
-                              />
-                            )}
-                            <div className="flex items-center gap-3">
-                              <div className="text-2xl">{moodOption?.emoji}</div>
-                              <div>
-                                <p className={`font-semibold ${moodOption?.color}`}>
-                                  {moodOption?.label}
-                                </p>
-                                <div className="flex items-center gap-2">
-                                  <p className="text-sm text-misty-rosewood-500">
-                                    {new Date(entry.date).toLocaleDateString()}
+                {moodEntries.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Heart className="w-12 h-12 text-misty-rosewood-300 mx-auto mb-4" />
+                    <h3 className="text-lg font-medium mb-2">No entries yet</h3>
+                    <p className="text-misty-rosewood-500">
+                      Start tracking your mood to see patterns and insights
+                    </p>
+                  </div>
+                ) : (
+                  moodEntries.map((entry) => {
+                    const moodOption = getMoodOption(entry.mood);
+                    return (
+                      <LiquidGlass key={entry.id} variant="crystal" interactive className="p-6">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-4 mb-3">
+                              {character && entry.entry_type === 'enhanced' && (
+                                <CharacterAvatar
+                                  character={character}
+                                  expression={getMoodExpression(entry.mood)}
+                                  size="md"
+                                  animated={false}
+                                />
+                              )}
+                              <div className="flex items-center gap-3">
+                                <div className="text-2xl">{moodOption?.emoji}</div>
+                                <div>
+                                  <p className={`font-semibold ${moodOption?.color}`}>
+                                    {moodOption?.label}
                                   </p>
-                                  <span className="text-xs px-2 py-1 rounded-full bg-emerald-splash-100 text-emerald-splash-600">
-                                    Enhanced
-                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    <p className="text-sm text-misty-rosewood-500">
+                                      {new Date(entry.date).toLocaleDateString()}
+                                    </p>
+                                    <span className="text-xs px-2 py-1 rounded-full bg-emerald-splash-100 text-emerald-splash-600">
+                                      Enhanced
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
+                            
+                            {entry.entry_type === 'enhanced' && (
+                              <div className="grid grid-cols-2 gap-4 mb-3">
+                                <div className="text-sm">
+                                  <span className="text-misty-rosewood-500">Stress:</span>
+                                  <span className="ml-2 font-medium">{entry.stress_level}/5</span>
+                                </div>
+                                <div className="text-sm">
+                                  <span className="text-misty-rosewood-500">Sleep:</span>
+                                  <span className="ml-2 font-medium">{entry.hours_slept}h ({entry.sleep_quality})</span>
+                                </div>
+                              </div>
+                            )}
+                            
+                            {entry.notes && (
+                              <p className="text-misty-rosewood-600 text-sm">{entry.notes}</p>
+                            )}
                           </div>
-                          
-                          {entry.entry_type === 'enhanced' && (
-                            <div className="grid grid-cols-2 gap-4 mb-3">
-                              <div className="text-sm">
-                                <span className="text-misty-rosewood-500">Stress:</span>
-                                <span className="ml-2 font-medium">{entry.stress_level}/5</span>
-                              </div>
-                              <div className="text-sm">
-                                <span className="text-misty-rosewood-500">Sleep:</span>
-                                <span className="ml-2 font-medium">{entry.hours_slept}h ({entry.sleep_quality})</span>
-                              </div>
-                            </div>
-                          )}
-                          
-                          {entry.notes && (
-                            <p className="text-misty-rosewood-600 text-sm">{entry.notes}</p>
-                          )}
                         </div>
-                      </div>
-                    </LiquidGlass>
-                  );
-                })}
+                      </LiquidGlass>
+                    );
+                  })
+                )}
               </div>
             </LiquidGlass>
           </TabsContent>

@@ -1,11 +1,23 @@
 
-import { Route } from "react-router-dom";
-import EnhancedMoodJournal from "@/pages/personal-growth/EnhancedMoodJournal";
-import MoodJournal from "@/pages/personal-growth/MoodJournal";
+import { Routes, Route } from "react-router-dom";
+import PersonalGrowth from "@/pages/PersonalGrowth";
 import Goals from "@/pages/personal-growth/Goals";
+import MoodJournal from "@/pages/personal-growth/MoodJournal";
+import EnhancedMoodJournal from "@/pages/personal-growth/EnhancedMoodJournal";
+import UnifiedMoodJournal from "@/pages/personal-growth/UnifiedMoodJournal";
+import AuthPage from "@/pages/auth/AuthPage";
 
-export const personalGrowthRoutes = [
-  <Route key="enhanced-mood-journal" path="/personal-growth/enhanced-mood-journal" element={<EnhancedMoodJournal />} />,
-  <Route key="mood-journal" path="/personal-growth/mood-journal" element={<MoodJournal />} />,
-  <Route key="goals" path="/personal-growth/goals" element={<Goals />} />,
-];
+const PersonalGrowthRoutes = () => {
+  return (
+    <Routes>
+      <Route path="" element={<PersonalGrowth />} />
+      <Route path="goals" element={<Goals />} />
+      <Route path="mood-journal" element={<MoodJournal />} />
+      <Route path="enhanced-mood-journal" element={<EnhancedMoodJournal />} />
+      <Route path="unified-mood-journal" element={<UnifiedMoodJournal />} />
+      <Route path="auth" element={<AuthPage />} />
+    </Routes>
+  );
+};
+
+export default PersonalGrowthRoutes;
