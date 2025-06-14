@@ -64,7 +64,7 @@ export default function Index() {
       <section className="mb-12">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-crimson-wine">
-            <span className="heading-gradient">
+            <span className="heading-gradient text-2xl md:text-3xl lg:text-4xl">
               Welcome to Your
             </span>
             <br />
