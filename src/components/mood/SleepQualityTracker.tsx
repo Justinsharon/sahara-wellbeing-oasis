@@ -1,14 +1,14 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Moon } from "lucide-react";
+import { Moon, Star, CheckCircle, Minus, AlertTriangle, AlertCircle } from "lucide-react";
 
 const sleepQualities = [
-  { value: "excellent", label: "Excellent", emoji: "😴", color: "bg-emerald-500", description: "Refreshed and energized" },
-  { value: "good", label: "Good", emoji: "😊", color: "bg-green-500", description: "Well-rested" },
-  { value: "fair", label: "Fair", emoji: "😐", color: "bg-yellow-500", description: "Somewhat rested" },
-  { value: "poor", label: "Poor", emoji: "😪", color: "bg-orange-500", description: "Tired and groggy" },
-  { value: "very_poor", label: "Very Poor", emoji: "😵", color: "bg-red-500", description: "Exhausted" },
+  { value: "excellent", label: "Excellent", icon: Star, color: "bg-emerald-500", description: "Refreshed and energized" },
+  { value: "good", label: "Good", icon: CheckCircle, color: "bg-green-500", description: "Well-rested" },
+  { value: "fair", label: "Fair", icon: Minus, color: "bg-yellow-500", description: "Somewhat rested" },
+  { value: "poor", label: "Poor", icon: AlertTriangle, color: "bg-orange-500", description: "Tired and groggy" },
+  { value: "very_poor", label: "Very Poor", icon: AlertCircle, color: "bg-red-500", description: "Exhausted" },
 ];
 
 interface SleepQualityTrackerProps {
@@ -64,24 +64,29 @@ export function SleepQualityTracker({
 
       {/* Sleep quality options */}
       <div className="grid grid-cols-5 gap-3">
-        {sleepQualities.map((quality) => (
-          <button
-            key={quality.value}
-            onClick={() => onQualitySelect(quality.value)}
-            onMouseEnter={() => setHoveredQuality(quality.value)}
-            onMouseLeave={() => setHoveredQuality(null)}
-            className={cn(
-              "p-3 rounded-xl transition-all duration-300 border-2 text-center",
-              selectedQuality === quality.value
-                ? `${quality.color} border-white text-white scale-105 shadow-lg`
-                : "bg-soft-blush-50 border-soft-blush-200 hover:scale-105 hover:shadow-md",
-              hoveredQuality === quality.value && selectedQuality !== quality.value && "scale-105 shadow-md"
-            )}
-          >
-            <div className="text-2xl mb-1">{quality.emoji}</div>
-            <div className="text-xs font-medium">{quality.label}</div>
-          </button>
-        ))}
+        {sleepQualities.map((quality) => {
+          const IconComponent = quality.icon;
+          return (
+            <button
+              key={quality.value}
+              onClick={() => onQualitySelect(quality.value)}
+              onMouseEnter={() => setHoveredQuality(quality.value)}
+              onMouseLeave={() => setHoveredQuality(null)}
+              className={cn(
+                "p-3 rounded-xl transition-all duration-300 border-2 text-center",
+                selectedQuality === quality.value
+                  ? `${quality.color} border-white text-white scale-105 shadow-lg`
+                  : "bg-soft-blush-50 border-soft-blush-200 hover:scale-105 hover:shadow-md",
+                hoveredQuality === quality.value && selectedQuality !== quality.value && "scale-105 shadow-md"
+              )}
+            >
+              <div className="flex justify-center mb-1">
+                <IconComponent size={24} />
+              </div>
+              <div className="text-xs font-medium">{quality.label}</div>
+            </button>
+          );
+        })}
       </div>
 
       {/* Quality description */}

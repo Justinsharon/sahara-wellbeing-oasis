@@ -1,13 +1,15 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { CharacterAvatar } from "@/components/character/CharacterAvatar";
+import { useCharacter } from "@/hooks/useCharacter";
 
 const moodOptions = [
-  { value: "very_happy", label: "Very Happy", emoji: "😄", color: "text-emerald-600", bgColor: "bg-emerald-100", position: { x: 50, y: 10 } },
-  { value: "happy", label: "Happy", emoji: "😊", color: "text-green-500", bgColor: "bg-green-100", position: { x: 85, y: 35 } },
-  { value: "neutral", label: "Neutral", emoji: "😐", color: "text-yellow-500", bgColor: "bg-yellow-100", position: { x: 85, y: 65 } },
-  { value: "sad", label: "Sad", emoji: "😢", color: "text-orange-500", bgColor: "bg-orange-100", position: { x: 50, y: 90 } },
-  { value: "very_sad", label: "Very Sad", emoji: "😭", color: "text-red-500", bgColor: "bg-red-100", position: { x: 15, y: 65 } },
+  { value: "very_happy", label: "Very Happy", color: "text-emerald-600", bgColor: "bg-emerald-100", position: { x: 50, y: 10 } },
+  { value: "happy", label: "Happy", color: "text-green-500", bgColor: "bg-green-100", position: { x: 85, y: 35 } },
+  { value: "neutral", label: "Neutral", color: "text-yellow-500", bgColor: "bg-yellow-100", position: { x: 85, y: 65 } },
+  { value: "sad", label: "Sad", color: "text-orange-500", bgColor: "bg-orange-100", position: { x: 50, y: 90 } },
+  { value: "very_sad", label: "Very Sad", color: "text-red-500", bgColor: "bg-red-100", position: { x: 15, y: 65 } },
 ];
 
 interface CircularMoodSelectorProps {
@@ -17,20 +19,54 @@ interface CircularMoodSelectorProps {
 
 export function CircularMoodSelector({ selectedMood, onMoodSelect }: CircularMoodSelectorProps) {
   const [hoveredMood, setHoveredMood] = useState<string | null>(null);
+  const { character, getCharacterExpression } = useCharacter();
+
+  const getMoodExpression = (mood: string) => {
+    switch (mood) {
+      case "very_happy":
+        return { type: 'excited' as const, intensity: 'high' as const };
+      case "happy":
+        return { type: 'happy' as const, intensity: 'medium' as const };
+      case "neutral":
+        return { type: 'neutral' as const, intensity: 'medium' as const };
+      case "sad":
+        return { type: 'sad' as const, intensity: 'medium' as const };
+      case "very_sad":
+        return { type: 'sad' as const, intensity: 'high' as const };
+      default:
+        return { type: 'neutral' as const, intensity: 'medium' as const };
+    }
+  };
+
+  if (!character) {
+    return (
+      <div className="text-center text-misty-rosewood-500">
+        <p>Create your character companion to track your mood!</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-80 h-80 mx-auto">
       {/* Circular background */}
       <div className="absolute inset-0 rounded-full border-4 border-soft-blush-200 bg-gradient-to-br from-soft-blush-50 to-muted-blush-100" />
       
-      {/* Center circle */}
+      {/* Center circle with character */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-white shadow-lg flex items-center justify-center border-2 border-soft-blush-200">
         {selectedMood ? (
-          <span className="text-4xl">
-            {moodOptions.find(m => m.value === selectedMood)?.emoji}
-          </span>
+          <CharacterAvatar
+            character={character}
+            expression={getMoodExpression(selectedMood)}
+            size="lg"
+            animated={false}
+          />
         ) : (
-          <span className="text-2xl text-misty-rosewood-400">?</span>
+          <CharacterAvatar
+            character={character}
+            expression={{ type: 'thinking', intensity: 'medium' }}
+            size="lg"
+            animated={false}
+          />
         )}
       </div>
 
@@ -54,7 +90,12 @@ export function CircularMoodSelector({ selectedMood, onMoodSelect }: CircularMoo
             transform: "translate(-50%, -50%)"
           }}
         >
-          <span className="text-2xl">{mood.emoji}</span>
+          <CharacterAvatar
+            character={character}
+            expression={getMoodExpression(mood.value)}
+            size="md"
+            animated={false}
+          />
         </button>
       ))}
 

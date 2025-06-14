@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Calendar, TrendingUp, Heart, BarChart3 } from "lucide-react";
@@ -6,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DailyCheckIn } from "@/components/mood/DailyCheckIn";
+import { CharacterAvatar } from "@/components/character/CharacterAvatar";
+import { useCharacter } from "@/hooks/useCharacter";
 import { MoodEntry } from "@/types";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
@@ -53,6 +54,7 @@ const mockEnhancedEntries: ExtendedMoodEntry[] = [
 
 export default function EnhancedMoodJournal() {
   const [moodEntries, setMoodEntries] = useState<ExtendedMoodEntry[]>(mockEnhancedEntries);
+  const { character, getCharacterExpression } = useCharacter();
 
   const handleSaveCheckIn = (data: any) => {
     const newEntry: ExtendedMoodEntry = {
@@ -69,6 +71,23 @@ export default function EnhancedMoodJournal() {
 
     const updatedEntries = moodEntries.filter(entry => entry.date !== data.date);
     setMoodEntries([newEntry, ...updatedEntries]);
+  };
+
+  const getMoodExpression = (mood: string) => {
+    switch (mood) {
+      case "very_happy":
+        return { type: 'excited' as const, intensity: 'high' as const };
+      case "happy":
+        return { type: 'happy' as const, intensity: 'medium' as const };
+      case "neutral":
+        return { type: 'neutral' as const, intensity: 'medium' as const };
+      case "sad":
+        return { type: 'sad' as const, intensity: 'medium' as const };
+      case "very_sad":
+        return { type: 'sad' as const, intensity: 'high' as const };
+      default:
+        return { type: 'neutral' as const, intensity: 'medium' as const };
+    }
   };
 
   const getChartData = () => {
@@ -236,12 +255,14 @@ export default function EnhancedMoodJournal() {
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-4 mb-3">
-                            <span className="text-2xl">
-                              {entry.mood === 'very_happy' ? '😄' : 
-                               entry.mood === 'happy' ? '😊' :
-                               entry.mood === 'neutral' ? '😐' :
-                               entry.mood === 'sad' ? '😢' : '😭'}
-                            </span>
+                            {character && (
+                              <CharacterAvatar
+                                character={character}
+                                expression={getMoodExpression(entry.mood)}
+                                size="md"
+                                animated={false}
+                              />
+                            )}
                             <div>
                               <p className="font-semibold text-crimson-wine-600 capitalize">
                                 {entry.mood.replace('_', ' ')}
