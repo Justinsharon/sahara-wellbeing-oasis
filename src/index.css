@@ -3,91 +3,88 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+/* Modern Design System for Sahara Mobile App */
 
 @layer base {
   :root {
-    --background: 38 25% 93%; /* Warm beige */
-    --foreground: 210 24% 16%; /* Dark text */
+    /* Modern warm color palette */
+    --background: 32 30% 96%; /* Softer warm white */
+    --foreground: 220 25% 12%; /* Rich dark text */
 
     --card: 0 0% 100%;
-    --card-foreground: 210 24% 16%;
+    --card-foreground: 220 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 24% 16%;
+    --popover-foreground: 220 25% 12%;
 
-    --primary: 211 39% 23%; /* Muted dark blue */
+    /* Vibrant but calming primary */
+    --primary: 262 83% 58%; /* Modern purple */
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 38 25% 90%; /* Light beige */
-    --secondary-foreground: 210 24% 16%;
+    /* Soft secondary colors */
+    --secondary: 32 30% 92%; 
+    --secondary-foreground: 220 25% 12%;
 
-    --muted: 38 25% 88%;
-    --muted-foreground: 210 11% 71%;
+    --muted: 32 20% 90%;
+    --muted-foreground: 220 15% 65%;
 
-    --accent: 211 39% 23%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 284 100% 95%; /* Light purple accent */
+    --accent-foreground: 262 83% 58%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 38 25% 85%;
-    --input: 38 25% 85%;
-    --ring: 211 39% 23%;
+    --border: 32 20% 88%;
+    --input: 32 20% 88%;
+    --ring: 262 83% 58%;
 
-    --radius: 0.75rem;
+    --radius: 1rem; /* More modern radius */
 
-    --sidebar-background: 38 25% 90%;
-    --sidebar-foreground: 210 24% 16%;
-    --sidebar-primary: 211 39% 23%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 38 25% 85%;
-    --sidebar-accent-foreground: 210 24% 16%;
-    --sidebar-border: 38 25% 80%;
-    --sidebar-ring: 211 39% 23%;
-
-    /* Emergency theme colors */
-    --emergency-bg: 0 84% 60%;
-    --emergency-fg: 0 0% 100%;
+    /* Chat specific colors */
+    --chat-user-bg: 262 83% 58%;
+    --chat-user-text: 0 0% 98%;
+    --chat-ai-bg: 32 20% 94%;
+    --chat-ai-text: 220 25% 12%;
+    
+    /* Success and info colors */
+    --success: 142 76% 36%;
+    --info: 217 91% 60%;
+    --warning: 38 92% 50%;
   }
 
   .dark {
-    --background: 210 24% 10%;
-    --foreground: 210 40% 98%;
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
 
-    --card: 210 24% 10%;
-    --card-foreground: 210 40% 98%;
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
 
-    --popover: 210 24% 10%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 213 31% 91%;
 
-    --primary: 211 39% 35%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 263 70% 50%;
+    --primary-foreground: 213 31% 91%;
 
-    --secondary: 210 24% 16%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 215 25% 27%;
+    --secondary-foreground: 213 31% 91%;
 
-    --muted: 210 24% 16%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
 
-    --accent: 210 24% 16%;
+    --accent: 216 34% 17%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 210 24% 16%;
-    --input: 210 24% 16%;
-    --ring: 211 39% 35%;
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+    --ring: 263 70% 50%;
 
-    --sidebar-background: 210 24% 12%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 211 39% 35%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 210 24% 16%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 210 24% 16%;
-    --sidebar-ring: 211 39% 35%;
+    --chat-user-bg: 263 70% 50%;
+    --chat-user-text: 213 31% 91%;
+    --chat-ai-bg: 223 47% 11%;
+    --chat-ai-text: 213 31% 91%;
   }
 }
 
@@ -96,29 +93,211 @@
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  html {
+    /* Mobile-first responsive text */
+    font-size: 16px;
   }
 
-  .emergency-theme {
-    --background: var(--emergency-bg);
-    --foreground: var(--emergency-fg);
-    --primary: var(--emergency-fg);
-    --primary-foreground: var(--emergency-bg);
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+    /* Better mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Improved mobile touch targets */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 
 @layer components {
+  /* Modern Sahara gradient */
   .sahara-gradient {
-    @apply bg-gradient-to-br from-background via-secondary/50 to-muted;
+    @apply bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50;
   }
-  
+
+  /* Modern glass effect */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  /* Enhanced card hover effects */
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.02];
+    @apply transition-all duration-300 ease-out hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1;
+  }
+
+  /* Modern shadows */
+  .soft-shadow {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .strong-shadow {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Chat message styles */
+  .chat-message-user {
+    @apply bg-primary text-primary-foreground rounded-2xl rounded-br-md px-4 py-3 max-w-[85%] ml-auto shadow-lg;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)) 100%);
+  }
+
+  .chat-message-ai {
+    @apply bg-secondary text-secondary-foreground rounded-2xl rounded-bl-md px-4 py-3 max-w-[85%] mr-auto shadow-md;
+    background: linear-gradient(135deg, hsl(var(--chat-ai-bg)) 0%, rgba(255, 255, 255, 0.8) 100%);
+  }
+
+  /* Modern avatar styles */
+  .avatar-user {
+    @apply w-10 h-10 rounded-full flex items-center justify-center shadow-md;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .avatar-ai {
+    @apply w-10 h-10 rounded-full flex items-center justify-center shadow-md;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+
+  /* Modern input styling */
+  .chat-input {
+    @apply rounded-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-purple-100 focus:border-primary focus:ring-0 shadow-lg transition-all duration-200;
+  }
+
+  /* Quick start question cards */
+  .quick-start-card {
+    @apply bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-100 rounded-2xl p-4 transition-all duration-200 hover:shadow-lg hover:scale-105 active:scale-95;
+  }
+
+  /* Modern button styles */
+  .btn-primary {
+    @apply bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full px-6 py-3 font-medium shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-white/80 backdrop-blur-sm border border-purple-200 text-purple-700 rounded-full px-6 py-3 font-medium shadow-md transition-all duration-200 hover:shadow-lg hover:scale-105 active:scale-95;
+  }
+
+  /* Enhanced mobile navigation */
+  .mobile-nav-item {
+    @apply flex flex-col items-center justify-center py-2 px-1 rounded-xl transition-all duration-200 min-h-[60px];
+  }
+
+  .mobile-nav-item.active {
+    @apply bg-gradient-to-t from-purple-100 to-pink-100 text-primary shadow-md;
+  }
+
+  /* Modern typing indicator */
+  .typing-dot {
+    @apply w-2 h-2 bg-purple-400 rounded-full animate-pulse;
+    animation: typing 1.4s infinite ease-in-out;
+  }
+
+  .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+  .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+  .typing-dot:nth-child(3) { animation-delay: 0s; }
+
+  /* Smooth page transitions */
+  .page-enter {
+    @apply opacity-0 translate-y-4;
+  }
+
+  .page-enter-active {
+    @apply opacity-100 translate-y-0 transition-all duration-300 ease-out;
+  }
+
+  /* Emergency button styling */
+  .emergency-btn {
+    @apply bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-full px-4 py-2 font-semibold shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 active:scale-95;
+  }
+}
+
+@layer utilities {
+  /* Mobile-specific utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Animation utilities */
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.3s ease-out;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s ease-out;
+  }
+}
+
+/* Custom animations */
+@keyframes typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile-first responsive design */
+@media (max-width: 768px) {
+  .container {
+    @apply px-4;
   }
   
-  .soft-shadow {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  }
+  /* Optimize text sizes for mobile */
+  h1 { @apply text-2xl; }
+  h2 { @apply text-xl; }
+  h3 { @apply text-lg; }
 }

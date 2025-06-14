@@ -18,20 +18,28 @@ export function MobileNav() {
   const isActive = (path: string) => currentPath === path;
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-t border-border/40">
+    <nav className="glass-effect border-t border-white/20 shadow-2xl">
       <div className="grid grid-cols-6 gap-1 p-2">
         {mobileNavItems.map((item) => (
           <NavLink
             key={item.title}
             to={item.url}
-            className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg transition-colors ${
-              isActive(item.url)
-                ? "bg-primary/10 text-primary"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+            className={`mobile-nav-item touch-manipulation ${
+              isActive(item.url) ? "active" : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <item.icon className="w-5 h-5 mb-1" />
-            <span className="text-xs font-medium">{item.title}</span>
+            <div className={`p-2 rounded-xl transition-all duration-200 ${
+              isActive(item.url) 
+                ? "bg-gradient-to-t from-purple-500 to-pink-500 text-white shadow-lg" 
+                : "hover:bg-white/50"
+            }`}>
+              <item.icon className="w-5 h-5" />
+            </div>
+            <span className={`text-xs font-medium mt-1 ${
+              isActive(item.url) ? "text-primary font-semibold" : ""
+            }`}>
+              {item.title}
+            </span>
           </NavLink>
         ))}
       </div>
