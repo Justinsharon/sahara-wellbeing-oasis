@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,10 +10,10 @@
     --background: 35 36% 95%; /* Ivory #F4F0ED for background */
     --foreground: 210 20% 64%; /* French Blue #88A5BC for text */
 
-    --card: 22 28% 82%; /* Blush #E1C8BC */
+    --card: 80 5% 64%; /* Sage #A1A79E */
     --card-foreground: 210 20% 64%;
 
-    --popover: 22 28% 82%;
+    --popover: 80 5% 64%; /* Sage #A1A79E */
     --popover-foreground: 210 20% 64%;
 
     /* Primary - French Blue */
@@ -25,7 +24,7 @@
     --secondary: 80 5% 64%; /* Sage #A1A79E */
     --secondary-foreground: 35 36% 95%;
 
-    --muted: 22 28% 85%; /* Lighter version of Blush */
+    --muted: 80 5% 70%; /* Lighter version of Sage */
     --muted-foreground: 210 20% 50%;
 
     /* Accent - Sage */
@@ -35,33 +34,33 @@
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 22 28% 75%;
-    --input: 22 28% 80%;
+    --border: 80 5% 60%;
+    --input: 80 5% 70%;
     --ring: 210 20% 64%;
 
     --radius: 2rem;
 
     /* Custom colors for prototype */
     --font-color: #88A5BC; /* French Blue for typography */
-    --box-feature-color: #E1C8BC; /* Blush for rounded boxes */
+    --box-feature-color: #A1A79E; /* Sage for rounded boxes */
     --sage-color: #A1A79E; /* Sage for soft accents */
   }
 
   .dark {
     --background: 210 20% 8%;
     --foreground: 35 36% 95%;
-    --card: 210 20% 10%;
+    --card: 80 5% 20%;
     --card-foreground: 35 36% 95%;
     --primary: 210 20% 50%;
     --primary-foreground: 210 20% 8%;
     --secondary: 80 5% 40%;
     --secondary-foreground: 35 36% 95%;
-    --muted: 210 20% 15%;
+    --muted: 80 5% 25%;
     --muted-foreground: 35 36% 65%;
     --accent: 80 5% 50%;
     --accent-foreground: 35 36% 95%;
-    --border: 210 20% 18%;
-    --input: 210 20% 18%;
+    --border: 80 5% 30%;
+    --input: 80 5% 30%;
     --ring: 210 20% 50%;
   }
 }
@@ -105,9 +104,9 @@
     background-color: #F4F0ED; /* Ivory */
   }
 
-  /* Glass morphism with new colors */
+  /* Glass morphism with Sage */
   .glass-card {
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid rgba(136, 165, 188, 0.2);
@@ -118,7 +117,7 @@
   }
 
   .glass-nav {
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
     border: 1px solid rgba(136, 165, 188, 0.2);
@@ -129,7 +128,7 @@
 
   /* Neomorphic elements */
   .neo-card {
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     box-shadow: 
       20px 20px 40px rgba(136, 165, 188, 0.2),
       -20px -20px 40px rgba(244, 240, 237, 0.1),
@@ -138,7 +137,7 @@
   }
 
   .neo-button {
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     box-shadow: 
       8px 8px 16px rgba(136, 165, 188, 0.15),
       -8px -8px 16px rgba(244, 240, 237, 0.1);
@@ -154,14 +153,14 @@
   /* Modern card designs */
   .insight-card {
     @apply rounded-3xl p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2;
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     backdrop-filter: blur(24px);
     border: 1px solid rgba(136, 165, 188, 0.2);
   }
 
   .metric-card {
     @apply relative overflow-hidden rounded-3xl p-6 transition-all duration-500 hover:scale-105;
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     backdrop-filter: blur(20px);
     border: 1px solid rgba(136, 165, 188, 0.2);
   }
@@ -209,14 +208,14 @@
 
   .btn-secondary-modern {
     @apply rounded-2xl px-8 py-4 font-semibold transition-all duration-300;
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     color: #88A5BC; /* French Blue */
     border: 1px solid rgba(136, 165, 188, 0.2);
   }
 
   .btn-secondary-modern:hover {
     @apply scale-105 -translate-y-0.5;
-    background-color: rgba(225, 200, 188, 0.8);
+    background-color: rgba(161, 167, 158, 0.8);
   }
 
   .btn-accent-modern {
@@ -229,7 +228,7 @@
 
   /* Enhanced Mobile Navigation */
   .enhanced-mobile-nav {
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border-top: 1px solid rgba(136, 165, 188, 0.2);
@@ -279,14 +278,14 @@
   /* Chart enhancements */
   .chart-container {
     @apply rounded-3xl p-6;
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     border: 1px solid rgba(136, 165, 188, 0.2);
   }
 
   /* Loading animations */
   .skeleton-modern {
     @apply animate-pulse rounded-2xl;
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     animation: shimmer 2s infinite ease-in-out;
   }
 
@@ -338,7 +337,7 @@
 
   /* Glass input */
   .glass-input {
-    background-color: #E1C8BC; /* Blush */
+    background-color: #A1A79E; /* Sage */
     backdrop-filter: blur(12px);
     border: 1px solid rgba(136, 165, 188, 0.2);
     color: #88A5BC; /* French Blue */
@@ -380,7 +379,7 @@
 
   /* Custom prototype colors */
   .text-font-color { color: #88A5BC; }
-  .bg-box-feature { background-color: #E1C8BC; }
+  .bg-box-feature { background-color: #A1A79E; } /* Changed from Blush to Sage */
 
   /* Modern animations */
   .animate-float {
