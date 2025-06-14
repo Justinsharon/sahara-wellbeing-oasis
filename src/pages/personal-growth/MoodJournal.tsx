@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Calendar, BookOpen, TrendingUp, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { MoodEntry } from "@/types";
+import { useMoodEntries } from "@/hooks/useMoodEntries";
+import { useState } from "react";
 
 const moodOptions = [
   { value: "very_happy", label: "Very Happy", emoji: "😄", color: "text-green-600" },
@@ -17,62 +17,30 @@ const moodOptions = [
   { value: "very_sad", label: "Very Sad", emoji: "😭", color: "text-red-500" },
 ] as const;
 
-const mockMoodEntries: MoodEntry[] = [
-  {
-    id: "1",
-    user_id: "user1",
-    mood: "happy",
-    notes: "Had a great therapy session today. Feeling optimistic about the future.",
-    date: "2024-06-14",
-    created_at: "2024-06-14T10:00:00Z",
-  },
-  {
-    id: "2",
-    user_id: "user1",
-    mood: "neutral",
-    notes: "Average day, nothing special but not bad either.",
-    date: "2024-06-13",
-    created_at: "2024-06-13T20:00:00Z",
-  },
-  {
-    id: "3",
-    user_id: "user1",
-    mood: "very_happy",
-    notes: "Achieved my meditation goal! Feeling very proud and peaceful.",
-    date: "2024-06-12",
-    created_at: "2024-06-12T18:00:00Z",
-  },
-];
-
 export default function MoodJournal() {
-  const [moodEntries, setMoodEntries] = useState<MoodEntry[]>(mockMoodEntries);
+  const { moodEntries, loading, createMoodEntry } = useMoodEntries();
   const [selectedMood, setSelectedMood] = useState<string>("");
   const [notes, setNotes] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
 
-  const handleSubmitEntry = () => {
+  const handleSubmitEntry = async () => {
     if (!selectedMood) {
       toast.error("Please select your mood");
       return;
     }
 
-    const newEntry: MoodEntry = {
-      id: Date.now().toString(),
-      user_id: "user1",
-      mood: selectedMood as MoodEntry['mood'],
+    const entryData = {
+      mood: selectedMood as any,
       notes: notes.trim(),
       date: currentDate,
-      created_at: new Date().toISOString(),
+      entry_type: 'simple' as const,
     };
 
-    // Remove existing entry for the same date and add new one
-    const updatedEntries = moodEntries.filter(entry => entry.date !== currentDate);
-    setMoodEntries([newEntry, ...updatedEntries]);
+    await createMoodEntry(entryData);
     
     setSelectedMood("");
     setNotes("");
     setCurrentDate(new Date().toISOString().split('T')[0]);
-    toast.success("Mood entry saved successfully!");
   };
 
   const getMoodOption = (mood: string) => {
@@ -87,6 +55,19 @@ export default function MoodJournal() {
     const average = lastWeek.reduce((sum, entry) => sum + moodValues[entry.mood], 0) / lastWeek.length;
     return Math.round(average * 10) / 10;
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen p-4 md:p-6 lg:p-8 pb-20 md:pb-8">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading mood entries...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen p-4 md:p-6 lg:p-8 pb-20 md:pb-8">
@@ -209,7 +190,9 @@ export default function MoodJournal() {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Current Streak</p>
-                  <p className="text-2xl font-bold text-primary">5 days</p>
+                  <p className="text-2xl font-bold text-primary">
+                    {moodEntries.length > 0 ? Math.min(moodEntries.length, 30) : 0} days
+                  </p>
                 </div>
               </div>
             </CardContent>

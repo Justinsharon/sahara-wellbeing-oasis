@@ -1,7 +1,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { CharacterCompanion, CharacterExpression } from '@/types/character';
-import { useMockAuth } from './useMockAuth';
+import { useAuth } from './useAuth';
 
 interface CharacterContextType {
   character: CharacterCompanion | null;
@@ -15,7 +15,7 @@ interface CharacterContextType {
 const CharacterContext = createContext<CharacterContextType | undefined>(undefined);
 
 export function CharacterProvider({ children }: { children: React.ReactNode }) {
-  const { user } = useMockAuth();
+  const { user } = useAuth();
   const [character, setCharacter] = useState<CharacterCompanion | null>(null);
   const [loading, setLoading] = useState(true);
 
