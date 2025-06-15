@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useCharacter } from "@/hooks/useCharacter";
-import { Heart, Sparkles, User } from "lucide-react";
+import { Heart, Sparkles, User, ArrowRight } from "lucide-react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { supabase } from "@/integrations/supabase/client";
 import DashboardTherapyRecommendation from "@/pages/dashboard/DashboardTherapyRecommendation";
