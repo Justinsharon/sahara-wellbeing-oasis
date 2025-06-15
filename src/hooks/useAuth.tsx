@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -167,14 +166,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const resetPassword = async (email: string) => {
-    // Use the correct Lovable preview URL or fallback to window.location.origin
-    const isLovablePreview = window.location.hostname.includes('lovable.app');
-    const redirectUrl = isLovablePreview 
-      ? `${window.location.origin}/auth/reset-password`
-      : `${window.location.origin}/auth/reset-password`;
-    
+    // Always use absolute URL for Supabase redirect
+    const redirectUrl = `${window.location.origin}/auth/reset-password`;
+
     console.log('Reset password redirect URL:', redirectUrl);
-    
+
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: redirectUrl,
     });
