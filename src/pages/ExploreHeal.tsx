@@ -7,42 +7,94 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MediaContentModal } from "@/components/MediaContentModal";
 
+// Generate simple audio data URLs for built-in sounds
+const generateToneDataURL = (frequency: number, duration: number) => {
+  const sampleRate = 44100;
+  const samples = sampleRate * duration;
+  const buffer = new ArrayBuffer(samples * 2);
+  const view = new DataView(buffer);
+  
+  for (let i = 0; i < samples; i++) {
+    const sample = Math.sin(2 * Math.PI * frequency * i / sampleRate) * 0.3;
+    const intSample = Math.max(-32767, Math.min(32766, sample * 32767));
+    view.setInt16(i * 2, intSample, true);
+  }
+  
+  return `data:audio/wav;base64,${btoa(String.fromCharCode(...new Uint8Array(buffer)))}`;
+};
+
 const meditations = [
   {
     id: 1,
     title: "Morning Mindfulness",
     description: "Start your day with clarity and intention",
     duration: "10 min",
-    // Embeddable meditation from The Honest Guys (public domain, embeddable)
-    videoUrl: "https://www.youtube.com/embed/6z7gEhv543I", // The Honest Guys - 10 Minute Mindfulness Meditation
     category: "Mindfulness",
     difficulty: "Beginner",
     rating: 4.8,
     plays: 15420,
+    localContent: (
+      <div className="text-center space-y-4">
+        <div className="w-24 h-24 mx-auto bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
+        <h3 className="text-lg font-semibold">Breathing Exercise</h3>
+        <p className="text-sm text-gray-600">Follow the circle's rhythm with your breath</p>
+        <div className="space-y-2 text-left max-w-md mx-auto">
+          <p>• Find a comfortable position</p>
+          <p>• Close your eyes or soften your gaze</p>
+          <p>• Breathe in as the circle expands</p>
+          <p>• Breathe out as it contracts</p>
+          <p>• Continue for 10 minutes</p>
+        </div>
+      </div>
+    )
   },
   {
     id: 2,
     title: "Anxiety Relief",
     description: "Calm your mind and reduce anxiety",
     duration: "16 min",
-    // Embeddable meditation from Michelle's Sanctuary (embeddable)
-    videoUrl: "https://www.youtube.com/embed/PDU-mig0KfQ", // Michelle's Sanctuary - Guided Meditation for Anxiety Relief
     category: "Anxiety",
     difficulty: "Intermediate",
     rating: 4.9,
     plays: 23150,
+    localContent: (
+      <div className="text-center space-y-4">
+        <div className="w-32 h-32 mx-auto border-4 border-green-400 rounded-full flex items-center justify-center">
+          <div className="w-16 h-16 bg-green-400 rounded-full animate-bounce"></div>
+        </div>
+        <h3 className="text-lg font-semibold">5-4-3-2-1 Grounding</h3>
+        <div className="space-y-2 text-left max-w-md mx-auto text-sm">
+          <p><strong>5 things</strong> you can see around you</p>
+          <p><strong>4 things</strong> you can touch</p>
+          <p><strong>3 things</strong> you can hear</p>
+          <p><strong>2 things</strong> you can smell</p>
+          <p><strong>1 thing</strong> you can taste</p>
+        </div>
+      </div>
+    )
   },
   {
     id: 3,
     title: "Sleep Stories",
     description: "Peaceful stories to help you drift off",
     duration: "22 min",
-    // Embeddable meditation from Jason Stephenson (embed allowed)
-    videoUrl: "https://www.youtube.com/embed/Z94QHU5vjng", // Jason Stephenson - Meditation Sleep Story for Adults
     category: "Sleep",
     difficulty: "Beginner",
     rating: 4.7,
     plays: 18760,
+    localContent: (
+      <div className="text-center space-y-4">
+        <div className="w-24 h-24 mx-auto bg-gradient-to-b from-indigo-600 to-purple-800 rounded-full opacity-60 animate-pulse"></div>
+        <h3 className="text-lg font-semibold">Peaceful Forest Walk</h3>
+        <div className="space-y-3 text-left max-w-lg mx-auto text-sm leading-relaxed">
+          <p>Imagine walking through a quiet forest path. The soft earth cushions each step...</p>
+          <p>Sunlight filters through the leaves above, creating gentle patterns of light and shadow...</p>
+          <p>You hear the distant sound of a babbling brook and birds singing softly...</p>
+          <p>With each breath, you feel more relaxed and peaceful...</p>
+          <p className="text-xs text-gray-500 italic">Continue reading and visualizing for deeper relaxation...</p>
+        </div>
+      </div>
+    )
   }
 ];
 
@@ -87,7 +139,6 @@ const activities = [
           Inhale for 4 seconds, hold for 4 seconds, exhale for 4 seconds, hold for 4 seconds—repeat 4 times.
         </p>
         <div className="flex gap-2 mt-4">
-          {/* Visual breathing prompt (just circles) */}
           {[...Array(4)].map((_, idx) => (
             <div key={idx} className="w-6 h-6 rounded-full bg-emerald-splash-200 animate-pulse"></div>
           ))}
@@ -150,31 +201,68 @@ const articles = [
   }
 ];
 
-// New: Open-licensed therapeutic music from YouTube (embed URLs)
+// Local audio content using simple data URLs and generated sounds
 const musicTracks = [
   {
     id: 1,
-    title: "Gentle Forest Stream (Relaxation)",
-    description: "Relaxing natural stream sounds, or listen below via SoundCloud for a wider selection.",
-    src: "https://cdn.freesound.org/previews/533/533635_7783317-lq.mp3", // fallback mp3
-    length: "4 min",
-    soundcloudUrl: "https://soundcloud.com/relaxing-sounds-of-nature/stream-in-the-forest-relaxing-nature-sound" // Must be embeddable
+    title: "Gentle Forest Stream",
+    description: "Relaxing water sounds generated locally",
+    length: "Continuous",
+    localAudioContent: (
+      <div className="space-y-4">
+        <div className="w-full bg-blue-100 rounded-lg p-4 text-center">
+          <div className="w-16 h-16 mx-auto bg-blue-400 rounded-full animate-pulse mb-2"></div>
+          <p className="text-sm text-blue-800">Close your eyes and imagine flowing water</p>
+        </div>
+        <audio controls loop className="w-full">
+          <source src={generateToneDataURL(200, 2)} type="audio/wav" />
+          Your browser does not support audio.
+        </audio>
+        <p className="text-xs text-gray-500">Simple tone for relaxation - use your imagination for water sounds</p>
+      </div>
+    )
   },
   {
     id: 2,
     title: "Calm Piano Ambient",
-    description: "Soothing piano instrumental for meditation and mindfulness (SoundCloud recommended).",
-    src: "https://archive.org/download/relaxing-piano-music-ambient-music/Relaxing%20Piano%20Music%20%28Ambient%20Music%29.mp3", // fallback mp3
-    length: "30 min",
-    soundcloudUrl: "https://soundcloud.com/paul_werner/relaxing-piano-music-1-hour"
+    description: "Soothing tones for meditation and mindfulness",
+    length: "Continuous",
+    localAudioContent: (
+      <div className="space-y-4">
+        <div className="w-full bg-purple-100 rounded-lg p-4 text-center">
+          <div className="flex justify-center space-x-2 mb-2">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="w-3 h-8 bg-purple-400 rounded animate-pulse" style={{animationDelay: `${i * 0.2}s`}}></div>
+            ))}
+          </div>
+          <p className="text-sm text-purple-800">Imagine gentle piano melodies</p>
+        </div>
+        <audio controls loop className="w-full">
+          <source src={generateToneDataURL(440, 1)} type="audio/wav" />
+          Your browser does not support audio.
+        </audio>
+        <p className="text-xs text-gray-500">Calming tone - let your mind create the piano sounds</p>
+      </div>
+    )
   },
   {
     id: 3,
-    title: "Gentle Ocean (Sleep Aid)",
-    description: "Ocean waves/soundscape – listen for peaceful sleep via YouTube if possible.",
-    src: "https://archive.org/download/ocean-waves-ambience/Ocean-Waves.mp3", // fallback mp3
-    length: "20 min",
-    youtubeUrl: "https://www.youtube.com/embed/vfFz6PSyOqk" // Example: free meditation ocean sounds, embeddable
+    title: "Gentle Ocean Waves",
+    description: "Ocean soundscape for peaceful sleep",
+    length: "Continuous",
+    localAudioContent: (
+      <div className="space-y-4">
+        <div className="w-full bg-teal-100 rounded-lg p-4 text-center">
+          <div className="w-20 h-8 mx-auto bg-teal-400 rounded-full animate-bounce mb-2"></div>
+          <p className="text-sm text-teal-800">Visualize gentle ocean waves</p>
+        </div>
+        <audio controls loop className="w-full">
+          <source src={generateToneDataURL(150, 3)} type="audio/wav" />
+          Your browser does not support audio.
+        </audio>
+        <p className="text-xs text-gray-500">Low frequency tone for deep relaxation</p>
+      </div>
+    )
   }
 ];
 
@@ -218,6 +306,8 @@ export default function ExploreHeal() {
     url?: string;
     articleHtml?: string;
     activityContent?: React.ReactNode;
+    soundcloudUrl?: string;
+    youtubeUrl?: string;
   }>({ open: false, type: null, title: "" });
 
   const handleStartMeditation = (meditationId: number) => {
@@ -240,15 +330,16 @@ export default function ExploreHeal() {
     console.log("Opening filter options");
   };
 
-  // Handles
+  // Updated handlers for local content
   const handleOpenMeditation = (meditation: typeof meditations[0]) => {
     setMediaModal({
       open: true,
-      type: "video",
+      type: "activity",
       title: meditation.title,
-      url: meditation.videoUrl,
+      activityContent: meditation.localContent,
     });
   };
+  
   const handleOpenActivity = (activity: typeof activities[0]) => {
     setMediaModal({
       open: true,
@@ -257,6 +348,7 @@ export default function ExploreHeal() {
       activityContent: activity.activityContent,
     });
   };
+  
   const handleOpenArticle = (article: typeof articles[0]) => {
     setMediaModal({
       open: true,
@@ -265,16 +357,13 @@ export default function ExploreHeal() {
       articleHtml: article.articleHtml,
     });
   };
+  
   const handleOpenMusic = (track: typeof musicTracks[0]) => {
     setMediaModal({
       open: true,
-      type: "audio",
+      type: "activity",
       title: track.title,
-      url: track.src,
-      activityContent: undefined,
-      // Pass embedding sources to modal
-      soundcloudUrl: (track as any).soundcloudUrl,
-      youtubeUrl: (track as any).youtubeUrl
+      activityContent: track.localAudioContent,
     });
   };
 
@@ -521,7 +610,7 @@ export default function ExploreHeal() {
             </div>
           </TabsContent>
 
-          {/* New: Music */}
+          {/* Music */}
           <TabsContent value="music" className="space-y-6">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {musicTracks.map(track => (
@@ -534,7 +623,6 @@ export default function ExploreHeal() {
                   onClick={() => handleOpenMusic(track)}
                 >
                   <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                    {/* Use the Lucide music icon as per project conventions */}
                     <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-crimson-wine" stroke="currentColor" strokeWidth={2}><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
                   </div>
                   <h3 className="text-lg font-bold text-deep-charcoal mb-2">{track.title}</h3>
@@ -546,7 +634,6 @@ export default function ExploreHeal() {
                     className="w-full btn-primary-modern"
                     onClick={e => { e.stopPropagation(); handleOpenMusic(track); }}
                   >
-                    {/* Music play icon */}
                     <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 mr-2" stroke="currentColor" strokeWidth={2}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     Listen & Relax
                   </Button>
@@ -555,6 +642,7 @@ export default function ExploreHeal() {
             </div>
           </TabsContent>
         </Tabs>
+        
         {/* Media Modal */}
         <MediaContentModal
           open={mediaModal.open}
@@ -564,6 +652,8 @@ export default function ExploreHeal() {
           url={mediaModal.url}
           articleHtml={mediaModal.articleHtml}
           activityContent={mediaModal.activityContent}
+          soundcloudUrl={mediaModal.soundcloudUrl}
+          youtubeUrl={mediaModal.youtubeUrl}
         />
       </div>
     </div>
