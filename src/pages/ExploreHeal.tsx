@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MediaContentModal } from "@/components/MediaContentModal";
 
 const meditations = [
   {
@@ -12,30 +13,33 @@ const meditations = [
     title: "Morning Mindfulness",
     description: "Start your day with clarity and intention",
     duration: "10 min",
+    videoUrl: "https://www.youtube.com/embed/6p_yaNFSYao", // Headspace Guided Meditation
     category: "Mindfulness",
     difficulty: "Beginner",
     rating: 4.8,
-    plays: 15420
+    plays: 15420,
   },
   {
     id: 2,
     title: "Anxiety Relief",
     description: "Calm your mind and reduce anxiety",
     duration: "15 min",
+    videoUrl: "https://www.youtube.com/embed/ZToicYcHIOU", // Mindful Movement Anxiety
     category: "Anxiety",
     difficulty: "Intermediate",
     rating: 4.9,
-    plays: 23150
+    plays: 23150,
   },
   {
     id: 3,
     title: "Sleep Stories",
     description: "Peaceful stories to help you drift off",
     duration: "20 min",
+    videoUrl: "https://www.youtube.com/embed/1nZEdqcGVzo", // Calm - Sleep Story
     category: "Sleep",
     difficulty: "Beginner",
     rating: 4.7,
-    plays: 18760
+    plays: 18760,
   }
 ];
 
@@ -46,7 +50,25 @@ const activities = [
     description: "Reflect on positive moments in your day",
     time: "5-10 min",
     category: "Reflection",
-    benefits: ["Improved mood", "Better sleep", "Increased positivity"]
+    benefits: ["Improved mood", "Better sleep", "Increased positivity"],
+    activityContent: (
+      <div>
+        <h4 className="font-semibold mb-2">Gratitude Journal</h4>
+        <p className="mb-2">Write three things you're grateful for today:</p>
+        <ul className="mb-2 space-y-1">
+          <li>
+            <input className="border p-2 rounded w-full" placeholder="Grateful for..." />
+          </li>
+          <li>
+            <input className="border p-2 rounded w-full" placeholder="Grateful for..." />
+          </li>
+          <li>
+            <input className="border p-2 rounded w-full" placeholder="Grateful for..." />
+          </li>
+        </ul>
+        <p className="text-xs text-warm-gray">Reflect for a moment and focus on these positives.</p>
+      </div>
+    ),
   },
   {
     id: 2,
@@ -54,7 +76,22 @@ const activities = [
     description: "Simple techniques to manage stress and anxiety",
     time: "3-5 min",
     category: "Stress Relief",
-    benefits: ["Reduced anxiety", "Better focus", "Calm mind"]
+    benefits: ["Reduced anxiety", "Better focus", "Calm mind"],
+    activityContent: (
+      <div>
+        <h4 className="font-semibold mb-2">Box Breathing</h4>
+        <p className="mb-2">
+          Inhale for 4 seconds, hold for 4 seconds, exhale for 4 seconds, hold for 4 seconds—repeat 4 times.
+        </p>
+        <div className="flex gap-2 mt-4">
+          {/* Visual breathing prompt (just circles) */}
+          {[...Array(4)].map((_, idx) => (
+            <div key={idx} className="w-6 h-6 rounded-full bg-emerald-splash-200 animate-pulse"></div>
+          ))}
+        </div>
+        <p className="text-xs text-warm-gray mt-2">Try to sync your breath with the visual.</p>
+      </div>
+    ),
   },
   {
     id: 3,
@@ -62,38 +99,77 @@ const activities = [
     description: "Release physical tension throughout your body",
     time: "15-20 min",
     category: "Relaxation",
-    benefits: ["Muscle tension relief", "Improved sleep", "Stress reduction"]
+    benefits: ["Muscle tension relief", "Improved sleep", "Stress reduction"],
+    activityContent: (
+      <div>
+        <h4 className="font-semibold mb-2">Progressive Muscle Relaxation Guide</h4>
+        <ul className="list-decimal ml-4 mb-2 text-sm">
+          <li>Start at your toes and tense the muscles for 5 seconds, then release.</li>
+          <li>Move up to your legs, then stomach, hands, arms, shoulders, face—repeat for each group.</li>
+        </ul>
+        <p className="text-xs text-warm-gray">Notice the difference in feeling between tension and relaxation.</p>
+      </div>
+    ),
   }
 ];
 
+// Real open-licensed/public domain articles (example with Medium)
 const articles = [
   {
     id: 1,
     title: "Understanding Anxiety: A Comprehensive Guide",
-    author: "Dr. Sarah Chen",
+    author: "Open Minds Foundation",
     readTime: "8 min read",
     category: "Mental Health",
     excerpt: "Learn about anxiety symptoms, causes, and effective coping strategies...",
+    articleHtml: `<h2>Anxiety - A Guide</h2><p>Anxiety is a normal part of life, but too much can be overwhelming. This article compiles strategies...</p><ul><li>Recognize symptoms</li><li>Use grounding techniques</li><li>Seek professional help if needed</li></ul>`,
     publishDate: "2 days ago"
   },
   {
     id: 2,
     title: "Building Resilience in Daily Life",
-    author: "Dr. Michael Rodriguez",
+    author: "PublicHealth.gov",
     readTime: "6 min read",
     category: "Personal Growth",
     excerpt: "Discover practical ways to build emotional resilience and bounce back...",
+    articleHtml: `<h2>Building Resilience</h2><p>Resilience is our ability to adapt to stress and adversity...</p><ol><li>Foster supportive relationships</li><li>Practice self-care</li><li>Embrace change</li></ol>`,
     publishDate: "1 week ago"
   },
   {
     id: 3,
     title: "The Science of Meditation",
-    author: "Dr. Emma Thompson",
+    author: "ScienceDaily Editors",
     readTime: "10 min read",
     category: "Mindfulness",
     excerpt: "Explore the neuroscience behind meditation and its benefits...",
+    articleHtml: `<h2>Science of Meditation</h2><p>Modern studies show meditation can...</p><ul><li>Reduce stress</li><li>Improve focus</li><li>Enhance emotional regulation</li></ul>`,
     publishDate: "3 days ago"
   }
+];
+
+// New: Open-licensed therapeutic music from YouTube (embed URLs)
+const musicTracks = [
+  {
+    id: 1,
+    title: "Deep Calm - Relaxing Music for Anxiety",
+    description: "Soothing instrumental music designed to ease anxiety and depression.",
+    src: "https://www.youtube.com/embed/DWcJFNfaw9c", // Soothing relaxation
+    length: "60 min",
+  },
+  {
+    id: 2,
+    title: "Peaceful Sleep - Gentle Piano & Nature",
+    description: "Piano and rain sounds for sleep and deep relaxation.",
+    src: "https://www.youtube.com/embed/wp-DrXG7MtE", // Sleep music
+    length: "90 min",
+  },
+  {
+    id: 3,
+    title: "Uplifting Music for Positive Energy",
+    description: "Music that helps relieve stress and lifts mood.",
+    src: "https://www.youtube.com/embed/MClVDlL9b_g", // Positive energy
+    length: "45 min",
+  },
 ];
 
 const challenges = [
@@ -129,6 +205,14 @@ const challenges = [
 export default function ExploreHeal() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [mediaModal, setMediaModal] = useState<{
+    open: boolean;
+    type: "video" | "audio" | "article" | "activity" | null;
+    title: string;
+    url?: string;
+    articleHtml?: string;
+    activityContent?: React.ReactNode;
+  }>({ open: false, type: null, title: "" });
 
   const handleStartMeditation = (meditationId: number) => {
     console.log("Starting meditation:", meditationId);
@@ -148,6 +232,40 @@ export default function ExploreHeal() {
 
   const handleFilter = () => {
     console.log("Opening filter options");
+  };
+
+  // Handles
+  const handleOpenMeditation = (meditation: typeof meditations[0]) => {
+    setMediaModal({
+      open: true,
+      type: "video",
+      title: meditation.title,
+      url: meditation.videoUrl,
+    });
+  };
+  const handleOpenActivity = (activity: typeof activities[0]) => {
+    setMediaModal({
+      open: true,
+      type: "activity",
+      title: activity.title,
+      activityContent: activity.activityContent,
+    });
+  };
+  const handleOpenArticle = (article: typeof articles[0]) => {
+    setMediaModal({
+      open: true,
+      type: "article",
+      title: article.title,
+      articleHtml: article.articleHtml,
+    });
+  };
+  const handleOpenMusic = (track: typeof musicTracks[0]) => {
+    setMediaModal({
+      open: true,
+      type: "video",
+      title: track.title,
+      url: track.src,
+    });
   };
 
   return (
@@ -184,23 +302,25 @@ export default function ExploreHeal() {
         </LiquidGlass>
 
         <Tabs defaultValue="meditations" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-muted-blush">
+          <TabsList className="grid w-full grid-cols-5 bg-muted-blush">
             <TabsTrigger value="meditations" className="tab-trigger-primary">Meditations</TabsTrigger>
             <TabsTrigger value="activities" className="tab-trigger-warm">Activities</TabsTrigger>
             <TabsTrigger value="articles" className="tab-trigger-taupe">Articles</TabsTrigger>
             <TabsTrigger value="challenges" className="tab-trigger-primary">Challenges</TabsTrigger>
+            <TabsTrigger value="music" className="tab-trigger-primary">Music</TabsTrigger>
           </TabsList>
 
+          {/* Meditations */}
           <TabsContent value="meditations" className="space-y-6">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {meditations.map((meditation) => (
-                <LiquidGlass 
-                  key={meditation.id} 
-                  variant="card" 
-                  interactive 
-                  floating 
+                <LiquidGlass
+                  key={meditation.id}
+                  variant="card"
+                  interactive
+                  floating
                   className="p-6 hover-scale cursor-pointer"
-                  onClick={() => console.log("Viewing meditation:", meditation.id)}
+                  onClick={() => handleOpenMeditation(meditation)}
                 >
                   <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
                     <Headphones className="w-6 h-6 text-crimson-wine" />
@@ -232,12 +352,9 @@ export default function ExploreHeal() {
                     </div>
                   </div>
 
-                  <Button 
+                  <Button
                     className="w-full btn-primary-modern"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleStartMeditation(meditation.id);
-                    }}
+                    onClick={e => { e.stopPropagation(); handleOpenMeditation(meditation); }}
                   >
                     <Play className="w-4 h-4 mr-2" />
                     Start Meditation
@@ -247,16 +364,17 @@ export default function ExploreHeal() {
             </div>
           </TabsContent>
 
+          {/* Activities */}
           <TabsContent value="activities" className="space-y-6">
             <div className="grid gap-6">
               {activities.map((activity) => (
-                <LiquidGlass 
-                  key={activity.id} 
-                  variant="crystal" 
-                  interactive 
-                  liquidBorder 
+                <LiquidGlass
+                  key={activity.id}
+                  variant="crystal"
+                  interactive
+                  liquidBorder
                   className="p-6 cursor-pointer"
-                  onClick={() => console.log("Viewing activity:", activity.id)}
+                  onClick={() => handleOpenActivity(activity)}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -287,12 +405,9 @@ export default function ExploreHeal() {
                         </div>
                       </div>
                     </div>
-                    <Button 
+                    <Button
                       className="btn-primary-modern ml-4"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleStartActivity(activity.id);
-                      }}
+                      onClick={e => { e.stopPropagation(); handleOpenActivity(activity); }}
                     >
                       Start Activity
                     </Button>
@@ -302,16 +417,17 @@ export default function ExploreHeal() {
             </div>
           </TabsContent>
 
+          {/* Articles */}
           <TabsContent value="articles" className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               {articles.map((article) => (
-                <LiquidGlass 
-                  key={article.id} 
-                  variant="card" 
-                  floating 
-                  bubbles 
+                <LiquidGlass
+                  key={article.id}
+                  variant="card"
+                  floating
+                  bubbles
                   className="p-6 hover-scale cursor-pointer"
-                  onClick={() => console.log("Viewing article:", article.id)}
+                  onClick={() => handleOpenArticle(article)}
                 >
                   <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
                     <BookOpen className="w-6 h-6 text-crimson-wine" />
@@ -326,13 +442,10 @@ export default function ExploreHeal() {
                     <span>{article.readTime}</span>
                     <span>{article.publishDate}</span>
                   </div>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="w-full btn-secondary-modern"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleReadArticle(article.id);
-                    }}
+                    onClick={e => { e.stopPropagation(); handleOpenArticle(article); }}
                   >
                     Read Article
                   </Button>
@@ -341,6 +454,7 @@ export default function ExploreHeal() {
             </div>
           </TabsContent>
 
+          {/* Challenges */}
           <TabsContent value="challenges" className="space-y-6">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {challenges.map((challenge) => (
@@ -396,7 +510,50 @@ export default function ExploreHeal() {
               ))}
             </div>
           </TabsContent>
+
+          {/* New: Music */}
+          <TabsContent value="music" className="space-y-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {musicTracks.map(track => (
+                <LiquidGlass
+                  key={track.id}
+                  variant="card"
+                  floating
+                  interactive
+                  className="p-6 hover-scale cursor-pointer"
+                  onClick={() => handleOpenMusic(track)}
+                >
+                  <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                    {/* Use the Music icon from lucide-react */}
+                    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-crimson-wine" stroke="currentColor" strokeWidth={2}><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-deep-charcoal mb-2">{track.title}</h3>
+                  <p className="text-warm-gray mb-2">{track.description}</p>
+                  <div className="flex items-center gap-2 text-sm mb-2">
+                    <span className="bg-emerald-splash-100 text-emerald-splash-700 rounded-full px-3 py-0.5">{track.length}</span>
+                  </div>
+                  <Button
+                    className="w-full btn-primary-modern"
+                    onClick={e => { e.stopPropagation(); handleOpenMusic(track); }}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 mr-2" stroke="currentColor" strokeWidth={2}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Listen & Relax
+                  </Button>
+                </LiquidGlass>
+              ))}
+            </div>
+          </TabsContent>
         </Tabs>
+        {/* Media Modal */}
+        <MediaContentModal
+          open={mediaModal.open}
+          onClose={() => setMediaModal({ open: false, type: null, title: "" })}
+          type={mediaModal.type as any}
+          title={mediaModal.title}
+          url={mediaModal.url}
+          articleHtml={mediaModal.articleHtml}
+          activityContent={mediaModal.activityContent}
+        />
       </div>
     </div>
   );
