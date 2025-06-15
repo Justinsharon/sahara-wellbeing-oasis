@@ -155,26 +155,26 @@ const musicTracks = [
   {
     id: 1,
     title: "Gentle Forest Stream (Relaxation)",
-    description: "Relaxing natural stream sounds for stress relief and deep relaxation. (from Freesound, Creative Commons 0)",
-    // CC0 Freesound.org (https://freesound.org/people/priesmeyer/sounds/533635/)
-    src: "https://cdn.freesound.org/previews/533/533635_7783317-lq.mp3",
-    length: "4 min"
+    description: "Relaxing natural stream sounds, or listen below via SoundCloud for a wider selection.",
+    src: "https://cdn.freesound.org/previews/533/533635_7783317-lq.mp3", // fallback mp3
+    length: "4 min",
+    soundcloudUrl: "https://soundcloud.com/relaxing-sounds-of-nature/stream-in-the-forest-relaxing-nature-sound" // Must be embeddable
   },
   {
     id: 2,
     title: "Calm Piano Ambient",
-    description: "Soothing piano instrumental for meditation and mindfulness. (from Internet Archive, no copyright restrictions)",
-    // https://archive.org/details/relaxing-piano-music-ambient-music
-    src: "https://archive.org/download/relaxing-piano-music-ambient-music/Relaxing%20Piano%20Music%20%28Ambient%20Music%29.mp3",
-    length: "30 min"
+    description: "Soothing piano instrumental for meditation and mindfulness (SoundCloud recommended).",
+    src: "https://archive.org/download/relaxing-piano-music-ambient-music/Relaxing%20Piano%20Music%20%28Ambient%20Music%29.mp3", // fallback mp3
+    length: "30 min",
+    soundcloudUrl: "https://soundcloud.com/paul_werner/relaxing-piano-music-1-hour"
   },
   {
     id: 3,
     title: "Gentle Ocean (Sleep Aid)",
-    description: "Ocean waves to help you sleep. (Internet Archive, public domain)",
-    // https://archive.org/details/ocean-waves-ambience/Ocean-Waves.mp3
-    src: "https://archive.org/download/ocean-waves-ambience/Ocean-Waves.mp3",
-    length: "20 min"
+    description: "Ocean waves/soundscape – listen for peaceful sleep via YouTube if possible.",
+    src: "https://archive.org/download/ocean-waves-ambience/Ocean-Waves.mp3", // fallback mp3
+    length: "20 min",
+    youtubeUrl: "https://www.youtube.com/embed/vfFz6PSyOqk" // Example: free meditation ocean sounds, embeddable
   }
 ];
 
@@ -271,6 +271,10 @@ export default function ExploreHeal() {
       type: "audio",
       title: track.title,
       url: track.src,
+      activityContent: undefined,
+      // Pass embedding sources to modal
+      soundcloudUrl: (track as any).soundcloudUrl,
+      youtubeUrl: (track as any).youtubeUrl
     });
   };
 
