@@ -39,12 +39,12 @@ const Index = () => {
     return (
       <div className="min-h-screen wellness-gradient">
         <div className="container mx-auto px-4 py-8 space-y-8">
-          {/* Dashboard Header - match Therapy Page style */}
+          {/* Dashboard Header - Therapy style */}
           <LiquidGlass variant="card" floating bubbles className="text-center p-8">
             <div className="w-16 h-16 bg-crimson-wine rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
               <User className="w-8 h-8 text-off-white" />
             </div>
-            {/* Heading - exact match: text-4xl font-bold heading-gradient mb-4 */}
+            {/* Main Page Title */}
             <h1 className="text-4xl font-bold heading-gradient mb-4">
               Welcome back, {user.full_name || user.email?.split("@")[0] || "Friend"}!
             </h1>
@@ -55,16 +55,27 @@ const Index = () => {
           </LiquidGlass>
           <div className="space-y-8">
             {/* Top Recommendation */}
-            <DashboardTherapyRecommendation
-              recommendations={therapyRecommendations}
-              loading={loading}
-              character={character}
-            />
+            <section aria-label="Preferred Approach" className="bg-transparent">
+              {/* Section header */}
+              <h2 className="text-2xl font-bold text-crimson-wine mb-6 mt-4 text-left md:text-center font-afacad">
+                Your Preferred Approach
+              </h2>
+              <DashboardTherapyRecommendation
+                recommendations={therapyRecommendations}
+                loading={loading}
+                character={character}
+              />
+            </section>
             {/* Suggestions as Cards */}
-            <DashboardSuggestionCards
-              user={user}
-              therapyRecommendations={therapyRecommendations}
-            />
+            <section aria-label="Personalized Suggestions" className="bg-transparent">
+              <h2 className="text-2xl font-bold text-crimson-wine mb-6 mt-10 text-left md:text-center font-afacad">
+                Personalized Suggestions
+              </h2>
+              <DashboardSuggestionCards
+                user={user}
+                therapyRecommendations={therapyRecommendations}
+              />
+            </section>
           </div>
         </div>
       </div>
@@ -90,7 +101,7 @@ const Index = () => {
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
               </div>
-              {/* Main Title - exact match: text-4xl font-bold heading-gradient mb-4 */}
+              {/* Main Title - therapy page style */}
               <h1 className="text-4xl font-bold heading-gradient mb-4">
                 Welcome to Sahara
               </h1>
@@ -106,7 +117,7 @@ const Index = () => {
                   <Button
                     asChild
                     size="lg"
-                    className="w-full bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold"
+                    className="w-full bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold font-afacad"
                   >
                     <Link to="/auth" className="flex items-center justify-center gap-3">
                       Get Started
@@ -117,7 +128,7 @@ const Index = () => {
                     variant="outline"
                     size="lg"
                     asChild
-                    className="w-full bg-white hover:bg-muted-blush text-crimson-wine border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg"
+                    className="w-full bg-white hover:bg-muted-blush text-crimson-wine border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg font-afacad"
                   >
                     <Link to="/auth">
                       Sign In
@@ -129,7 +140,7 @@ const Index = () => {
                   <Button
                     asChild
                     size="lg"
-                    className="w-full bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold"
+                    className="w-full bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold font-afacad"
                   >
                     <Link to="/personal-growth" className="flex items-center justify-center gap-3">
                       Continue Your Journey
@@ -140,7 +151,7 @@ const Index = () => {
                     variant="outline"
                     size="lg"
                     asChild
-                    className="w-full bg-white hover:bg-muted-blush text-crimson-wine border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg"
+                    className="w-full bg-white hover:bg-muted-blush text-crimson-wine border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg font-afacad"
                   >
                     <Link to="/personal-growth/unified-mood-journal">
                       Track Your Mood
@@ -149,20 +160,20 @@ const Index = () => {
                 </>
               )}
             </div>
-            {/* Trust indicators - same font/caps/color system as Therapy page */}
+            {/* Trust indicators - font/caps/color as Therapy page */}
             <div className="mt-10 pt-8 border-t border-gray-200/50">
               <div className="flex flex-wrap items-center justify-center gap-8">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse"></div>
-                  <span className="text-sm font-bold text-crimson-wine">Licensed Therapists</span>
+                  <span className="text-sm font-bold text-crimson-wine uppercase tracking-wide font-afacad">Licensed Therapists</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                  <span className="text-sm font-bold text-crimson-wine">24/7 Support</span>
+                  <span className="text-sm font-bold text-crimson-wine uppercase tracking-wide font-afacad">24/7 Support</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '1s' }}></div>
-                  <span className="text-sm font-bold text-crimson-wine">Privacy Protected</span>
+                  <span className="text-sm font-bold text-crimson-wine uppercase tracking-wide font-afacad">Privacy Protected</span>
                 </div>
               </div>
             </div>
@@ -174,3 +185,4 @@ const Index = () => {
 };
 
 export default Index;
+
