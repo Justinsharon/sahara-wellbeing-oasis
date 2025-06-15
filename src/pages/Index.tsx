@@ -48,9 +48,9 @@ const Index = () => {
                   Welcome to Sahara
                 </h1>
                 
-                {/* Main Tagline with Enhanced Visibility */}
+                {/* Main Tagline with White Text */}
                 <div className="bg-white/98 backdrop-blur-sm rounded-2xl p-6 shadow-inner border border-gray-200/50">
-                  <p className="text-lg md:text-xl lg:text-2xl text-black leading-relaxed font-semibold">
+                  <p className="text-lg md:text-xl lg:text-2xl text-white leading-relaxed font-semibold">
                     Your personal wellness companion is here to support your mental health journey
                   </p>
                 </div>
