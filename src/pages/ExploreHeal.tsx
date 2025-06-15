@@ -151,24 +151,24 @@ const articles = [
 const musicTracks = [
   {
     id: 1,
-    title: "Deep Calm - Relaxing Music for Anxiety",
-    description: "Soothing instrumental music designed to ease anxiety and depression.",
-    src: "https://www.youtube.com/embed/DWcJFNfaw9c", // Soothing relaxation
+    title: "Anxiety Relief - Healing Meditation Music",
+    description: "Gentle, calming music to reduce anxiety and promote inner peace. (Open licensed by Meditation Relax Music)",
+    src: "https://www.youtube.com/embed/DWcJFNfaw9c", // Meditation Relax Music - embeddable
     length: "60 min",
   },
   {
     id: 2,
-    title: "Peaceful Sleep - Gentle Piano & Nature",
-    description: "Piano and rain sounds for sleep and deep relaxation.",
-    src: "https://www.youtube.com/embed/wp-DrXG7MtE", // Sleep music
-    length: "90 min",
+    title: "Depression & Stress Relief - 528Hz Positive Energy",
+    description: "Uplifting frequency music for mood improvement and stress relief. (Open licensed by PowerThoughts Meditation Club)",
+    src: "https://www.youtube.com/embed/GnJpRB7eAuw", // PowerThoughts Meditation Club - embeddable
+    length: "3 hours",
   },
   {
     id: 3,
-    title: "Uplifting Music for Positive Energy",
-    description: "Music that helps relieve stress and lifts mood.",
-    src: "https://www.youtube.com/embed/MClVDlL9b_g", // Positive energy
-    length: "45 min",
+    title: "Sleep Healing - Deep Relaxation Music",
+    description: "Soothing sleep music for relaxation, healing, and calm. (Embeddable from Soothing Relaxation)",
+    src: "https://www.youtube.com/embed/M1W8mGZF8kk", // Soothing Relaxation - embeddable
+    length: "2 hours",
   },
 ];
 
