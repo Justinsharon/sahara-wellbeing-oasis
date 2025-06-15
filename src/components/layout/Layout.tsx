@@ -1,4 +1,3 @@
-
 import { useAuth } from "@/hooks/useAuth";
 import { useCharacter } from "@/hooks/useCharacter";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
@@ -31,8 +30,10 @@ export default function Layout({ children }: LayoutProps) {
   const navigate = useNavigate();
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
-  // Redirect to character creator if user exists but has no character
-  const shouldShowCharacterPrompt = user && !hasCharacter && !loading;
+  // Only prompt for character creation if user is logged in,
+  // hasn't completed onboarding (i.e. assessment), and has no character.
+  const shouldShowCharacterPrompt =
+    user && !user.onboarding_completed && !hasCharacter && !loading;
 
   if (loading) {
     return <LoadingScreen />;

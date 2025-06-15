@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import { CharacterCompanion, CharacterExpression } from '@/types/character';
 import { useAuth } from './useAuth';
@@ -19,15 +18,47 @@ export function CharacterProvider({ children }: { children: React.ReactNode }) {
   const [character, setCharacter] = useState<CharacterCompanion | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Helper to parse character JSON safely
+  function getCharacterFromUser(user: any): CharacterCompanion | null {
+    if (!user?.character_companion) return null;
+    try {
+      // If profile data is a JSON string, parse it
+      if (typeof user.character_companion === "string") {
+        return JSON.parse(user.character_companion);
+      }
+      // If already parsed (object), return as is
+      if (typeof user.character_companion === "object") {
+        return user.character_companion as CharacterCompanion;
+      }
+      return null;
+    } catch (e) {
+      console.warn("Failed to parse character_companion:", e);
+      return null;
+    }
+  }
+
   useEffect(() => {
+    // load from user profile after assessment completion or login
+    if (user && user.onboarding_completed) {
+      const parsed = getCharacterFromUser(user);
+      setCharacter(parsed);
+      setLoading(false);
+      return;
+    }
+    // fallback: load from localStorage (for pre-onboarding users)
     if (user?.character_companion) {
       const storedCharacter = localStorage.getItem(`character_${user.id}`);
       if (storedCharacter) {
         setCharacter(JSON.parse(storedCharacter));
+      } else {
+        const parsed = getCharacterFromUser(user);
+        setCharacter(parsed);
       }
+    } else {
+      setCharacter(null);
     }
     setLoading(false);
-  }, [user]);
+  }, [user?.character_companion, user?.onboarding_completed, user?.id]);
 
   const updateCharacter = async (updates: Partial<CharacterCompanion>) => {
     if (!character || !user) return;
@@ -79,7 +110,7 @@ export function CharacterProvider({ children }: { children: React.ReactNode }) {
     updateCharacter,
     incrementInteraction,
     getCharacterExpression,
-    hasCharacter: !!character
+    hasCharacter: !!character // only true if a character exists
   };
 
   return <CharacterContext.Provider value={value}>{children}</CharacterContext.Provider>;
