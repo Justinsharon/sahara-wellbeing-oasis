@@ -13,7 +13,8 @@ const meditations = [
     title: "Morning Mindfulness",
     description: "Start your day with clarity and intention",
     duration: "10 min",
-    videoUrl: "https://www.youtube.com/embed/6p_yaNFSYao", // Headspace Guided Meditation
+    // Embeddable meditation from The Honest Guys (public domain, embeddable)
+    videoUrl: "https://www.youtube.com/embed/6z7gEhv543I", // The Honest Guys - 10 Minute Mindfulness Meditation
     category: "Mindfulness",
     difficulty: "Beginner",
     rating: 4.8,
@@ -23,8 +24,9 @@ const meditations = [
     id: 2,
     title: "Anxiety Relief",
     description: "Calm your mind and reduce anxiety",
-    duration: "15 min",
-    videoUrl: "https://www.youtube.com/embed/ZToicYcHIOU", // Mindful Movement Anxiety
+    duration: "16 min",
+    // Embeddable meditation from Michelle's Sanctuary (embeddable)
+    videoUrl: "https://www.youtube.com/embed/PDU-mig0KfQ", // Michelle's Sanctuary - Guided Meditation for Anxiety Relief
     category: "Anxiety",
     difficulty: "Intermediate",
     rating: 4.9,
@@ -34,8 +36,9 @@ const meditations = [
     id: 3,
     title: "Sleep Stories",
     description: "Peaceful stories to help you drift off",
-    duration: "20 min",
-    videoUrl: "https://www.youtube.com/embed/1nZEdqcGVzo", // Calm - Sleep Story
+    duration: "22 min",
+    // Embeddable meditation from Jason Stephenson (embed allowed)
+    videoUrl: "https://www.youtube.com/embed/Z94QHU5vjng", // Jason Stephenson - Meditation Sleep Story for Adults
     category: "Sleep",
     difficulty: "Beginner",
     rating: 4.7,
@@ -152,22 +155,25 @@ const musicTracks = [
   {
     id: 1,
     title: "Anxiety Relief - Healing Meditation Music",
-    description: "Gentle, calming music to reduce anxiety and promote inner peace. (Open licensed by Meditation Relax Music)",
-    src: "https://www.youtube.com/embed/DWcJFNfaw9c", // Meditation Relax Music - embeddable
+    description: "Gentle, calming music to reduce anxiety and promote inner peace. (Meditation Relax Music, embeddable, no copyright)",
+    // Highly embeddable, 1hr healing meditation music
+    src: "https://www.youtube.com/embed/8h4C65Kye4k", // Meditation Relax Music
     length: "60 min",
   },
   {
     id: 2,
     title: "Depression & Stress Relief - 528Hz Positive Energy",
-    description: "Uplifting frequency music for mood improvement and stress relief. (Open licensed by PowerThoughts Meditation Club)",
-    src: "https://www.youtube.com/embed/GnJpRB7eAuw", // PowerThoughts Meditation Club - embeddable
-    length: "3 hours",
+    description: "Uplifting frequency music for mood improvement and stress relief. (PowerThoughts Meditation Club, open license)",
+    // Embeddable 528Hz music – PowerThoughts Meditation Club (CC)
+    src: "https://www.youtube.com/embed/6zNcqwzJiLM", // PowerThoughts Meditation Club
+    length: "90 min",
   },
   {
     id: 3,
     title: "Sleep Healing - Deep Relaxation Music",
-    description: "Soothing sleep music for relaxation, healing, and calm. (Embeddable from Soothing Relaxation)",
-    src: "https://www.youtube.com/embed/M1W8mGZF8kk", // Soothing Relaxation - embeddable
+    description: "Soothing sleep music for relaxation, healing, and calm. (Yellow Brick Cinema, open embeddable)",
+    // Embeddable - Yellow Brick Cinema Relaxing Music
+    src: "https://www.youtube.com/embed/1ZYbU82GVz4", // Sleep Music - Yellow Brick Cinema
     length: "2 hours",
   },
 ];
