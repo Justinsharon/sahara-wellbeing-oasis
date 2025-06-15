@@ -167,7 +167,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const resetPassword = async (email: string) => {
-    const redirectUrl = `${window.location.origin}/auth/reset-password`;
+    // Use the correct Lovable preview URL or fallback to window.location.origin
+    const isLovablePreview = window.location.hostname.includes('lovable.app');
+    const redirectUrl = isLovablePreview 
+      ? `${window.location.origin}/auth/reset-password`
+      : `${window.location.origin}/auth/reset-password`;
+    
+    console.log('Reset password redirect URL:', redirectUrl);
     
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: redirectUrl,
