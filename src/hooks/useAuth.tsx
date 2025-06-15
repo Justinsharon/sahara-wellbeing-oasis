@@ -1,11 +1,14 @@
+
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User as SupabaseUser } from '@supabase/supabase-js';
+import { User as SupabaseUser, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { User } from '@/types';
 
+// Add session to context to ensure persistent session state
 interface AuthContextType {
   user: User | null;
   supabaseUser: SupabaseUser | null;
+  session: Session | null;
   loading: boolean;
   signUp: (email: string, password: string, userData?: Partial<User>) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
@@ -19,69 +22,45 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [supabaseUser, setSupabaseUser] = useState<SupabaseUser | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
-
-    // Get initial session
-    const getSession = async () => {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error('Error getting session:', error);
-          if (isMounted) {
-            setLoading(false);
-          }
-          return;
-        }
-
-        if (isMounted) {
-          setSupabaseUser(session?.user ?? null);
-          
-          if (session?.user) {
-            await fetchUserProfile(session.user.id);
-          } else {
-            setUser(null);
-          }
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Error in getSession:', error);
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    getSession();
-
-    // Listen for auth changes
+    // Subscribe to auth changes FIRST to avoid brief unwanted null states
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('Auth state changed:', event, session?.user?.id);
-        
-        if (isMounted) {
-          setSupabaseUser(session?.user ?? null);
-          
-          if (session?.user) {
-            await fetchUserProfile(session.user.id);
-          } else {
-            setUser(null);
-          }
-          
-          if (!loading) {
-            setLoading(false);
-          }
+      (event, _session) => {
+        setSession(_session);
+        setSupabaseUser(_session?.user ?? null);
+        // Always try to get profile as soon as we have a user
+        if (_session?.user) {
+          setTimeout(() => {
+            fetchUserProfile(_session.user.id);
+          }, 0);
+        } else if (isMounted) {
+          setUser(null);
         }
+        if (isMounted) setLoading(false);
       }
     );
+
+    // Then check for initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setSupabaseUser(session?.user ?? null);
+      if (session?.user) {
+        fetchUserProfile(session.user.id);
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
 
     return () => {
       isMounted = false;
       subscription.unsubscribe();
     };
+    // eslint-disable-next-line
   }, []);
 
   const fetchUserProfile = async (userId: string) => {
@@ -94,14 +73,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         console.error('Error fetching user profile:', error);
+        // Don't reset user to null if failed; just log error.
         return;
       }
-      
       if (data) {
         setUser(data);
-      } else {
-        console.log('No profile found for user:', userId);
-        setUser(null);
       }
     } catch (error) {
       console.error('Error in fetchUserProfile:', error);
@@ -111,16 +87,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string, userData: Partial<User> = {}) => {
     setLoading(true);
     try {
+      const redirectUrl = `${window.location.origin}/`;
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          data: userData
+          data: userData,
+          emailRedirectTo: redirectUrl,
         }
       });
-
       if (error) throw error;
-      
       console.log('Sign up successful:', data);
     } catch (error) {
       console.error('Sign up error:', error);
@@ -139,7 +115,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (error) throw error;
-      
       console.log('Sign in successful:', data);
     } catch (error) {
       console.error('Sign in error:', error);
@@ -154,9 +129,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-      
       setUser(null);
       setSupabaseUser(null);
+      setSession(null);
     } catch (error) {
       console.error('Sign out error:', error);
       throw error;
@@ -166,11 +141,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const resetPassword = async (email: string) => {
-    // Always use absolute URL for Supabase redirect
     const redirectUrl = `${window.location.origin}/auth/reset-password`;
-
     console.log('Reset password redirect URL:', redirectUrl);
-
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: redirectUrl,
     });
@@ -179,20 +151,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updateProfile = async (data: Partial<User>) => {
     if (!supabaseUser) throw new Error('No user logged in');
-
     const { error } = await supabase
       .from('profiles')
       .update(data)
       .eq('id', supabaseUser.id);
-
     if (error) throw error;
-    
     await fetchUserProfile(supabaseUser.id);
   };
 
   const value = {
     user,
     supabaseUser,
+    session,
     loading,
     signUp,
     signIn,
@@ -211,3 +181,6 @@ export function useAuth() {
   }
   return context;
 }
+
+// Consider refactoring this file to smaller, focused hooks or utilities; it's now lengthy.
+

@@ -21,8 +21,9 @@ export default function AuthPage() {
   // Simple redirect logic - if user exists and onboarding is complete, go to personal growth
   // Otherwise, let them complete onboarding flow
   if (user && !authLoading) {
+    // Always send completed users to HOME; onboarding still gets routed correctly
     if (user.onboarding_completed) {
-      return <Navigate to="/personal-growth" replace />;
+      return <Navigate to="/" replace />;
     } else {
       // User exists but onboarding not complete - redirect to character creator or assessment
       if (!user.character_companion) {

@@ -170,7 +170,7 @@ export default function OnboardingAssessment() {
       setIsCompleted(true);
       toast.success('Assessment completed! Your personalized recommendations are ready.');
       
-      // Navigate to main app after a delay
+      // Navigate to main app (homepage) after a delay
       setTimeout(() => {
         navigate('/');
       }, 3000);
