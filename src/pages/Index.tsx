@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useCharacter } from "@/hooks/useCharacter";
-import { Heart, ArrowRight, Sparkles } from "lucide-react";
+import { Heart, Sparkles, User } from "lucide-react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { supabase } from "@/integrations/supabase/client";
 import DashboardTherapyRecommendation from "@/pages/dashboard/DashboardTherapyRecommendation";
@@ -35,27 +35,39 @@ const Index = () => {
   // Personalized Dashboard
   if (user && user.onboarding_completed) {
     return (
-      <div className="min-h-screen wellness-gradient px-3 pb-6">
-        <div className="container mx-auto max-w-3xl pt-8 pb-8">
-          {/* Greeting + Top Recommendation */}
-          <div className="mb-5">
-            <span className="font-semibold text-base text-gray-600">Welcome back, {user.full_name || user.email?.split("@")[0] || "Friend"}!</span>
-            <h1 className="text-3xl font-bold mt-1 mb-2 text-black">Your Personalized Wellness Dashboard</h1>
-            <p className="text-muted-foreground">Curated care and resources <span className="font-semibold text-emerald-700">just for you</span>.</p>
-          </div>
+      <div className="min-h-screen wellness-gradient">
+        <div className="container mx-auto px-4 py-8 space-y-8">
+          {/* Dashboard Header - Unified with Therapy/Community */}
+          <LiquidGlass variant="card" floating bubbles className="text-center p-8">
+            <div className="w-16 h-16 bg-crimson-wine rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+              <User className="w-8 h-8 text-off-white" />
+            </div>
+            <h1 className="text-4xl font-bold heading-gradient mb-4">
+              Welcome back, {user.full_name || user.email?.split("@")[0] || "Friend"}!
+            </h1>
+            <p className="text-lg text-warm-gray max-w-2xl mx-auto">
+              Your Personalized Wellness Dashboard<br />
+              <span className="font-semibold text-emerald-700">Curated care and resources just for you.</span>
+            </p>
+          </LiquidGlass>
 
-          <div className="mb-8">
-            <DashboardTherapyRecommendation 
-              recommendations={therapyRecommendations} 
-              loading={loading}
-              character={character}
-            />
-          </div>
-          <div className="mb-8">
-            <DashboardSuggestionCards
-              user={user}
-              therapyRecommendations={therapyRecommendations}
-            />
+          <div className="space-y-8">
+            {/* Top Recommendation */}
+            <LiquidGlass variant="crystal" liquidBorder className="p-6">
+              <DashboardTherapyRecommendation
+                recommendations={therapyRecommendations}
+                loading={loading}
+                character={character}
+              />
+            </LiquidGlass>
+
+            {/* Suggestions as Cards */}
+            <LiquidGlass variant="overlay" floating className="p-6">
+              <DashboardSuggestionCards
+                user={user}
+                therapyRecommendations={therapyRecommendations}
+              />
+            </LiquidGlass>
           </div>
         </div>
       </div>
