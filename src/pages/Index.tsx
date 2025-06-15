@@ -23,137 +23,115 @@ const Index = () => {
       {/* Main Content with Enhanced Contrast */}
       <div className="container mx-auto px-6 py-20 relative z-10">
         <div className="max-w-2xl mx-auto text-center">
-          {/* Hero Icon */}
-          <div className="mb-12 relative">
-            <LiquidGlass 
-              variant="crystal" 
-              floating 
-              bubbles
-              className="w-32 h-32 mx-auto rounded-full flex items-center justify-center shadow-2xl relative animate-scale-in"
-            >
-              <Heart className="w-16 h-16 text-crimson-wine animate-pulse-slow" />
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full flex items-center justify-center shadow-lg animate-bounce">
-                <Sparkles className="w-4 h-4 text-white" />
+          {/* Main Liquid Glass Container - Wrapping all content */}
+          <LiquidGlass 
+            variant="card" 
+            interactive
+            floating
+            className="p-8 md:p-12 rounded-3xl shadow-2xl backdrop-blur-xl border-2 border-white/30 bg-white/95 transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1"
+          >
+            {/* Hero Icon */}
+            <div className="mb-8 relative">
+              <div className="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-gradient-to-br from-crimson-wine to-crimson-wine/80 flex items-center justify-center shadow-2xl relative animate-scale-in">
+                <Heart className="w-12 h-12 md:w-16 md:h-16 text-white animate-pulse-slow" />
+                <div className="absolute -top-2 -right-2 w-6 h-6 md:w-8 md:h-8 bg-emerald-400 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                  <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                </div>
               </div>
-            </LiquidGlass>
-          </div>
+            </div>
 
-          {/* Hero Content with Text-Optimized Glass */}
-          <div className="space-y-8 animate-fade-in">
-            {/* Title with maximum contrast background */}
-            <LiquidGlass 
-              variant="text" 
-              className="p-8 rounded-3xl shadow-2xl"
-            >
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black header-font text-high-contrast">
-                Welcome to Sahara
-              </h1>
-            </LiquidGlass>
-            
-            {/* Main Tagline Card - Text-Optimized Glass */}
-            <LiquidGlass 
-              variant="text" 
-              interactive
-              className="p-8 rounded-3xl transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 shadow-2xl"
-            >
-              <p className="text-xl md:text-2xl text-black leading-relaxed font-bold text-high-contrast">
-                Your personal wellness companion is here to support your mental health journey
-              </p>
-            </LiquidGlass>
+            {/* Hero Content */}
+            <div className="space-y-8 animate-fade-in">
+              {/* Title with maximum contrast */}
+              <div className="space-y-6">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black leading-tight">
+                  Welcome to Sahara
+                </h1>
+                
+                {/* Main Tagline with Enhanced Visibility */}
+                <div className="bg-white/98 backdrop-blur-sm rounded-2xl p-6 shadow-inner border border-gray-200/50">
+                  <p className="text-lg md:text-xl lg:text-2xl text-black leading-relaxed font-semibold">
+                    Your personal wellness companion is here to support your mental health journey
+                  </p>
+                </div>
+              </div>
 
-            <div className="pt-8">
-              {!user ? (
-                <div className="space-y-4">
-                  <LiquidGlass 
-                    variant="button" 
-                    interactive 
-                    className="w-full max-w-sm mx-auto block"
-                  >
+              {/* Action Buttons */}
+              <div className="pt-4">
+                {!user ? (
+                  <div className="space-y-4">
+                    {/* Get Started Button */}
                     <Button 
                       asChild 
                       size="lg" 
-                      className="w-full bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300"
+                      className="w-full max-w-sm mx-auto bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold"
                     >
                       <Link to="/auth" className="flex items-center justify-center gap-3">
                         Get Started
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
-                  </LiquidGlass>
-                  
-                  {/* Sign In Button with solid white background for maximum contrast */}
-                  <div className="w-full max-w-sm mx-auto block bg-white rounded-2xl shadow-2xl border-2 border-crimson-wine/50">
+                    
+                    {/* Sign In Button */}
                     <Button 
                       variant="outline" 
                       size="lg" 
                       asChild 
-                      className="w-full bg-transparent hover:bg-gray-50 text-black border-none text-lg py-6 rounded-2xl transition-all duration-300 font-bold"
+                      className="w-full max-w-sm mx-auto bg-white/90 hover:bg-white text-black border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg"
                     >
                       <Link to="/auth">
                         Sign In
                       </Link>
                     </Button>
                   </div>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <LiquidGlass 
-                    variant="button" 
-                    interactive 
-                    className="w-full max-w-sm mx-auto block"
-                  >
+                ) : (
+                  <div className="space-y-4">
+                    {/* Continue Journey Button */}
                     <Button 
                       asChild 
                       size="lg" 
-                      className="w-full bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300"
+                      className="w-full max-w-sm mx-auto bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold"
                     >
                       <Link to="/personal-growth" className="flex items-center justify-center gap-3">
                         Continue Your Journey
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
-                  </LiquidGlass>
-                  
-                  {/* Track Mood Button with solid white background */}
-                  <div className="w-full max-w-sm mx-auto block bg-white rounded-2xl shadow-2xl border-2 border-crimson-wine/50">
+                    
+                    {/* Track Mood Button */}
                     <Button 
                       variant="outline" 
                       size="lg" 
                       asChild 
-                      className="w-full bg-transparent hover:bg-gray-50 text-black border-none text-lg py-6 rounded-2xl transition-all duration-300 font-bold"
+                      className="w-full max-w-sm mx-auto bg-white/90 hover:bg-white text-black border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg"
                     >
                       <Link to="/personal-growth/unified-mood-journal">
                         Track Your Mood
                       </Link>
                     </Button>
                   </div>
-                </div>
-              )}
-            </div>
-          </div>
+                )}
+              </div>
 
-          {/* Trust indicators with text-optimized glass */}
-          <div className="mt-16 pt-12 border-t border-white/30">
-            <LiquidGlass 
-              variant="text" 
-              className="p-8 rounded-3xl shadow-2xl"
-            >
-              <div className="flex flex-wrap items-center justify-center gap-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse"></div>
-                  <span className="text-sm font-bold text-black text-high-contrast">Licensed Therapists</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                  <span className="text-sm font-bold text-black text-high-contrast">24/7 Support</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '1s' }}></div>
-                  <span className="text-sm font-bold text-black text-high-contrast">Privacy Protected</span>
+              {/* Trust indicators */}
+              <div className="mt-8 pt-8 border-t border-gray-200/50">
+                <div className="flex flex-wrap items-center justify-center gap-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse"></div>
+                    <span className="text-sm font-bold text-black">Licensed Therapists</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                    <span className="text-sm font-bold text-black">24/7 Support</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    <span className="text-sm font-bold text-black">Privacy Protected</span>
+                  </div>
                 </div>
               </div>
-            </LiquidGlass>
-          </div>
+            </div>
+          </LiquidGlass>
         </div>
       </div>
     </div>
