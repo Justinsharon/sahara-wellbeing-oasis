@@ -132,20 +132,33 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
     setError(null);
     try {
       console.log('Sending audio for local AI analysis...');
-      const { data, error } = await supabase.functions.invoke('analyze-voice-mood', {
+      const { data, error: funcError } = await supabase.functions.invoke('analyze-voice-mood', {
         body: { audioData: audioBase64 }
       });
-      console.log('Analysis response:', { data, error });
-      if (error) {
-        console.error('Analysis function error:', error);
-        throw new Error(error.message || 'Failed to analyze voice');
+      // Added improved error handling & detailed error logging
+      if (funcError) {
+        const detailedErrorMsg = `Failed to send a request to the Edge Function: ${funcError.message || funcError}`;
+        console.error('Function invocation error:', funcError, detailedErrorMsg);
+        setError(detailedErrorMsg);
+        toast.error("Voice analysis function unreachable. Please try again later.");
+        return;
+      }
+      if (!data) {
+        console.error('No data received from function:', data);
+        setError("No data received from voice analysis. Please try again.");
+        toast.error("No data received from function. Please try again.");
+        return;
       }
       if (data?.error) {
         console.error('Voice analysis error:', data.error);
-        throw new Error(data.error);
+        setError(data.error);
+        toast.error("Failed to analyze voice. Please try recording again or use manual selection.");
+        return;
       }
       if (!data?.mood) {
-        throw new Error('No mood data received from analysis');
+        setError('No mood data received from analysis');
+        toast.error('No mood data returned by analysis.');
+        return;
       }
       console.log('Analysis successful:', data);
       setDetectedMood(data.mood);
