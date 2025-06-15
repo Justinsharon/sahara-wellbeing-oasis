@@ -1,4 +1,3 @@
-
 import React, { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -27,6 +26,43 @@ const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const queryClient = new QueryClient();
 
+// Error boundary for catching rendering errors
+function ErrorBoundary({ children }: { children: React.ReactNode }) {
+  const [error, setError] = React.useState<Error | null>(null);
+
+  React.useEffect(() => {
+    setError(null); // reset error when path changes
+  }, [window.location.pathname]);
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen p-8">
+        <div className="max-w-sm w-full bg-white rounded-lg shadow p-6 text-center">
+          <h1 className="text-xl font-bold text-red-600 mb-2">Something went wrong</h1>
+          <p className="mb-4">{error.message}</p>
+          <button
+            className="btn btn-primary-modern"
+            onClick={() => window.location.reload()}
+          >
+            Reload
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <React.ErrorBoundary
+      fallbackRender={({ error }) => {
+        setError(error);
+        return null;
+      }}
+    >
+      {children}
+    </React.ErrorBoundary>
+  );
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -36,43 +72,54 @@ function App() {
         <BrowserRouter>
           <AuthProvider>
             <CharacterProvider>
-              <Routes>
-                {/* Auth routes - outside of Layout */}
-                <Route path="/auth" element={<AuthPage />} />
-                <Route path="/auth/signup" element={<SignUp />} />
-                <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-                <Route path="/auth/reset-password" element={<ResetPassword />} />
-                
-                {/* Onboarding routes - outside of Layout */}
-                <Route path="/character-creator" element={<CharacterCreator />} />
-                <Route path="/onboarding-assessment" element={<OnboardingAssessment />} />
-                
-                {/* Main app routes - inside Layout */}
-                <Route
-                  path="/*"
-                  element={
-                    <Layout>
-                      <Suspense fallback={
-                        <div className="flex items-center justify-center min-h-[400px]">
-                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                        </div>
-                      }>
-                        <Routes>
-                          <Route path="/" element={<Index />} />
-                          <Route path="/therapy/*" element={<Therapy />} />
-                          <Route path="/community/*" element={<Community />} />
-                          <Route path="/explore-heal/*" element={<ExploreHeal />} />
-                          <Route path="/insights/*" element={<Insights />} />
-                          <Route path="/emergency/*" element={<Emergency />} />
-                          <Route path="/chat/*" element={<Chat />} />
-                          <Route path="/personal-growth/*" element={<PersonalGrowthRoutes />} />
-                          <Route path="*" element={<NotFound />} />
-                        </Routes>
-                      </Suspense>
-                    </Layout>
-                  }
-                />
-              </Routes>
+              <ErrorBoundary>
+                <Routes>
+                  {/* Auth routes outside layout */}
+                  <Route path="/auth" element={<AuthPage />} />
+                  <Route path="/auth/signup" element={<SignUp />} />
+                  <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+                  
+                  {/* Move ResetPassword route INSIDE layout for complete context/styling! */}
+                  <Route
+                    path="/auth/reset-password"
+                    element={
+                      <Layout>
+                        <ResetPassword />
+                      </Layout>
+                    }
+                  />
+
+                  {/* Onboarding routes - outside of Layout */}
+                  <Route path="/character-creator" element={<CharacterCreator />} />
+                  <Route path="/onboarding-assessment" element={<OnboardingAssessment />} />
+
+                  {/* Main app routes - inside Layout */}
+                  <Route
+                    path="/*"
+                    element={
+                      <Layout>
+                        <Suspense fallback={
+                          <div className="flex items-center justify-center min-h-[400px]">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                          </div>
+                        }>
+                          <Routes>
+                            <Route path="/" element={<Index />} />
+                            <Route path="/therapy/*" element={<Therapy />} />
+                            <Route path="/community/*" element={<Community />} />
+                            <Route path="/explore-heal/*" element={<ExploreHeal />} />
+                            <Route path="/insights/*" element={<Insights />} />
+                            <Route path="/emergency/*" element={<Emergency />} />
+                            <Route path="/chat/*" element={<Chat />} />
+                            <Route path="/personal-growth/*" element={<PersonalGrowthRoutes />} />
+                            <Route path="*" element={<NotFound />} />
+                          </Routes>
+                        </Suspense>
+                      </Layout>
+                    }
+                  />
+                </Routes>
+              </ErrorBoundary>
             </CharacterProvider>
           </AuthProvider>
         </BrowserRouter>
