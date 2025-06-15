@@ -53,21 +53,16 @@ const Index = () => {
 
           <div className="space-y-8">
             {/* Top Recommendation */}
-            <LiquidGlass variant="crystal" liquidBorder className="p-6">
-              <DashboardTherapyRecommendation
-                recommendations={therapyRecommendations}
-                loading={loading}
-                character={character}
-              />
-            </LiquidGlass>
-
+            <DashboardTherapyRecommendation
+              recommendations={therapyRecommendations}
+              loading={loading}
+              character={character}
+            />
             {/* Suggestions as Cards */}
-            <LiquidGlass variant="overlay" floating className="p-6">
-              <DashboardSuggestionCards
-                user={user}
-                therapyRecommendations={therapyRecommendations}
-              />
-            </LiquidGlass>
+            <DashboardSuggestionCards
+              user={user}
+              therapyRecommendations={therapyRecommendations}
+            />
           </div>
         </div>
       </div>
