@@ -1,12 +1,66 @@
-
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useCharacter } from "@/hooks/useCharacter";
 import { Heart, ArrowRight, Sparkles } from "lucide-react";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
+import { supabase } from "@/integrations/supabase/client";
+import DashboardTherapyRecommendation from "@/pages/dashboard/DashboardTherapyRecommendation";
+import DashboardSuggestionCards from "@/pages/dashboard/DashboardSuggestionCards";
 
 const Index = () => {
   const { user } = useAuth();
+  const { character } = useCharacter();
+  const [therapyRecommendations, setTherapyRecommendations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTherapyRecommendations = async () => {
+      if (user && user.onboarding_completed) {
+        const { data, error } = await supabase
+          .from("therapy_recommendations")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("confidence_score", { ascending: false });
+        if (!error && data) {
+          setTherapyRecommendations(data);
+        }
+      }
+      setLoading(false);
+    };
+    fetchTherapyRecommendations();
+  }, [user]);
+
+  // Personalized Dashboard
+  if (user && user.onboarding_completed) {
+    return (
+      <div className="min-h-screen wellness-gradient px-3 pb-6">
+        <div className="container mx-auto max-w-3xl pt-8 pb-8">
+          {/* Greeting + Top Recommendation */}
+          <div className="mb-5">
+            <span className="font-semibold text-base text-gray-600">Welcome back, {user.full_name || user.email?.split("@")[0] || "Friend"}!</span>
+            <h1 className="text-3xl font-bold mt-1 mb-2 text-black">Your Personalized Wellness Dashboard</h1>
+            <p className="text-muted-foreground">Curated care and resources <span className="font-semibold text-emerald-700">just for you</span>.</p>
+          </div>
+
+          <div className="mb-8">
+            <DashboardTherapyRecommendation 
+              recommendations={therapyRecommendations} 
+              loading={loading}
+              character={character}
+            />
+          </div>
+          <div className="mb-8">
+            <DashboardSuggestionCards
+              user={user}
+              therapyRecommendations={therapyRecommendations}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen relative overflow-hidden">

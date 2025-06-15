@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -173,7 +172,7 @@ export default function OnboardingAssessment() {
       
       // Navigate to main app after a delay
       setTimeout(() => {
-        navigate('/personal-growth');
+        navigate('/');
       }, 3000);
 
     } catch (error) {
