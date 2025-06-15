@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import DashboardTherapyRecommendation from "@/pages/dashboard/DashboardTherapyRecommendation";
 import DashboardSuggestionCards from "@/pages/dashboard/DashboardSuggestionCards";
 
+// Main home/dashboard welcome page
 const Index = () => {
   const { user } = useAuth();
   const { character } = useCharacter();
@@ -32,17 +34,18 @@ const Index = () => {
     fetchTherapyRecommendations();
   }, [user]);
 
-  // Personalized Dashboard
+  // Dashboard for logged-in users
   if (user && user.onboarding_completed) {
     return (
       <div className="min-h-screen wellness-gradient">
         <div className="container mx-auto px-4 py-8 space-y-8">
-          {/* Dashboard Header - Unified with Therapy/Community */}
+          {/* Dashboard Header - Consistent with Therapy Page */}
           <LiquidGlass variant="card" floating bubbles className="text-center p-8">
             <div className="w-16 h-16 bg-crimson-wine rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
               <User className="w-8 h-8 text-off-white" />
             </div>
-            <h1 className="text-4xl font-bold heading-gradient mb-4">
+            {/* Heading matches h1 (2xl, crimson-wine) on therapy page */}
+            <h1 className="text-2xl font-bold text-crimson-wine mb-4 header-font">
               Welcome back, {user.full_name || user.email?.split("@")[0] || "Friend"}!
             </h1>
             <p className="text-lg text-warm-gray max-w-2xl mx-auto">
@@ -69,126 +72,100 @@ const Index = () => {
     );
   }
 
+  // Main landing page (not authenticated)
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Enhanced Liquid Glass Background with Better Opacity */}
-      <div className="absolute inset-0 min-h-screen bg-gradient-to-br from-crimson-wine/20 via-soft-taupe/30 to-warm-gray/25 backdrop-blur-3xl">
-        {/* Background decorative elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-crimson-wine/15 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-32 right-16 w-24 h-24 bg-soft-taupe/25 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-warm-gray/20 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }}></div>
-        </div>
-      </div>
-
-      {/* Main Content with Enhanced Contrast */}
-      <div className="container mx-auto px-6 py-20 relative z-10">
-        <div className="max-w-2xl mx-auto text-center">
-          {/* Main Liquid Glass Container - Wrapping all content */}
-          <LiquidGlass 
-            variant="card" 
-            interactive
+    <div className="min-h-screen wellness-gradient flex items-center">
+      <div className="container mx-auto px-4 py-8 flex flex-col justify-center items-center">
+        <div className="max-w-2xl w-full">
+          {/* Central liquid glass panel for home, styled like Therapy page */}
+          <LiquidGlass
+            variant="card"
             floating
-            className="p-8 md:p-12 rounded-3xl shadow-2xl backdrop-blur-xl border-2 border-white/30 bg-white/95 transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1"
+            className="p-8 md:p-12 rounded-3xl shadow-2xl"
           >
-            {/* Hero Icon */}
-            <div className="mb-8 relative">
-              <div className="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-gradient-to-br from-crimson-wine to-crimson-wine/80 flex items-center justify-center shadow-2xl relative animate-scale-in">
-                <Heart className="w-12 h-12 md:w-16 md:h-16 text-white animate-pulse-slow" />
-                <div className="absolute -top-2 -right-2 w-6 h-6 md:w-8 md:h-8 bg-emerald-400 rounded-full flex items-center justify-center shadow-lg animate-bounce">
-                  <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-white" />
+            {/* Icon Header */}
+            <div className="mb-8 relative flex flex-col items-center">
+              <div className="w-20 h-20 bg-crimson-wine rounded-2xl flex items-center justify-center mb-4 shadow-xl">
+                <Heart className="w-10 h-10 text-off-white" />
+                <div className="absolute -top-3 -right-6 w-8 h-8 bg-emerald-400 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                  <Sparkles className="w-4 h-4 text-white" />
                 </div>
               </div>
+              {/* Main Title with matching typography from Therapy */}
+              <h1 className="text-4xl font-bold mb-4 text-crimson-wine header-font">
+                Welcome to Sahara
+              </h1>
+              {/* Subtitle under main title */}
+              <p className="text-lg text-warm-gray mb-2 mt-2 max-w-xl">
+                Your personal wellness companion is here to support your mental health journey.
+              </p>
             </div>
 
-            {/* Hero Content */}
-            <div className="space-y-8 animate-fade-in">
-              {/* Title with maximum contrast */}
-              <div className="space-y-6">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black leading-tight">
-                  Welcome to Sahara
-                </h1>
-                
-                {/* Main Tagline with White Text */}
-                <div className="bg-white/98 backdrop-blur-sm rounded-2xl p-6 shadow-inner border border-gray-200/50">
-                  <p className="text-lg md:text-xl lg:text-2xl text-white leading-relaxed font-semibold">
-                    Your personal wellness companion is here to support your mental health journey
-                  </p>
+            {/* Action Buttons */}
+            <div className="pt-2 space-y-4 w-full max-w-sm mx-auto">
+              {!user ? (
+                <>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="w-full bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold"
+                  >
+                    <Link to="/auth" className="flex items-center justify-center gap-3">
+                      Get Started
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    asChild
+                    className="w-full bg-white hover:bg-muted-blush text-crimson-wine border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg"
+                  >
+                    <Link to="/auth">
+                      Sign In
+                    </Link>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="w-full bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold"
+                  >
+                    <Link to="/personal-growth" className="flex items-center justify-center gap-3">
+                      Continue Your Journey
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    asChild
+                    className="w-full bg-white hover:bg-muted-blush text-crimson-wine border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg"
+                  >
+                    <Link to="/personal-growth/unified-mood-journal">
+                      Track Your Mood
+                    </Link>
+                  </Button>
+                </>
+              )}
+            </div>
+
+            {/* Trust indicators - same font/caps/color system */}
+            <div className="mt-10 pt-8 border-t border-gray-200/50">
+              <div className="flex flex-wrap items-center justify-center gap-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse"></div>
+                  <span className="text-sm font-bold text-crimson-wine">Licensed Therapists</span>
                 </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="pt-4">
-                {!user ? (
-                  <div className="space-y-4">
-                    {/* Get Started Button */}
-                    <Button 
-                      asChild 
-                      size="lg" 
-                      className="w-full max-w-sm mx-auto bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold"
-                    >
-                      <Link to="/auth" className="flex items-center justify-center gap-3">
-                        Get Started
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </Button>
-                    
-                    {/* Sign In Button */}
-                    <Button 
-                      variant="outline" 
-                      size="lg" 
-                      asChild 
-                      className="w-full max-w-sm mx-auto bg-white/90 hover:bg-white text-black border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg"
-                    >
-                      <Link to="/auth">
-                        Sign In
-                      </Link>
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {/* Continue Journey Button */}
-                    <Button 
-                      asChild 
-                      size="lg" 
-                      className="w-full max-w-sm mx-auto bg-crimson-wine hover:bg-crimson-wine/90 text-white text-lg py-6 rounded-2xl group shadow-xl border-2 border-white/20 transition-all duration-300 font-semibold"
-                    >
-                      <Link to="/personal-growth" className="flex items-center justify-center gap-3">
-                        Continue Your Journey
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </Button>
-                    
-                    {/* Track Mood Button */}
-                    <Button 
-                      variant="outline" 
-                      size="lg" 
-                      asChild 
-                      className="w-full max-w-sm mx-auto bg-white/90 hover:bg-white text-black border-2 border-gray-300 text-lg py-6 rounded-2xl transition-all duration-300 font-semibold shadow-lg"
-                    >
-                      <Link to="/personal-growth/unified-mood-journal">
-                        Track Your Mood
-                      </Link>
-                    </Button>
-                  </div>
-                )}
-              </div>
-
-              {/* Trust indicators */}
-              <div className="mt-8 pt-8 border-t border-gray-200/50">
-                <div className="flex flex-wrap items-center justify-center gap-8">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse"></div>
-                    <span className="text-sm font-bold text-black">Licensed Therapists</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <span className="text-sm font-bold text-black">24/7 Support</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <span className="text-sm font-bold text-black">Privacy Protected</span>
-                  </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                  <span className="text-sm font-bold text-crimson-wine">24/7 Support</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '1s' }}></div>
+                  <span className="text-sm font-bold text-crimson-wine">Privacy Protected</span>
                 </div>
               </div>
             </div>
