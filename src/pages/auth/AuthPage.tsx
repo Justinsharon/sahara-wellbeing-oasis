@@ -9,15 +9,11 @@ import { useAuth } from '@/hooks/useAuth';
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 
 export default function AuthPage() {
-  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [fullName, setFullName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { user, signUp, signIn, loading: authLoading } = useAuth();
+  const { user, signIn, loading: authLoading } = useAuth();
 
   console.log('AuthPage - Current user:', user);
   console.log('AuthPage - Auth loading:', authLoading);
@@ -39,31 +35,11 @@ export default function AuthPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (isSignUp && password !== confirmPassword) {
-      toast.error('Passwords do not match');
-      return;
-    }
-
-    if (password.length < 6) {
-      toast.error('Password must be at least 6 characters');
-      return;
-    }
-
     setLoading(true);
 
     try {
-      if (isSignUp) {
-        await signUp(email, password, { 
-          full_name: fullName,
-          email_verified: false,
-          otp_verified: false 
-        });
-        toast.success('Account created successfully! Please check your email to verify your account.');
-      } else {
-        await signIn(email, password);
-        toast.success('Welcome back!');
-      }
+      await signIn(email, password);
+      toast.success('Welcome back!');
     } catch (error: any) {
       console.error('Auth error:', error);
       toast.error(error.message || 'An error occurred during authentication');
@@ -98,29 +74,14 @@ export default function AuthPage() {
         <Card className="soft-shadow border-0">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl heading-gradient">
-              {isSignUp ? 'Create Account' : 'Welcome Back'}
+              Welcome Back
             </CardTitle>
             <CardDescription>
-              {isSignUp ? 'Start your wellness journey today' : 'Sign in to continue your wellness journey'}
+              Sign in to continue your wellness journey
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              {isSignUp && (
-                <div>
-                  <Label htmlFor="fullName">Full Name</Label>
-                  <Input
-                    id="fullName"
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    required
-                    className="mt-1"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-              )}
-              
               <div>
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -143,9 +104,8 @@ export default function AuthPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    minLength={6}
                     className="mt-1 pr-10"
-                    placeholder={isSignUp ? "Create a password (min 6 characters)" : "Enter your password"}
+                    placeholder="Enter your password"
                   />
                   <Button
                     type="button"
@@ -162,40 +122,8 @@ export default function AuthPage() {
                   </Button>
                 </div>
               </div>
-
-              {isSignUp && (
-                <div>
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <div className="relative">
-                    <Input
-                      id="confirmPassword"
-                      type={showConfirmPassword ? "text" : "password"}
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                      minLength={6}
-                      className="mt-1 pr-10"
-                      placeholder="Confirm your password"
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    >
-                      {showConfirmPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              )}
               
-              {!isSignUp && (
-                <div className="flex justify-end">
+              <div className="flex justify-end">
                   <Link 
                     to="/auth/forgot-password" 
                     className="text-sm text-primary hover:underline"
@@ -203,28 +131,19 @@ export default function AuthPage() {
                     Forgot your password?
                   </Link>
                 </div>
-              )}
               
               <Button type="submit" className="w-full" disabled={loading || authLoading}>
-                {loading ? 'Loading...' : (isSignUp ? 'Create Account' : 'Sign In')}
+                {loading ? 'Loading...' : 'Sign In'}
               </Button>
             </form>
             
             <div className="mt-6 text-center">
-              <button
-                type="button"
-                onClick={() => {
-                  setIsSignUp(!isSignUp);
-                  setEmail('');
-                  setPassword('');
-                  setConfirmPassword('');
-                  setFullName('');
-                }}
-                className="text-primary hover:underline"
-                disabled={loading || authLoading}
-              >
-                {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
-              </button>
+              <p className="text-sm text-muted-foreground">
+                Don't have an account?{" "}
+                <Link to="/auth/signup" className="text-primary hover:underline font-medium">
+                  Sign Up
+                </Link>
+              </p>
             </div>
           </CardContent>
         </Card>

@@ -11,6 +11,7 @@ import Layout from "@/components/layout/Layout";
 import Index from "@/pages/Index";
 import PersonalGrowthRoutes from "@/routes/personalGrowthRoutes";
 import AuthPage from "@/pages/auth/AuthPage";
+import SignUp from "@/pages/auth/SignUp";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
 import OnboardingAssessment from "@/pages/OnboardingAssessment";
@@ -38,6 +39,7 @@ function App() {
               <Routes>
                 {/* Auth routes - outside of Layout */}
                 <Route path="/auth" element={<AuthPage />} />
+                <Route path="/auth/signup" element={<SignUp />} />
                 <Route path="/auth/forgot-password" element={<ForgotPassword />} />
                 <Route path="/auth/reset-password" element={<ResetPassword />} />
                 

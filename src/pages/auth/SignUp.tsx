@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -263,7 +262,7 @@ export default function SignUp() {
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
               Already have an account?{" "}
-              <Link to="/auth/signin" className="text-primary hover:underline font-medium">
+              <Link to="/auth" className="text-primary hover:underline font-medium">
                 Sign In
               </Link>
             </p>
