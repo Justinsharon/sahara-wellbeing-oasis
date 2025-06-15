@@ -155,24 +155,26 @@ const musicTracks = [
   {
     id: 1,
     title: "Gentle Forest Stream (Relaxation)",
-    description: "Relaxing natural stream sounds for stress relief and deep relaxation. (from FreeSound, licensed for reuse)",
-    // From Archive.org, attribution-free
-    src: "https://archive.org/download/forest-stream-nature/Fantasy_Forest_Stream.mp3",
-    length: "45 min"
+    description: "Relaxing natural stream sounds for stress relief and deep relaxation. (from Freesound, Creative Commons 0)",
+    // CC0 Freesound.org (https://freesound.org/people/priesmeyer/sounds/533635/)
+    src: "https://cdn.freesound.org/previews/533/533635_7783317-lq.mp3",
+    length: "4 min"
   },
   {
     id: 2,
     title: "Calm Piano Ambient",
-    description: "Soothing piano instrumental for meditation and mindfulness. (from Archive.org, no copyright restrictions)",
-    src: "https://archive.org/download/peaceful-piano-ambience/Peaceful%20Piano%20Ambience.mp3",
-    length: "60 min"
+    description: "Soothing piano instrumental for meditation and mindfulness. (from Internet Archive, no copyright restrictions)",
+    // https://archive.org/details/relaxing-piano-music-ambient-music
+    src: "https://archive.org/download/relaxing-piano-music-ambient-music/Relaxing%20Piano%20Music%20%28Ambient%20Music%29.mp3",
+    length: "30 min"
   },
   {
     id: 3,
     title: "Gentle Ocean (Sleep Aid)",
-    description: "Ocean waves and soft ambient music to help you sleep.",
-    src: "https://archive.org/download/SleepyOceanAmbience/SleepyOceanAmbience.mp3",
-    length: "90 min"
+    description: "Ocean waves to help you sleep. (Internet Archive, public domain)",
+    // https://archive.org/details/ocean-waves-ambience/Ocean-Waves.mp3
+    src: "https://archive.org/download/ocean-waves-ambience/Ocean-Waves.mp3",
+    length: "20 min"
   }
 ];
 

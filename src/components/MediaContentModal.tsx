@@ -33,10 +33,12 @@ export function MediaContentModal({
 }: MediaContentModalProps) {
   // Track video error state for fallback UI
   const [videoError, setVideoError] = useState(false);
+  const [audioError, setAudioError] = useState(false);
 
   // Reset error state when switching modal content
   React.useEffect(() => {
     setVideoError(false);
+    setAudioError(false);
   }, [open, url]);
 
   return (
@@ -76,14 +78,26 @@ export function MediaContentModal({
           )}
           {type === "audio" && url && (
             <div className="w-full flex flex-col items-center">
-              <audio
-                controls
-                src={url}
-                className="w-full rounded-lg shadow border"
-                style={{ outline: 'none' }}
-              >
-                Your browser does not support the audio element.
-              </audio>
+              {!audioError ? (
+                <audio
+                  controls
+                  src={url}
+                  className="w-full rounded-lg shadow border"
+                  style={{ outline: 'none' }}
+                  preload="metadata"
+                  onError={() => setAudioError(true)}
+                >
+                  Your browser does not support the audio element.
+                </audio>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-8 text-center text-warm-gray">
+                  <svg className="mx-auto mb-4 w-10 h-10 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+                  <span>
+                    Sorry, the audio could not be loaded.<br />
+                    Please try again or choose a different track.
+                  </span>
+                </div>
+              )}
             </div>
           )}
           {type === "article" && articleHtml && (
