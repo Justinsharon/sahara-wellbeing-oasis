@@ -39,13 +39,13 @@ const Index = () => {
     return (
       <div className="min-h-screen wellness-gradient">
         <div className="container mx-auto px-4 py-8 space-y-8">
-          {/* Dashboard Header - Consistent with Therapy Page */}
+          {/* Dashboard Header - match Therapy Page style */}
           <LiquidGlass variant="card" floating bubbles className="text-center p-8">
             <div className="w-16 h-16 bg-crimson-wine rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
               <User className="w-8 h-8 text-off-white" />
             </div>
-            {/* Heading matches h1 (2xl, crimson-wine) on therapy page */}
-            <h1 className="text-2xl font-bold text-crimson-wine mb-4 header-font">
+            {/* Heading - exact match: text-4xl font-bold heading-gradient mb-4 */}
+            <h1 className="text-4xl font-bold heading-gradient mb-4">
               Welcome back, {user.full_name || user.email?.split("@")[0] || "Friend"}!
             </h1>
             <p className="text-lg text-warm-gray max-w-2xl mx-auto">
@@ -53,7 +53,6 @@ const Index = () => {
               <span className="font-semibold text-emerald-700">Curated care and resources just for you.</span>
             </p>
           </LiquidGlass>
-
           <div className="space-y-8">
             {/* Top Recommendation */}
             <DashboardTherapyRecommendation
@@ -81,7 +80,7 @@ const Index = () => {
           <LiquidGlass
             variant="card"
             floating
-            className="p-8 md:p-12 rounded-3xl shadow-2xl"
+            className="p-8 md:p-12 rounded-3xl shadow-2xl text-center"
           >
             {/* Icon Header */}
             <div className="mb-8 relative flex flex-col items-center">
@@ -91,8 +90,8 @@ const Index = () => {
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
               </div>
-              {/* Main Title with matching typography from Therapy */}
-              <h1 className="text-4xl font-bold mb-4 text-crimson-wine header-font">
+              {/* Main Title - exact match: text-4xl font-bold heading-gradient mb-4 */}
+              <h1 className="text-4xl font-bold heading-gradient mb-4">
                 Welcome to Sahara
               </h1>
               {/* Subtitle under main title */}
@@ -100,7 +99,6 @@ const Index = () => {
                 Your personal wellness companion is here to support your mental health journey.
               </p>
             </div>
-
             {/* Action Buttons */}
             <div className="pt-2 space-y-4 w-full max-w-sm mx-auto">
               {!user ? (
@@ -151,8 +149,7 @@ const Index = () => {
                 </>
               )}
             </div>
-
-            {/* Trust indicators - same font/caps/color system */}
+            {/* Trust indicators - same font/caps/color system as Therapy page */}
             <div className="mt-10 pt-8 border-t border-gray-200/50">
               <div className="flex flex-wrap items-center justify-center gap-8">
                 <div className="flex items-center gap-3">
