@@ -1,10 +1,11 @@
+
 import { useAuth } from "@/hooks/useAuth";
 import { useCharacter } from "@/hooks/useCharacter";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { MobileNav } from "./MobileNav";
 import { FloatingChatButton } from "./FloatingChatButton";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Menu, Heart, Home, User, Settings, HelpCircle, LogOut, Plus } from "lucide-react";
+import { AlertTriangle, Menu, Heart, LogOut, Plus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
@@ -14,17 +15,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+// Refactored components/constants
+import { sideMenuItems } from "@/constants/navigation";
+import { CharacterCreationPrompt } from "./CharacterCreationPrompt";
+import { AuthOverlay } from "./AuthOverlay";
+import { LoadingScreen } from "@/components/common/LoadingScreen";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
-
-const sideMenuItems = [
-  { title: "Home", url: "/", icon: Home },
-  { title: "Profile", url: "/profile", icon: User },
-  { title: "Settings", url: "/settings", icon: Settings },
-  { title: "Help & Support", url: "/help", icon: HelpCircle },
-];
 
 export default function Layout({ children }: LayoutProps) {
   const { user, loading } = useAuth();
@@ -36,23 +35,7 @@ export default function Layout({ children }: LayoutProps) {
   const shouldShowCharacterPrompt = user && !hasCharacter && !loading;
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center wellness-gradient">
-        <div className="text-center animate-slide-up">
-          <div className="w-20 h-20 rounded-3xl bg-crimson-wine flex items-center justify-center mx-auto mb-8 shadow-2xl animate-float">
-            <Heart className="w-10 h-10 text-off-white animate-pulse-slow" />
-          </div>
-          <div className="space-y-4">
-            <div className="flex justify-center space-x-2">
-              <div className="skeleton-modern w-3 h-3 rounded-full"></div>
-              <div className="skeleton-modern w-3 h-3 rounded-full"></div>
-              <div className="skeleton-modern w-3 h-3 rounded-full"></div>
-            </div>
-            <p className="text-lg text-warm-gray font-semibold">Loading your wellness space...</p>
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   return (
@@ -98,7 +81,6 @@ export default function Layout({ children }: LayoutProps) {
                   </SheetHeader>
                   
                   <nav className="space-y-2">
-                    {/* Fix prompt link to use the correctly routed CharacterCreator */}
                     {!character && user && (
                       <Link
                         to="/character-creator"
@@ -138,7 +120,6 @@ export default function Layout({ children }: LayoutProps) {
                 </SheetContent>
               </Sheet>
 
-              {/* Enhanced Clickable Logo with Character */}
               <Link to="/" className="flex items-center gap-3 transition-all duration-300 hover:scale-105 active:scale-95">
                 {character ? (
                   <CharacterAvatar 
@@ -158,7 +139,6 @@ export default function Layout({ children }: LayoutProps) {
               </Link>
             </div>
 
-            {/* Enhanced Emergency SOS Button */}
             <Button
               asChild
               size="sm"
@@ -187,54 +167,10 @@ export default function Layout({ children }: LayoutProps) {
       {user && <FloatingChatButton />}
 
       {/* Character Creation Prompt */}
-      {shouldShowCharacterPrompt && (
-        <div className="fixed inset-0 z-40 glass-nav flex items-center justify-center p-6">
-          <div className="glass-card rounded-3xl p-8 text-center shadow-2xl max-w-sm w-full animate-scale-in">
-            <div className="w-24 h-24 rounded-3xl bg-emerald-splash-500 flex items-center justify-center mx-auto mb-8 shadow-xl">
-              <Plus className="w-12 h-12 text-white" />
-            </div>
-            <h2 className="text-3xl font-bold mb-4 heading-gradient">
-              Create Your Companion
-            </h2>
-            <p className="text-warm-gray mb-8 text-lg">
-              Let's create a personalized companion to support you throughout your wellness journey.
-            </p>
-            <div className="space-y-4">
-              <Button onClick={() => navigate('/character-creator')} className="btn-primary-modern w-full">
-                Create My Companion
-              </Button>
-              <Button variant="outline" onClick={() => {/* Skip for now */}} className="btn-secondary-modern w-full">
-                Maybe Later
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      {shouldShowCharacterPrompt && <CharacterCreationPrompt />}
 
       {/* Enhanced Auth Overlay */}
-      {!user && (
-        <div className="fixed inset-0 z-40 glass-nav flex items-center justify-center p-6">
-          <div className="glass-card rounded-3xl p-8 text-center shadow-2xl max-w-sm w-full animate-scale-in">
-            <div className="w-24 h-24 rounded-3xl bg-crimson-wine flex items-center justify-center mx-auto mb-8 shadow-xl">
-              <Heart className="w-12 h-12 text-off-white" />
-            </div>
-            <h2 className="text-3xl font-bold mb-4 heading-gradient">
-              Welcome to Sahara
-            </h2>
-            <p className="text-warm-gray mb-8 text-lg">
-              Your personal wellness companion is here to support your mental health journey.
-            </p>
-            <div className="space-y-4">
-              <Button asChild className="btn-primary-modern w-full">
-                <Link to="/auth">Get Started</Link>
-              </Button>
-              <Button variant="outline" asChild className="btn-secondary-modern w-full">
-                <Link to="/auth">Sign In</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      {!user && <AuthOverlay />}
     </div>
   );
 }
