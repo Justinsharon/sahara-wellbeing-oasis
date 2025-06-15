@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Dialog,
@@ -47,7 +46,7 @@ export function MediaContentModal({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
             {type === "video" && "Healing music or meditation video."}
-            {type === "audio" && "Therapeutic audio content."}
+            {type === "audio" && "Therapeutic music or relaxation sounds."}
             {type === "article" && "Wellness article."}
             {type === "activity" && "Interactive healing activity."}
           </DialogDescription>
@@ -76,13 +75,16 @@ export function MediaContentModal({
             </div>
           )}
           {type === "audio" && url && (
-            <iframe
-              src={url}
-              allow="autoplay"
-              title={title}
-              className="w-full h-20 rounded-xl shadow border"
-              loading="lazy"
-            />
+            <div className="w-full flex flex-col items-center">
+              <audio
+                controls
+                src={url}
+                className="w-full rounded-lg shadow border"
+                style={{ outline: 'none' }}
+              >
+                Your browser does not support the audio element.
+              </audio>
+            </div>
           )}
           {type === "article" && articleHtml && (
             <div

@@ -154,28 +154,26 @@ const articles = [
 const musicTracks = [
   {
     id: 1,
-    title: "Anxiety Relief - Healing Meditation Music",
-    description: "Gentle, calming music to reduce anxiety and promote inner peace. (Meditation Relax Music, embeddable, no copyright)",
-    // Highly embeddable, 1hr healing meditation music
-    src: "https://www.youtube.com/embed/8h4C65Kye4k", // Meditation Relax Music
-    length: "60 min",
+    title: "Gentle Forest Stream (Relaxation)",
+    description: "Relaxing natural stream sounds for stress relief and deep relaxation. (from FreeSound, licensed for reuse)",
+    // From Archive.org, attribution-free
+    src: "https://archive.org/download/forest-stream-nature/Fantasy_Forest_Stream.mp3",
+    length: "45 min"
   },
   {
     id: 2,
-    title: "Depression & Stress Relief - 528Hz Positive Energy",
-    description: "Uplifting frequency music for mood improvement and stress relief. (PowerThoughts Meditation Club, open license)",
-    // Embeddable 528Hz music – PowerThoughts Meditation Club (CC)
-    src: "https://www.youtube.com/embed/6zNcqwzJiLM", // PowerThoughts Meditation Club
-    length: "90 min",
+    title: "Calm Piano Ambient",
+    description: "Soothing piano instrumental for meditation and mindfulness. (from Archive.org, no copyright restrictions)",
+    src: "https://archive.org/download/peaceful-piano-ambience/Peaceful%20Piano%20Ambience.mp3",
+    length: "60 min"
   },
   {
     id: 3,
-    title: "Sleep Healing - Deep Relaxation Music",
-    description: "Soothing sleep music for relaxation, healing, and calm. (Yellow Brick Cinema, open embeddable)",
-    // Embeddable - Yellow Brick Cinema Relaxing Music
-    src: "https://www.youtube.com/embed/1ZYbU82GVz4", // Sleep Music - Yellow Brick Cinema
-    length: "2 hours",
-  },
+    title: "Gentle Ocean (Sleep Aid)",
+    description: "Ocean waves and soft ambient music to help you sleep.",
+    src: "https://archive.org/download/SleepyOceanAmbience/SleepyOceanAmbience.mp3",
+    length: "90 min"
+  }
 ];
 
 const challenges = [
@@ -268,7 +266,7 @@ export default function ExploreHeal() {
   const handleOpenMusic = (track: typeof musicTracks[0]) => {
     setMediaModal({
       open: true,
-      type: "video",
+      type: "audio",
       title: track.title,
       url: track.src,
     });
@@ -530,7 +528,7 @@ export default function ExploreHeal() {
                   onClick={() => handleOpenMusic(track)}
                 >
                   <div className="w-12 h-12 bg-soft-taupe rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                    {/* Use the Music icon from lucide-react */}
+                    {/* Use the Lucide music icon as per project conventions */}
                     <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-crimson-wine" stroke="currentColor" strokeWidth={2}><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
                   </div>
                   <h3 className="text-lg font-bold text-deep-charcoal mb-2">{track.title}</h3>
@@ -542,6 +540,7 @@ export default function ExploreHeal() {
                     className="w-full btn-primary-modern"
                     onClick={e => { e.stopPropagation(); handleOpenMusic(track); }}
                   >
+                    {/* Music play icon */}
                     <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 mr-2" stroke="currentColor" strokeWidth={2}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     Listen & Relax
                   </Button>
