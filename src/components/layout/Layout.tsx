@@ -98,9 +98,10 @@ export default function Layout({ children }: LayoutProps) {
                   </SheetHeader>
                   
                   <nav className="space-y-2">
+                    {/* Fix prompt link to use the correctly routed CharacterCreator */}
                     {!character && user && (
                       <Link
-                        to="/create-character"
+                        to="/character-creator"
                         onClick={() => setSideMenuOpen(false)}
                         className="flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 bg-emerald-splash-100 border border-emerald-splash-200"
                       >
@@ -199,7 +200,7 @@ export default function Layout({ children }: LayoutProps) {
               Let's create a personalized companion to support you throughout your wellness journey.
             </p>
             <div className="space-y-4">
-              <Button onClick={() => navigate('/create-character')} className="btn-primary-modern w-full">
+              <Button onClick={() => navigate('/character-creator')} className="btn-primary-modern w-full">
                 Create My Companion
               </Button>
               <Button variant="outline" onClick={() => {/* Skip for now */}} className="btn-secondary-modern w-full">

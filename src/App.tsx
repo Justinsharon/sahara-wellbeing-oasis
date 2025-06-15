@@ -1,4 +1,3 @@
-
 import React, { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -90,17 +89,14 @@ function App() {
                   <Route path="/auth" element={<AuthPage />} />
                   <Route path="/auth/signup" element={<SignUp />} />
                   <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-                  <Route
-                    path="/auth/reset-password"
-                    element={
-                      <Layout>
-                        <ResetPassword />
-                      </Layout>
-                    }
-                  />
+                  {/* IMPORTANT: ResetPassword route now outside Layout */}
+                  <Route path="/auth/reset-password" element={<ResetPassword />} />
 
                   {/* Onboarding routes - outside of Layout */}
                   <Route path="/character-creator" element={<CharacterCreator />} />
+                  {/* Add alias route for create-character for prompt compatibility */}
+                  <Route path="/create-character" element={<CharacterCreator />} />
+                  
                   <Route path="/onboarding-assessment" element={<OnboardingAssessment />} />
 
                   {/* Main app routes - inside Layout */}
@@ -141,4 +137,3 @@ function App() {
 }
 
 export default App;
-
