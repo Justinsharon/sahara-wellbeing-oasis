@@ -1,3 +1,4 @@
+
 import React, { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -15,6 +16,54 @@ import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
 import OnboardingAssessment from "@/pages/OnboardingAssessment";
 
+// ErrorBoundary class component
+class LegacyErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // You could log the error and errorInfo here if needed
+    console.error("Uncaught error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="flex items-center justify-center min-h-screen p-8">
+          <div className="max-w-sm w-full bg-white rounded-lg shadow p-6 text-center">
+            <h1 className="text-xl font-bold text-red-600 mb-2">
+              Something went wrong
+            </h1>
+            <p className="mb-4">{this.state.error.message}</p>
+            <button
+              className="btn btn-primary-modern"
+              onClick={() => window.location.reload()}
+            >
+              Reload
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+// Helper functional ErrorBoundary component
+function ErrorBoundary({ children }: { children: React.ReactNode }) {
+  return <LegacyErrorBoundary>{children}</LegacyErrorBoundary>;
+}
+
 const Therapy = lazy(() => import("@/pages/Therapy"));
 const Community = lazy(() => import("@/pages/Community"));
 const ExploreHeal = lazy(() => import("@/pages/ExploreHeal"));
@@ -25,43 +74,6 @@ const CharacterCreator = lazy(() => import("@/pages/CharacterCreator"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const queryClient = new QueryClient();
-
-// Error boundary for catching rendering errors
-function ErrorBoundary({ children }: { children: React.ReactNode }) {
-  const [error, setError] = React.useState<Error | null>(null);
-
-  React.useEffect(() => {
-    setError(null); // reset error when path changes
-  }, [window.location.pathname]);
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen p-8">
-        <div className="max-w-sm w-full bg-white rounded-lg shadow p-6 text-center">
-          <h1 className="text-xl font-bold text-red-600 mb-2">Something went wrong</h1>
-          <p className="mb-4">{error.message}</p>
-          <button
-            className="btn btn-primary-modern"
-            onClick={() => window.location.reload()}
-          >
-            Reload
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <React.ErrorBoundary
-      fallbackRender={({ error }) => {
-        setError(error);
-        return null;
-      }}
-    >
-      {children}
-    </React.ErrorBoundary>
-  );
-}
 
 function App() {
   return (
@@ -78,8 +90,6 @@ function App() {
                   <Route path="/auth" element={<AuthPage />} />
                   <Route path="/auth/signup" element={<SignUp />} />
                   <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-                  
-                  {/* Move ResetPassword route INSIDE layout for complete context/styling! */}
                   <Route
                     path="/auth/reset-password"
                     element={
@@ -98,11 +108,13 @@ function App() {
                     path="/*"
                     element={
                       <Layout>
-                        <Suspense fallback={
-                          <div className="flex items-center justify-center min-h-[400px]">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                          </div>
-                        }>
+                        <Suspense
+                          fallback={
+                            <div className="flex items-center justify-center min-h-[400px]">
+                              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                            </div>
+                          }
+                        >
                           <Routes>
                             <Route path="/" element={<Index />} />
                             <Route path="/therapy/*" element={<Therapy />} />
@@ -129,3 +141,4 @@ function App() {
 }
 
 export default App;
+
