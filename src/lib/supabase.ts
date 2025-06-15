@@ -1,19 +1,10 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// These should be set through your Supabase project settings
-// You can find these in your Supabase Dashboard > Settings > API
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Supabase configuration missing. Please add your Supabase URL and anon key.');
-  console.log('You can find these in your Supabase Dashboard > Settings > API');
-  console.log('VITE_SUPABASE_URL should be your Project URL');
-  console.log('VITE_SUPABASE_ANON_KEY should be your anon public key');
-}
+const supabaseUrl = 'https://pfwzdfmsovtjksiaxvva.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmd3pkZm1zb3Z0amtzaWF4dnZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4OTg5NjQsImV4cCI6MjA2NTQ3NDk2NH0.L0P8f381FBN8zuFC3ft-L6i_Cn3o515l1h7BOjI7FXo';
 
 export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co', 
-  supabaseAnonKey || 'placeholder-key'
+  supabaseUrl,
+  supabaseAnonKey
 );
