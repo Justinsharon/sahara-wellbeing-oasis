@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { Eye, EyeOff, Heart } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const signUpSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
@@ -34,6 +35,7 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [needsConfirmation, setNeedsConfirmation] = useState(false);
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
@@ -52,22 +54,69 @@ export default function SignUp() {
   const onSubmit = async (data: SignUpForm) => {
     setLoading(true);
     try {
-      await signUp(data.email, data.password, {
-        full_name: data.fullName,
-        mobile_number: data.mobileNumber,
-        country_code: data.countryCode,
-        date_of_birth: data.dateOfBirth,
-        gender: data.gender,
-        email_verified: false,
-        otp_verified: false,
+      const redirectUrl = `${window.location.origin}/`;
+      const { data: authData, error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            full_name: data.fullName,
+            mobile_number: data.mobileNumber,
+            country_code: data.countryCode,
+            date_of_birth: data.dateOfBirth,
+            gender: data.gender,
+            email_verified: false,
+            otp_verified: false,
+          },
+          emailRedirectTo: redirectUrl,
+        }
       });
-      
-      toast.success("Account created successfully!");
-      navigate("/");
+
+      if (error) throw error;
+
+      // Check if email confirmation is required
+      if (authData.user && !authData.session) {
+        setNeedsConfirmation(true);
+        toast.success("Please check your email to confirm your account!");
+      } else {
+        toast.success("Account created successfully!");
+        navigate("/");
+      }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to create account");
+      console.error('Sign up error:', error);
+      if (error instanceof Error) {
+        if (error.message.includes('User already registered')) {
+          toast.error("This email is already registered. Please sign in instead.");
+        } else if (error.message.includes('Failed to fetch')) {
+          toast.error("Network error. Please check your connection and try again.");
+        } else {
+          toast.error(error.message);
+        }
+      } else {
+        toast.error("Failed to create account. Please try again.");
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const resendConfirmation = async () => {
+    try {
+      const email = watch("email");
+      if (!email) return;
+      
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`
+        }
+      });
+      
+      if (error) throw error;
+      toast.success("Confirmation email sent!");
+    } catch (error) {
+      toast.error("Failed to resend confirmation email");
     }
   };
 
@@ -84,189 +133,213 @@ export default function SignUp() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
-              <Input
-                id="fullName"
-                {...register("fullName")}
-                placeholder="Enter your full name"
-                className="rounded-xl"
-              />
-              {errors.fullName && (
-                <p className="text-sm text-destructive">{errors.fullName.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                type="email"
-                {...register("email")}
-                placeholder="Enter your email"
-                className="rounded-xl"
-              />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
-              )}
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="countryCode">Country Code</Label>
-                <Input
-                  id="countryCode"
-                  {...register("countryCode")}
-                  placeholder="+1"
-                  className="rounded-xl"
-                />
-                {errors.countryCode && (
-                  <p className="text-sm text-destructive">{errors.countryCode.message}</p>
-                )}
+          {needsConfirmation ? (
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                <Heart className="w-8 h-8 text-green-600" />
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="mobileNumber">Mobile Number</Label>
-                <Input
-                  id="mobileNumber"
-                  {...register("mobileNumber")}
-                  placeholder="1234567890"
-                  className="rounded-xl"
-                />
-                {errors.mobileNumber && (
-                  <p className="text-sm text-destructive">{errors.mobileNumber.message}</p>
-                )}
+              <div>
+                <h3 className="text-lg font-semibold text-green-600">Check Your Email</h3>
+                <p className="text-sm text-muted-foreground mt-2">
+                  We sent a confirmation link to {watch("email")}. Please click the link to activate your account.
+                </p>
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="dateOfBirth">Date of Birth</Label>
-              <Input
-                id="dateOfBirth"
-                type="date"
-                {...register("dateOfBirth")}
-                className="rounded-xl"
-              />
-              {errors.dateOfBirth && (
-                <p className="text-sm text-destructive">{errors.dateOfBirth.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="gender">Gender</Label>
-              <Select onValueChange={(value) => setValue("gender", value)}>
-                <SelectTrigger className="rounded-xl">
-                  <SelectValue placeholder="Select your gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="male">Male</SelectItem>
-                  <SelectItem value="female">Female</SelectItem>
-                  <SelectItem value="non-binary">Non-binary</SelectItem>
-                  <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
-                </SelectContent>
-              </Select>
-              {errors.gender && (
-                <p className="text-sm text-destructive">{errors.gender.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  {...register("password")}
-                  placeholder="Create a strong password"
-                  className="rounded-xl pr-10"
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
+              <div className="space-y-3">
+                <Button onClick={resendConfirmation} variant="outline" className="w-full">
+                  Resend Confirmation Email
+                </Button>
+                <Button onClick={() => setNeedsConfirmation(false)} variant="ghost" className="w-full">
+                  Back to Sign Up
                 </Button>
               </div>
-              {errors.password && (
-                <p className="text-sm text-destructive">{errors.password.message}</p>
-              )}
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <div className="relative">
-                <Input
-                  id="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  {...register("confirmPassword")}
-                  placeholder="Confirm your password"
-                  className="rounded-xl pr-10"
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
+          ) : (
+            <>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Full Name</Label>
+                  <Input
+                    id="fullName"
+                    {...register("fullName")}
+                    placeholder="Enter your full name"
+                    className="rounded-xl"
+                  />
+                  {errors.fullName && (
+                    <p className="text-sm text-destructive">{errors.fullName.message}</p>
                   )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    {...register("email")}
+                    placeholder="Enter your email"
+                    className="rounded-xl"
+                  />
+                  {errors.email && (
+                    <p className="text-sm text-destructive">{errors.email.message}</p>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="countryCode">Country Code</Label>
+                    <Input
+                      id="countryCode"
+                      {...register("countryCode")}
+                      placeholder="+1"
+                      className="rounded-xl"
+                    />
+                    {errors.countryCode && (
+                      <p className="text-sm text-destructive">{errors.countryCode.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="mobileNumber">Mobile Number</Label>
+                    <Input
+                      id="mobileNumber"
+                      {...register("mobileNumber")}
+                      placeholder="1234567890"
+                      className="rounded-xl"
+                    />
+                    {errors.mobileNumber && (
+                      <p className="text-sm text-destructive">{errors.mobileNumber.message}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="dateOfBirth">Date of Birth</Label>
+                  <Input
+                    id="dateOfBirth"
+                    type="date"
+                    {...register("dateOfBirth")}
+                    className="rounded-xl"
+                  />
+                  {errors.dateOfBirth && (
+                    <p className="text-sm text-destructive">{errors.dateOfBirth.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="gender">Gender</Label>
+                  <Select onValueChange={(value) => setValue("gender", value)}>
+                    <SelectTrigger className="rounded-xl">
+                      <SelectValue placeholder="Select your gender" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="male">Male</SelectItem>
+                      <SelectItem value="female">Female</SelectItem>
+                      <SelectItem value="non-binary">Non-binary</SelectItem>
+                      <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {errors.gender && (
+                    <p className="text-sm text-destructive">{errors.gender.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      {...register("password")}
+                      placeholder="Create a strong password"
+                      className="rounded-xl pr-10"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                  {errors.password && (
+                    <p className="text-sm text-destructive">{errors.password.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      {...register("confirmPassword")}
+                      placeholder="Confirm your password"
+                      className="rounded-xl pr-10"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                  {errors.confirmPassword && (
+                    <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
+                  )}
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="acceptTerms"
+                    checked={acceptTerms}
+                    onCheckedChange={(checked) => setValue("acceptTerms", !!checked)}
+                  />
+                  <Label htmlFor="acceptTerms" className="text-sm">
+                    I accept the{" "}
+                    <Link to="/terms" className="text-primary hover:underline">
+                      Terms & Conditions
+                    </Link>{" "}
+                    and{" "}
+                    <Link to="/privacy" className="text-primary hover:underline">
+                      Privacy Policy
+                    </Link>
+                  </Label>
+                </div>
+                {errors.acceptTerms && (
+                  <p className="text-sm text-destructive">{errors.acceptTerms.message}</p>
+                )}
+
+                <Button 
+                  type="submit" 
+                  className="w-full rounded-xl" 
+                  disabled={loading}
+                >
+                  {loading ? "Creating Account..." : "Create Account"}
                 </Button>
+              </form>
+
+              <div className="mt-6 text-center">
+                <p className="text-sm text-muted-foreground">
+                  Already have an account?{" "}
+                  <Link to="/auth" className="text-primary hover:underline font-medium">
+                    Sign In
+                  </Link>
+                </p>
               </div>
-              {errors.confirmPassword && (
-                <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
-              )}
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="acceptTerms"
-                checked={acceptTerms}
-                onCheckedChange={(checked) => setValue("acceptTerms", !!checked)}
-              />
-              <Label htmlFor="acceptTerms" className="text-sm">
-                I accept the{" "}
-                <Link to="/terms" className="text-primary hover:underline">
-                  Terms & Conditions
-                </Link>{" "}
-                and{" "}
-                <Link to="/privacy" className="text-primary hover:underline">
-                  Privacy Policy
-                </Link>
-              </Label>
-            </div>
-            {errors.acceptTerms && (
-              <p className="text-sm text-destructive">{errors.acceptTerms.message}</p>
-            )}
-
-            <Button 
-              type="submit" 
-              className="w-full rounded-xl" 
-              disabled={loading}
-            >
-              {loading ? "Creating Account..." : "Create Account"}
-            </Button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              Already have an account?{" "}
-              <Link to="/auth" className="text-primary hover:underline font-medium">
-                Sign In
-              </Link>
-            </p>
-          </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>

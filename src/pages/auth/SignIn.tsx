@@ -40,7 +40,18 @@ export default function SignIn() {
       toast.success("Welcome back to Sahara!");
       navigate("/");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to sign in");
+      console.error('Sign in error:', error);
+      if (error instanceof Error) {
+        if (error.message.includes('Invalid login credentials') || error.message.includes('invalid_credentials')) {
+          toast.error("Incorrect email or password, or email not confirmed. Please confirm your email or reset your password.");
+        } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+          toast.error("Network error. Please check your connection and try again.");
+        } else {
+          toast.error(error.message);
+        }
+      } else {
+        toast.error("Failed to sign in. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

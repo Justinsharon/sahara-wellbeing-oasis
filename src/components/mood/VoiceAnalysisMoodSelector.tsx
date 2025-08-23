@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Mic, MicOff, Play, Square, Loader2, Pause, AlertCircle, Waves, ExternalLink } from "lucide-react";
 import { CharacterAvatar } from "@/components/character/CharacterAvatar";
 import { useCharacter } from "@/hooks/useCharacter";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 interface VoiceAnalysisMoodSelectorProps {

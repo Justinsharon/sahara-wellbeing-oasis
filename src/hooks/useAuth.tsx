@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Always try to get profile as soon as we have a user
         if (_session?.user) {
           setTimeout(() => {
-            fetchUserProfile(_session.user.id);
+            ensureProfileExists(_session.user.id);
           }, 0);
         } else if (isMounted) {
           setUser(null);
@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(session);
       setSupabaseUser(session?.user ?? null);
       if (session?.user) {
-        fetchUserProfile(session.user.id);
+        ensureProfileExists(session.user.id);
       } else {
         setUser(null);
       }
@@ -63,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // eslint-disable-next-line
   }, []);
 
-  const fetchUserProfile = async (userId: string) => {
+  const ensureProfileExists = async (userId: string) => {
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -73,14 +73,51 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         console.error('Error fetching user profile:', error);
-        // Don't reset user to null if failed; just log error.
         return;
       }
+
       if (data) {
         setUser(data);
+      } else {
+        // Create minimal profile if none exists
+        console.log('No profile found, creating minimal profile...');
+        const { data: newProfile, error: insertError } = await supabase
+          .from('profiles')
+          .insert({
+            id: userId,
+            email: supabaseUser?.email || '',
+            full_name: supabaseUser?.user_metadata?.full_name || supabaseUser?.email || '',
+            onboarding_completed: false
+          })
+          .select()
+          .single();
+
+        if (insertError) {
+          console.error('Error creating profile:', insertError);
+          // Create minimal in-memory user object if DB insert fails
+          setUser({
+            id: userId,
+            email: supabaseUser?.email || '',
+            full_name: supabaseUser?.user_metadata?.full_name || supabaseUser?.email || '',
+            onboarding_completed: false,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          } as any);
+        } else {
+          setUser(newProfile);
+        }
       }
     } catch (error) {
-      console.error('Error in fetchUserProfile:', error);
+      console.error('Error in ensureProfileExists:', error);
+      // Create minimal in-memory user object as fallback
+      setUser({
+        id: userId,
+        email: supabaseUser?.email || '',
+        full_name: supabaseUser?.user_metadata?.full_name || supabaseUser?.email || '',
+        onboarding_completed: false,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      } as any);
     }
   };
 
@@ -156,7 +193,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .update(data)
       .eq('id', supabaseUser.id);
     if (error) throw error;
-    await fetchUserProfile(supabaseUser.id);
+    await ensureProfileExists(supabaseUser.id);
   };
 
   const value = {

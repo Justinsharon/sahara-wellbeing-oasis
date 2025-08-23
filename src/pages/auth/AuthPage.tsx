@@ -43,7 +43,13 @@ export default function AuthPage() {
       toast.success('Welcome back!');
     } catch (error: any) {
       console.error('Auth error:', error);
-      toast.error(error.message || 'An error occurred during authentication');
+      if (error?.message?.includes('Invalid login credentials') || error?.message?.includes('invalid_credentials')) {
+        toast.error("Incorrect email or password, or email not confirmed. Please confirm your email or reset your password.");
+      } else if (error?.message?.includes('Failed to fetch') || error?.message?.includes('NetworkError')) {
+        toast.error("Network error. Please check your connection and try again.");
+      } else {
+        toast.error(error?.message || 'An error occurred during authentication');
+      }
     } finally {
       setLoading(false);
     }
