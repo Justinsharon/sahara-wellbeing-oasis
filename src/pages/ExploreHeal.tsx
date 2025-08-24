@@ -7,20 +7,73 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MediaContentModal } from "@/components/MediaContentModal";
 
-// Generate simple audio data URLs for built-in sounds
-const generateToneDataURL = (frequency: number, duration: number) => {
+// Safe audio generation that creates blob URLs on demand
+const generateToneObjectURL = (frequency: number, duration: number) => {
   const sampleRate = 44100;
   const samples = sampleRate * duration;
-  const buffer = new ArrayBuffer(samples * 2);
+  const buffer = new ArrayBuffer(44 + samples * 2); // WAV header + PCM data
   const view = new DataView(buffer);
   
+  // WAV file header
+  const writeString = (offset: number, string: string) => {
+    for (let i = 0; i < string.length; i++) {
+      view.setUint8(offset + i, string.charCodeAt(i));
+    }
+  };
+  
+  writeString(0, 'RIFF');
+  view.setUint32(4, 36 + samples * 2, true);
+  writeString(8, 'WAVE');
+  writeString(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeString(36, 'data');
+  view.setUint32(40, samples * 2, true);
+  
+  // Generate audio samples
   for (let i = 0; i < samples; i++) {
     const sample = Math.sin(2 * Math.PI * frequency * i / sampleRate) * 0.3;
     const intSample = Math.max(-32767, Math.min(32766, sample * 32767));
-    view.setInt16(i * 2, intSample, true);
+    view.setInt16(44 + i * 2, intSample, true);
   }
   
-  return `data:audio/wav;base64,${btoa(String.fromCharCode(...new Uint8Array(buffer)))}`;
+  const blob = new Blob([buffer], { type: 'audio/wav' });
+  return URL.createObjectURL(blob);
+};
+
+// Component for lazy audio loading
+const ToneAudio = ({ frequency, duration }: { frequency: number; duration: number }) => {
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  
+  const handlePlay = () => {
+    if (!audioUrl) {
+      const url = generateToneObjectURL(frequency, duration);
+      setAudioUrl(url);
+      const audio = new Audio(url);
+      audio.play();
+      
+      // Clean up the blob URL after playing
+      audio.onended = () => {
+        URL.revokeObjectURL(url);
+        setAudioUrl(null);
+      };
+    } else {
+      const audio = new Audio(audioUrl);
+      audio.play();
+    }
+  };
+  
+  return (
+    <Button onClick={handlePlay} variant="outline" size="sm">
+      <Play className="w-4 h-4 mr-2" />
+      Play Tone
+    </Button>
+  );
 };
 
 const meditations = [
@@ -214,10 +267,7 @@ const musicTracks = [
           <div className="w-16 h-16 mx-auto bg-blue-400 rounded-full animate-pulse mb-2"></div>
           <p className="text-sm text-blue-800">Close your eyes and imagine flowing water</p>
         </div>
-        <audio controls loop className="w-full">
-          <source src={generateToneDataURL(200, 2)} type="audio/wav" />
-          Your browser does not support audio.
-        </audio>
+        <ToneAudio frequency={200} duration={2} />
         <p className="text-xs text-gray-500">Simple tone for relaxation - use your imagination for water sounds</p>
       </div>
     )
@@ -237,10 +287,7 @@ const musicTracks = [
           </div>
           <p className="text-sm text-purple-800">Imagine gentle piano melodies</p>
         </div>
-        <audio controls loop className="w-full">
-          <source src={generateToneDataURL(440, 1)} type="audio/wav" />
-          Your browser does not support audio.
-        </audio>
+        <ToneAudio frequency={440} duration={1} />
         <p className="text-xs text-gray-500">Calming tone - let your mind create the piano sounds</p>
       </div>
     )
@@ -256,10 +303,7 @@ const musicTracks = [
           <div className="w-20 h-8 mx-auto bg-teal-400 rounded-full animate-bounce mb-2"></div>
           <p className="text-sm text-teal-800">Visualize gentle ocean waves</p>
         </div>
-        <audio controls loop className="w-full">
-          <source src={generateToneDataURL(150, 3)} type="audio/wav" />
-          Your browser does not support audio.
-        </audio>
+        <ToneAudio frequency={150} duration={3} />
         <p className="text-xs text-gray-500">Low frequency tone for deep relaxation</p>
       </div>
     )
