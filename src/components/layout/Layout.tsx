@@ -5,7 +5,7 @@ import { MobileNav } from "./MobileNav";
 import { FloatingChatButton } from "./FloatingChatButton";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, Menu, Heart, LogOut, Plus } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
   Sheet,
@@ -25,10 +25,20 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const { user, loading } = useAuth();
+  const { user, loading, signOut } = useAuth();
   const { character, hasCharacter } = useCharacter();
   const navigate = useNavigate();
+  const location = useLocation();
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      navigate("/");
+    } catch (error) {
+      console.error("Sign out error:", error);
+    }
+  };
 
   // Only prompt for character creation if user is logged in,
   // hasn't completed onboarding (i.e. assessment), and has no character.
@@ -109,14 +119,19 @@ export default function Layout({ children }: LayoutProps) {
                       </Link>
                     ))}
                     
-                    <div className="pt-4 border-t border-white/30">
-                      <button className="flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 w-full text-left text-red-600 hover:bg-red-50">
-                        <div className="w-10 h-10 rounded-2xl bg-red-100 flex items-center justify-center">
-                          <LogOut className="w-5 h-5" />
-                        </div>
-                        <span className="font-semibold">Sign Out</span>
-                      </button>
-                    </div>
+                    {user && (
+                      <div className="pt-4 border-t border-white/30">
+                        <button 
+                          onClick={handleSignOut}
+                          className="flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 w-full text-left text-red-600 hover:bg-red-50"
+                        >
+                          <div className="w-10 h-10 rounded-2xl bg-red-100 flex items-center justify-center">
+                            <LogOut className="w-5 h-5" />
+                          </div>
+                          <span className="font-semibold">Sign Out</span>
+                        </button>
+                      </div>
+                    )}
                   </nav>
                 </SheetContent>
               </Sheet>
@@ -170,8 +185,8 @@ export default function Layout({ children }: LayoutProps) {
       {/* Character Creation Prompt */}
       {shouldShowCharacterPrompt && <CharacterCreationPrompt />}
 
-      {/* Enhanced Auth Overlay */}
-      {!user && <AuthOverlay />}
+      {/* Enhanced Auth Overlay - only show on home page */}
+      {!user && location.pathname === "/" && <AuthOverlay />}
     </div>
   );
 }
