@@ -1,39 +1,44 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Badge } from '@/components/ui/badge';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/components/ui/use-toast';
+import { SafetyAlert } from '@/components/chat/SafetyAlert';
+import { TherapistConnectionModal } from '@/components/chat/TherapistConnectionModal';
+import { MessageWithVoice } from '@/components/chat/MessageWithVoice';
+import { 
+  Send, 
+  Paperclip, 
+  Smile, 
+  Mic, 
+  Heart, 
+  Brain, 
+  Zap,
+  MessageCircle,
+  Coffee,
+  Moon,
+  Phone,
+  Loader2
+} from 'lucide-react';
 
-import { useState, useRef, useEffect } from "react";
-import { Send, Mic, Paperclip, Smile, Heart, Sparkles, MessageCircle } from "lucide-react";
-import { LiquidGlass } from "@/components/ui/liquid-glass";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
-
-const mockMessages = [
+// Initial conversation data
+const initialMessages = [
   {
     id: 1,
-    content: "Hello! I'm Nia, your AI wellness companion. How are you feeling today?",
-    sender: "ai",
-    timestamp: new Date(Date.now() - 300000),
-    mood: "supportive"
-  },
-  {
-    id: 2,
-    content: "Hi Nia! I'm feeling a bit overwhelmed with work lately. Any suggestions?",
-    sender: "user",
-    timestamp: new Date(Date.now() - 240000)
-  },
-  {
-    id: 3,
-    content: "I understand feeling overwhelmed can be really challenging. Let's work through this together. Would you like to try a quick breathing exercise, or would you prefer to talk about what's specifically causing the stress?",
-    sender: "ai",
-    timestamp: new Date(Date.now() - 180000),
-    mood: "caring"
+    sender: 'ai',
+    text: "Hello! I'm Nia, your wellness companion. I'm here to support you through whatever you're experiencing. How are you feeling today?",
+    timestamp: '10:00 AM',
+    safety: { level: 1, keywords: [], needsAttention: false }
   }
 ];
 
 const quickQuestions = [
   "How can I manage stress better?",
   "I'm feeling anxious today",
-  "Help me with sleep issues",
+  "Help me with sleep issues", 
   "I need motivation",
   "Coping with sadness"
 ];
@@ -46,44 +51,110 @@ const moodOptions = [
   { emoji: "😴", label: "Tired", color: "bg-indigo-100 text-indigo-700" }
 ];
 
-export default function Chat() {
-  const [messages, setMessages] = useState(mockMessages);
-  const [inputValue, setInputValue] = useState("");
+const Chat = () => {
+  const [messages, setMessages] = useState(initialMessages);
+  const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [safetyLevel, setSafetyLevel] = useState(1);
+  const [showTherapistModal, setShowTherapistModal] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
-
-    const newMessage = {
-      id: messages.length + 1,
-      content: inputValue,
-      sender: "user" as const,
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, newMessage]);
-    setInputValue("");
-    setIsTyping(true);
-
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponse = {
-        id: messages.length + 2,
-        content: "Thank you for sharing that with me. I'm here to support you through this. Let's explore some strategies that might help...",
-        sender: "ai" as const,
-        timestamp: new Date(),
-        mood: "supportive" as const
+  const handleSendMessage = async () => {
+    if (inputValue.trim() && !isConnecting) {
+      const userMessage = {
+        id: messages.length + 1,
+        sender: 'user',
+        text: inputValue.trim(),
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        safety: { level: 1, keywords: [], needsAttention: false }
       };
-      setMessages(prev => [...prev, aiResponse]);
-      setIsTyping(false);
-    }, 2000);
+      
+      setMessages(prev => [...prev, userMessage]);
+      const messageText = inputValue.trim();
+      setInputValue('');
+      setIsTyping(true);
+      setIsConnecting(true);
+      
+      try {
+        // Get conversation history for context
+        const conversationHistory = messages.map(msg => ({
+          sender: msg.sender,
+          text: msg.text
+        }));
+
+        const { data, error } = await supabase.functions.invoke('nia-gemini-chat', {
+          body: {
+            message: messageText,
+            conversationHistory
+          }
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        const aiResponse = {
+          id: messages.length + 2,
+          sender: 'ai',
+          text: data.message,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          safety: data.safety
+        };
+
+        setMessages(prev => [...prev, aiResponse]);
+        setSafetyLevel(data.safety.level);
+
+        // Show therapist modal for high safety levels
+        if (data.safety.level >= 3) {
+          setTimeout(() => setShowTherapistModal(true), 1000);
+        }
+
+      } catch (error) {
+        console.error('Error sending message:', error);
+        toast({
+          title: "Connection Error",
+          description: "I'm having trouble connecting. Please try again.",
+          variant: "destructive",
+        });
+
+        // Add error message
+        const errorResponse = {
+          id: messages.length + 2,
+          sender: 'ai',
+          text: "I'm having trouble connecting right now, but I'm here for you. If you're in crisis, please reach out to a mental health professional immediately.",
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          safety: { level: 1, keywords: [], needsAttention: false }
+        };
+        setMessages(prev => [...prev, errorResponse]);
+      } finally {
+        setIsTyping(false);
+        setIsConnecting(false);
+      }
+    }
   };
 
   const handleQuickQuestion = (question: string) => {
     setInputValue(question);
   };
 
+  const handleEmergencyHelp = () => {
+    // In a real app, this would open emergency contacts or crisis resources
+    toast({
+      title: "Emergency Resources",
+      description: "In a real app, this would connect you to crisis support immediately.",
+    });
+  };
+
+  const handleTherapistConnected = () => {
+    toast({
+      title: "Connected",
+      description: "You're now connected with a professional therapist.",
+    });
+  };
+
+  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
@@ -91,29 +162,110 @@ export default function Chat() {
   }, [messages]);
 
   return (
-    <div className="min-h-screen wellness-gradient">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
-        <LiquidGlass variant="card" floating className="text-center p-6 mb-8">
-          <div className="w-12 h-12 bg-crimson-wine rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <MessageCircle className="w-6 h-6 text-off-white" />
+        <LiquidGlass className="text-center p-6 mb-8">
+          <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <MessageCircle className="w-6 h-6 text-primary-foreground" />
           </div>
-          <h1 className="text-2xl font-bold heading-gradient mb-2">Chat with Nia</h1>
-          <p className="text-warm-gray">Your AI wellness companion is here to listen and support you</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Chat with Nia</h1>
+          <p className="text-muted-foreground">Your AI wellness companion is here to listen and support you</p>
         </LiquidGlass>
 
-        <div className="grid lg:grid-cols-4 gap-6">
-          {/* Quick Actions Sidebar */}
-          <div className="lg:col-span-1 space-y-4">
-            <LiquidGlass variant="crystal" className="p-4">
-              <h3 className="font-bold text-deep-charcoal mb-4">Quick Questions</h3>
+        <div className="flex-1 flex flex-col lg:flex-row gap-4">
+          {/* Chat Area */}
+          <div className="flex-1 flex flex-col">
+            <SafetyAlert 
+              level={safetyLevel}
+              onConnectTherapist={() => setShowTherapistModal(true)}
+              onEmergencyHelp={handleEmergencyHelp}
+            />
+            
+            <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+              <div className="space-y-4">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <MessageWithVoice 
+                      message={message.text} 
+                      isAI={message.sender === 'ai'}
+                    >
+                      <LiquidGlass className={`max-w-xs lg:max-w-md p-3 ${
+                        message.sender === 'user' 
+                          ? 'bg-primary/20 ml-auto' 
+                          : 'bg-secondary/50'
+                      }`}>
+                        <div className="text-sm">{message.text}</div>
+                        <div className="text-xs opacity-70 mt-1">{message.timestamp}</div>
+                      </LiquidGlass>
+                    </MessageWithVoice>
+                  </div>
+                ))}
+                
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <LiquidGlass className="max-w-xs lg:max-w-md p-3 bg-secondary/50">
+                      <div className="flex items-center space-x-1">
+                        <div className="w-2 h-2 bg-current rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                        <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      </div>
+                    </LiquidGlass>
+                  </div>
+                )}
+              </div>
+            </ScrollArea>
+
+            {/* Input Area */}
+            <div className="p-4 border-t border-border/50">
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="icon">
+                  <Paperclip className="w-4 h-4" />
+                </Button>
+                <Button variant="ghost" size="icon">
+                  <Smile className="w-4 h-4" />
+                </Button>
+                <Input
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  placeholder="Type your message..."
+                  className="flex-1 bg-background/50 border-border/50"
+                  disabled={isConnecting}
+                />
+                <Button variant="ghost" size="icon">
+                  <Mic className="w-4 h-4" />
+                </Button>
+                <Button 
+                  onClick={handleSendMessage} 
+                  size="icon"
+                  disabled={isConnecting || !inputValue.trim()}
+                >
+                  {isConnecting ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Send className="w-4 h-4" />
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:w-80 space-y-4">
+            <LiquidGlass className="p-4">
+              <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                <Zap className="w-4 h-4" />
+                Quick Questions
+              </h3>
               <div className="space-y-2">
                 {quickQuestions.map((question, index) => (
                   <LiquidGlass
                     key={index}
-                    variant="card"
-                    interactive
-                    className="p-3 cursor-pointer text-sm"
+                    className="p-3 cursor-pointer text-sm hover:bg-accent transition-colors"
                     onClick={() => handleQuickQuestion(question)}
                   >
                     {question}
@@ -122,15 +274,16 @@ export default function Chat() {
               </div>
             </LiquidGlass>
 
-            <LiquidGlass variant="crystal" className="p-4">
-              <h3 className="font-bold text-deep-charcoal mb-4">How are you feeling?</h3>
+            <LiquidGlass className="p-4">
+              <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                <Heart className="w-4 h-4" />
+                How are you feeling?
+              </h3>
               <div className="space-y-2">
                 {moodOptions.map((mood, index) => (
                   <LiquidGlass
                     key={index}
-                    variant="card"
-                    interactive
-                    className="p-2 cursor-pointer text-sm flex items-center gap-2"
+                    className="p-2 cursor-pointer text-sm flex items-center gap-2 hover:bg-accent transition-colors"
                   >
                     <span className="text-lg">{mood.emoji}</span>
                     <span>{mood.label}</span>
@@ -138,89 +291,43 @@ export default function Chat() {
                 ))}
               </div>
             </LiquidGlass>
-          </div>
 
-          {/* Chat Area */}
-          <div className="lg:col-span-3">
-            <LiquidGlass variant="card" bubbles className="flex flex-col h-[600px]">
-              {/* Messages */}
-              <ScrollArea ref={scrollAreaRef} className="flex-1 p-6">
-                <div className="space-y-4">
-                  {messages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <LiquidGlass
-                        variant={message.sender === 'user' ? 'crystal' : 'card'}
-                        floating
-                        className={`max-w-xs lg:max-w-md p-4 ${
-                          message.sender === 'user' 
-                            ? 'bg-crimson-wine text-off-white' 
-                            : 'bg-soft-taupe'
-                        }`}
-                      >
-                        <p className="text-sm">{message.content}</p>
-                        <p className={`text-xs mt-2 ${
-                          message.sender === 'user' 
-                            ? 'text-off-white/70' 
-                            : 'text-warm-gray'
-                        }`}>
-                          {message.timestamp.toLocaleTimeString([], { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
-                          })}
-                        </p>
-                      </LiquidGlass>
-                    </div>
-                  ))}
-                  
-                  {isTyping && (
-                    <div className="flex justify-start">
-                      <LiquidGlass variant="card" floating className="p-4 bg-soft-taupe">
-                        <div className="flex items-center gap-1">
-                          <div className="w-2 h-2 bg-warm-gray rounded-full animate-bounce" />
-                          <div className="w-2 h-2 bg-warm-gray rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                          <div className="w-2 h-2 bg-warm-gray rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                        </div>
-                      </LiquidGlass>
-                    </div>
-                  )}
-                </div>
-              </ScrollArea>
-
-              {/* Input Area */}
-              <LiquidGlass variant="overlay" className="p-4 border-t border-white/20">
-                <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="icon" className="neo-button">
-                    <Paperclip className="w-4 h-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="neo-button">
-                    <Smile className="w-4 h-4" />
-                  </Button>
-                  <Input
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Type your message..."
-                    className="flex-1 glass-input"
-                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  />
-                  <Button variant="ghost" size="icon" className="neo-button">
-                    <Mic className="w-4 h-4" />
-                  </Button>
-                  <Button 
-                    onClick={handleSendMessage}
-                    className="btn-primary-modern"
-                    disabled={!inputValue.trim()}
-                  >
-                    <Send className="w-4 h-4" />
-                  </Button>
-                </div>
-              </LiquidGlass>
+            <LiquidGlass className="p-4">
+              <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                <Brain className="w-4 h-4" />
+                Support Options
+              </h3>
+              <div className="space-y-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start"
+                  onClick={() => setShowTherapistModal(true)}
+                >
+                  <Phone className="w-4 h-4 mr-2" />
+                  Connect with Therapist
+                </Button>
+                <Button variant="outline" size="sm" className="w-full justify-start">
+                  <Coffee className="w-4 h-4 mr-2" />
+                  Breathing Exercise
+                </Button>
+                <Button variant="outline" size="sm" className="w-full justify-start">
+                  <Moon className="w-4 h-4 mr-2" />
+                  Sleep Stories
+                </Button>
+              </div>
             </LiquidGlass>
           </div>
         </div>
+
+        <TherapistConnectionModal
+          isOpen={showTherapistModal}
+          onClose={() => setShowTherapistModal(false)}
+          onConnected={handleTherapistConnected}
+        />
       </div>
     </div>
   );
-}
+};
+
+export default Chat;
