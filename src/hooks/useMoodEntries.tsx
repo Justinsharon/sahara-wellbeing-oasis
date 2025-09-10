@@ -96,6 +96,17 @@ export function useMoodEntries() {
       const transformedEntry = transformDatabaseEntry(data);
       setMoodEntries(prev => [transformedEntry, ...prev.filter(entry => entry.date !== transformedEntry.date)]);
       toast.success('Mood entry saved successfully!');
+      
+      // Trigger badge awards and nudge generation
+      try {
+        await Promise.all([
+          supabase.functions.invoke('award-badges', { body: { user_id: user.id } }),
+          supabase.functions.invoke('nudge-engine', { body: { user_id: user.id } })
+        ]);
+      } catch (error) {
+        console.error('Error triggering post-entry functions:', error);
+      }
+      
       return transformedEntry;
     } catch (error) {
       console.error('Error creating mood entry:', error);

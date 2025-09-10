@@ -9,6 +9,10 @@ import { useToast } from '@/components/ui/use-toast';
 import { SafetyAlert } from '@/components/chat/SafetyAlert';
 import { TherapistConnectionModal } from '@/components/chat/TherapistConnectionModal';
 import { MessageWithVoice } from '@/components/chat/MessageWithVoice';
+import { StreakBadgeWidget } from '@/components/gamification/StreakBadgeWidget';
+import { NudgeBanner } from '@/components/nudges/NudgeBanner';
+import { NudgeCenter } from '@/components/nudges/NudgeCenter';
+import { useNudges } from '@/hooks/useNudges';
 import { 
   Send, 
   Paperclip, 
@@ -60,6 +64,7 @@ const Chat = () => {
   const [showTherapistModal, setShowTherapistModal] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const { nudges, snoozeNudge, dismissNudge, markAsDelivered } = useNudges();
 
   const handleSendMessage = async () => {
     if (inputValue.trim() && !isConnecting) {

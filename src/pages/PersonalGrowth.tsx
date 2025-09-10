@@ -16,6 +16,7 @@ import {
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { StreakBadgeWidget } from "@/components/gamification/StreakBadgeWidget";
 
 const quickActions = [
   {
@@ -77,6 +78,11 @@ export default function PersonalGrowth() {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Streak & Badges Widget */}
+        <div className="mb-8 animate-slide-up" style={{ animationDelay: "0.1s" }}>
+          <StreakBadgeWidget />
         </div>
 
         {/* Stats Overview */}
