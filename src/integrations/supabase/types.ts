@@ -249,6 +249,324 @@ export type Database = {
         }
         Relationships: []
       }
+      counselor_notes: {
+        Row: {
+          content: string
+          counselor_id: string
+          created_at: string
+          id: string
+          interventions_used: string[] | null
+          is_confidential: boolean
+          metadata: Json | null
+          note_type: string
+          risk_level: number | null
+          session_id: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          counselor_id: string
+          created_at?: string
+          id?: string
+          interventions_used?: string[] | null
+          is_confidential?: boolean
+          metadata?: Json | null
+          note_type?: string
+          risk_level?: number | null
+          session_id: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          counselor_id?: string
+          created_at?: string
+          id?: string
+          interventions_used?: string[] | null
+          is_confidential?: boolean
+          metadata?: Json | null
+          note_type?: string
+          risk_level?: number | null
+          session_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "counselor_notes_counselor_id_fkey"
+            columns: ["counselor_id"]
+            isOneToOne: false
+            referencedRelation: "crisis_counselors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "counselor_notes_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "crisis_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crisis_counselors: {
+        Row: {
+          availability_status: string
+          certification_level: string
+          created_at: string
+          current_sessions: number
+          id: string
+          languages: string[]
+          max_concurrent_sessions: number
+          specialties: string[]
+          timezone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          availability_status?: string
+          certification_level?: string
+          created_at?: string
+          current_sessions?: number
+          id?: string
+          languages?: string[]
+          max_concurrent_sessions?: number
+          specialties?: string[]
+          timezone?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          availability_status?: string
+          certification_level?: string
+          created_at?: string
+          current_sessions?: number
+          id?: string
+          languages?: string[]
+          max_concurrent_sessions?: number
+          specialties?: string[]
+          timezone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      crisis_escalations: {
+        Row: {
+          action_taken: string | null
+          created_at: string
+          escalated_by: string
+          escalated_to: string | null
+          escalation_type: string
+          id: string
+          metadata: Json | null
+          outcome: string | null
+          reason: string
+          resolved_at: string | null
+          session_id: string
+        }
+        Insert: {
+          action_taken?: string | null
+          created_at?: string
+          escalated_by: string
+          escalated_to?: string | null
+          escalation_type: string
+          id?: string
+          metadata?: Json | null
+          outcome?: string | null
+          reason: string
+          resolved_at?: string | null
+          session_id: string
+        }
+        Update: {
+          action_taken?: string | null
+          created_at?: string
+          escalated_by?: string
+          escalated_to?: string | null
+          escalation_type?: string
+          id?: string
+          metadata?: Json | null
+          outcome?: string | null
+          reason?: string
+          resolved_at?: string | null
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crisis_escalations_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "crisis_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crisis_locations: {
+        Row: {
+          address: string | null
+          city: string | null
+          coordinates: unknown | null
+          country_code: string
+          created_at: string
+          hours_of_operation: string | null
+          id: string
+          is_active: boolean
+          languages_supported: string[] | null
+          metadata: Json | null
+          name: string
+          phone_number: string | null
+          resource_type: string
+          special_services: string[] | null
+          state_province: string | null
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          coordinates?: unknown | null
+          country_code: string
+          created_at?: string
+          hours_of_operation?: string | null
+          id?: string
+          is_active?: boolean
+          languages_supported?: string[] | null
+          metadata?: Json | null
+          name: string
+          phone_number?: string | null
+          resource_type: string
+          special_services?: string[] | null
+          state_province?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          coordinates?: unknown | null
+          country_code?: string
+          created_at?: string
+          hours_of_operation?: string | null
+          id?: string
+          is_active?: boolean
+          languages_supported?: string[] | null
+          metadata?: Json | null
+          name?: string
+          phone_number?: string | null
+          resource_type?: string
+          special_services?: string[] | null
+          state_province?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
+      crisis_messages: {
+        Row: {
+          content: string
+          created_at: string
+          file_url: string | null
+          id: string
+          is_read: boolean
+          message_type: string
+          metadata: Json | null
+          sender_id: string
+          sender_type: string
+          session_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          is_read?: boolean
+          message_type?: string
+          metadata?: Json | null
+          sender_id: string
+          sender_type: string
+          session_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          is_read?: boolean
+          message_type?: string
+          metadata?: Json | null
+          sender_id?: string
+          sender_type?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crisis_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "crisis_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crisis_sessions: {
+        Row: {
+          counselor_id: string | null
+          created_at: string
+          ended_at: string | null
+          escalation_reason: string | null
+          id: string
+          initial_message: string | null
+          location_data: Json | null
+          resolution_notes: string | null
+          session_metadata: Json | null
+          session_type: string
+          started_at: string | null
+          status: string
+          updated_at: string
+          urgency_level: number
+          user_id: string
+        }
+        Insert: {
+          counselor_id?: string | null
+          created_at?: string
+          ended_at?: string | null
+          escalation_reason?: string | null
+          id?: string
+          initial_message?: string | null
+          location_data?: Json | null
+          resolution_notes?: string | null
+          session_metadata?: Json | null
+          session_type?: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          urgency_level?: number
+          user_id: string
+        }
+        Update: {
+          counselor_id?: string | null
+          created_at?: string
+          ended_at?: string | null
+          escalation_reason?: string | null
+          id?: string
+          initial_message?: string | null
+          location_data?: Json | null
+          resolution_notes?: string | null
+          session_metadata?: Json | null
+          session_type?: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          urgency_level?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crisis_sessions_counselor_id_fkey"
+            columns: ["counselor_id"]
+            isOneToOne: false
+            referencedRelation: "crisis_counselors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mood_entries: {
         Row: {
           created_at: string
