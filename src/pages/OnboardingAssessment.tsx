@@ -66,11 +66,17 @@ export default function OnboardingAssessment() {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error creating assessment session:', error);
+        // Generate a local session ID so assessment can still proceed
+        setSessionId(`local-${crypto.randomUUID()}`);
+        return;
+      }
       setSessionId(data.id);
     } catch (error) {
       console.error('Error creating assessment session:', error);
-      toast.error('Failed to start assessment');
+      // Still allow assessment to proceed with local session
+      setSessionId(`local-${crypto.randomUUID()}`);
     }
   };
 
