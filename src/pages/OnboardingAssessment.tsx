@@ -137,48 +137,51 @@ export default function OnboardingAssessment() {
   };
 
   const completeAssessment = async (finalScores: AssessmentScores, finalResponses: UserResponses) => {
-    if (!sessionId || !user) return;
+    if (!user) return;
 
     try {
-      // Update assessment session as completed
-      await supabase
-        .from('assessment_sessions')
-        .update({
-          status: 'completed',
-          completed_at: new Date().toISOString(),
-          emotional_score: finalScores.emotional,
-          physical_score: finalScores.physical,
-          work_score: finalScores.work,
-          lifestyle_score: finalScores.lifestyle
-        })
-        .eq('id', sessionId);
+      const isRealSession = sessionId && !sessionId.startsWith('local-');
 
-      // Generate therapy recommendations
-      const recommendations = generateTherapyRecommendations(finalScores, finalResponses);
-
-      // Save therapy recommendations
-      for (const rec of recommendations) {
+      if (isRealSession) {
+        // Update assessment session as completed
         await supabase
-          .from('therapy_recommendations')
-          .insert({
-            user_id: user.id,
-            session_id: sessionId,
-            recommendation_type: rec.type,
-            confidence_score: rec.confidence,
-            reasoning: rec.reasoning
-          });
+          .from('assessment_sessions')
+          .update({
+            status: 'completed',
+            completed_at: new Date().toISOString(),
+            emotional_score: finalScores.emotional,
+            physical_score: finalScores.physical,
+            work_score: finalScores.work,
+            lifestyle_score: finalScores.lifestyle
+          })
+          .eq('id', sessionId);
+
+        // Generate therapy recommendations
+        const recommendations = generateTherapyRecommendations(finalScores, finalResponses);
+
+        // Save therapy recommendations
+        for (const rec of recommendations) {
+          await supabase
+            .from('therapy_recommendations')
+            .insert({
+              user_id: user.id,
+              session_id: sessionId,
+              recommendation_type: rec.type,
+              confidence_score: rec.confidence,
+              reasoning: rec.reasoning
+            });
+        }
       }
 
-      // Update user profile - now with correct typing
+      // Update user profile
       await updateProfile({
         onboarding_completed: true,
-        assessment_session_id: sessionId
+        ...(isRealSession ? { assessment_session_id: sessionId } : {})
       });
 
       setIsCompleted(true);
       toast.success('Assessment completed! Your personalized recommendations are ready.');
       
-      // Navigate to main app (homepage) after a delay
       setTimeout(() => {
         navigate('/');
       }, 3000);
