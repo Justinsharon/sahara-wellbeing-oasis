@@ -1,10 +1,14 @@
-
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export function CharacterCreationPrompt() {
   const navigate = useNavigate();
+  const [dismissed, setDismissed] = useState(false);
+
+  if (dismissed) return null;
+
   return (
     <div className="fixed inset-0 z-40 glass-nav flex items-center justify-center p-6">
       <div className="glass-card rounded-3xl p-8 text-center shadow-2xl max-w-sm w-full animate-scale-in">
@@ -21,7 +25,7 @@ export function CharacterCreationPrompt() {
           <Button onClick={() => navigate('/character-creator')} className="btn-primary-modern w-full">
             Create My Companion
           </Button>
-          <Button variant="outline" onClick={() => {}} className="btn-secondary-modern w-full">
+          <Button variant="outline" onClick={() => setDismissed(true)} className="btn-secondary-modern w-full">
             Maybe Later
           </Button>
         </div>
