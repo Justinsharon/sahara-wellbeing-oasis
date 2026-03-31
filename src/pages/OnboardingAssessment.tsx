@@ -81,7 +81,7 @@ export default function OnboardingAssessment() {
   };
 
   const handleAnswer = async (answer: string) => {
-    if (!currentQuestion || !sessionId) return;
+    if (!currentQuestion) return;
 
     const newResponses = { ...responses, [currentQuestion.id]: answer };
     setResponses(newResponses);
