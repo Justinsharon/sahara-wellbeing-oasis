@@ -26,7 +26,7 @@ export function VoiceAnalysisMoodSelector({ onMoodDetected, onManualFallback }: 
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { character } = useCharacter();
 
   const startRecording = async () => {
