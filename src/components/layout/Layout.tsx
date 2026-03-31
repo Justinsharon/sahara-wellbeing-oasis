@@ -41,9 +41,9 @@ export default function Layout({ children }: LayoutProps) {
   };
 
   // Only prompt for character creation if user is logged in,
-  // hasn't completed onboarding (i.e. assessment), and has no character.
+  // hasn't completed onboarding, has no character data at all (profile or context).
   const shouldShowCharacterPrompt =
-    user && !user.onboarding_completed && !hasCharacter && !loading;
+    user && !user.onboarding_completed && !hasCharacter && !user.character_companion && !loading;
 
   if (loading) {
     return <LoadingScreen />;
