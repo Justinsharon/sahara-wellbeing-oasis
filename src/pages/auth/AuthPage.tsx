@@ -18,20 +18,9 @@ export default function AuthPage() {
   console.log('AuthPage - Current user:', user);
   console.log('AuthPage - Auth loading:', authLoading);
 
-  // Simple redirect logic - if user exists and onboarding is complete, go to personal growth
-  // Otherwise, let them complete onboarding flow
+  // Sign-in always goes to home — onboarding is only for new sign-ups
   if (user && !authLoading) {
-    // Always send completed users to HOME; onboarding still gets routed correctly
-    if (user.onboarding_completed) {
-      return <Navigate to="/" replace />;
-    } else {
-      // User exists but onboarding not complete - redirect to character creator or assessment
-      if (!user.character_companion) {
-        return <Navigate to="/character-creator" replace />;
-      } else {
-        return <Navigate to="/onboarding-assessment" replace />;
-      }
-    }
+    return <Navigate to="/" replace />;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
