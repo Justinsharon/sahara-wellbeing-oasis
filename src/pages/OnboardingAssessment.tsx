@@ -98,21 +98,23 @@ export default function OnboardingAssessment() {
     });
     setScores(newScores);
 
-    // Save response to database
-    try {
-      await supabase
-        .from('assessment_responses')
-        .insert({
-          session_id: sessionId,
-          question_id: currentQuestion.id,
-          answer_value: answer,
-          emotional_score: questionScoring.emotional[answer] || 0,
-          physical_score: questionScoring.physical[answer] || 0,
-          work_score: questionScoring.work[answer] || 0,
-          lifestyle_score: questionScoring.lifestyle[answer] || 0
-        });
-    } catch (error) {
-      console.error('Error saving response:', error);
+    // Save response to database (only if we have a real session)
+    if (sessionId && !sessionId.startsWith('local-')) {
+      try {
+        await supabase
+          .from('assessment_responses')
+          .insert({
+            session_id: sessionId,
+            question_id: currentQuestion.id,
+            answer_value: answer,
+            emotional_score: questionScoring.emotional[answer] || 0,
+            physical_score: questionScoring.physical[answer] || 0,
+            work_score: questionScoring.work[answer] || 0,
+            lifestyle_score: questionScoring.lifestyle[answer] || 0
+          });
+      } catch (error) {
+        console.error('Error saving response:', error);
+      }
     }
 
     // Handle special breathing exercise case
